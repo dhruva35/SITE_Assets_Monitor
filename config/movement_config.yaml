@@ -1,0 +1,19 @@
+# Movement Detection Configuration
+# Used from Week 5 onwards
+
+# State machine
+states: ["STATIONARY", "MOVEMENT_SUSPECTED", "MOVING", "UNCERTAIN"]
+
+# Hysteresis — how many consecutive frames of motion evidence before transitioning
+frames_to_suspect: 2        # STATIONARY → MOVEMENT_SUSPECTED after N frames of motion
+frames_to_confirm: 5        # MOVEMENT_SUSPECTED → MOVING after N frames of sustained motion
+frames_to_clear: 10         # MOVING → STATIONARY after N frames of no motion
+
+# Position change threshold (in pixels) to count as "motion detected"
+position_change_threshold_px: 15
+
+# Depth-based distance change threshold (in meters) — if depth is available
+distance_change_threshold_m: 0.5
+
+# Ego-motion compensation
+ego_motion_enabled: true  # Requires robot pose data from ROS engineer

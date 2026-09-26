@@ -1,0 +1,72 @@
+# ========================================
+# ASI Perception — .gitignore
+# ========================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual Environment
+venv/
+env/
+.venv/
+.env/
+
+# Model Weights (too large for Git — use Git LFS or share separately)
+*.pt
+*.pth
+*.onnx
+*.ncnn
+*.bin
+*.param
+*.trt
+*.engine
+models/detection/*.pt
+models/detection/*.onnx
+models/reid/*.pt
+models/reid/*.onnx
+
+# Datasets (too large for Git)
+data/datasets/
+data/raw/
+data/reference_images/
+data/embeddings/*.npy
+
+# Evidence outputs
+evidence/
+
+# YOLO training runs output
+runs/
+
+# Runtime reference database (generated at site — not source code)
+data/reference_db/*.npz
+
+# Logs
+logs/
+*.log
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Calibration files (device-specific)
+data/calibration/*.yaml
+data/calibration/*.json
+!data/calibration/README.md

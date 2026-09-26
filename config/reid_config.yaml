@@ -1,0 +1,23 @@
+# ReID Configuration
+# Used from Week 3 onwards
+
+# Backbone model
+backbone: "osnet_x1_0"  # osnet_x1_0 | osnet_x0_75 | resnet50_ibn
+model_path: "models/reid/reid_backbone_best.onnx"
+model_format: "onnx"
+embedding_dim: 512
+
+# Matching
+similarity_metric: "cosine"  # cosine | euclidean
+max_candidates: 5  # Return top-N candidates
+
+# Confidence thresholds (WILL BE CALIBRATED from validation data — these are starting points)
+thresholds:
+  t_high: 0.85       # Score >= t_high AND margin >= t_margin → CONFIRMED
+  t_low: 0.65        # Score >= t_low but < t_high → PROBABLE
+  t_margin: 0.15     # Gap between top-1 and top-2 must be >= this for CONFIRMED
+  t_min: 0.40        # Score below this → UNKNOWN (no match)
+
+# Multi-view references
+max_references_per_asset: 10  # Store up to N reference images per asset
+embedding_aggregation: "mean"  # mean | max | weighted

@@ -1,0 +1,38 @@
+# Class taxonomy — to be finalized with client (Biraj) in Week 1
+# These are starting classes based on the spec. Biraj needs to confirm/adjust.
+
+model_path: "models/detection/yolo_best.onnx"
+model_format: "onnx"  # onnx | ncnn | pytorch
+
+# Input settings
+input_size: [640, 640]
+device: "cpu"  # Pi 5 is CPU-only
+
+# Detection thresholds
+confidence_threshold: 0.5
+nms_iou_threshold: 0.45
+
+# Asset classes (YOLO class indices mapped to names)
+# These will be updated once Biraj confirms the exact equipment types
+classes:
+  0: "Dump truck"
+  1: "Excavator"
+  2: "Motor grader"
+  3: "Roller"
+  4: "Crane manipulator"
+  5: "Gazelle"
+  6: "Forklift Standart"
+  7: "Bucket loader Big"
+  8: "Mixer"
+  9: "Tanker"
+  10: "Bulldozer"
+  11: "Cleaning equipment"
+  12: "Truck"
+  13: "Trailer"
+  14: "Forklift Giraffe"
+  15: "Bucket loader Standart"
+  16: "Autocran"
+
+# Separate person/vehicle from asset classes for different handling
+asset_classes: ["Dump truck", "Excavator", "Motor grader", "Roller", "Crane manipulator", "Forklift Standart", "Bucket loader Big", "Mixer", "Tanker", "Bulldozer", "Cleaning equipment", "Trailer", "Forklift Giraffe", "Bucket loader Standart", "Autocran"]
+context_classes: ["Gazelle", "Truck"]  # Detected but not treated as trackable assets

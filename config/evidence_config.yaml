@@ -1,0 +1,23 @@
+# Evidence Capture Configuration
+
+# Evidence directory
+evidence_dir: "evidence/"
+
+# What to capture
+capture_full_frame: true
+capture_asset_crop: true
+capture_annotated_preview: true   # Bounding boxes drawn on frame
+
+# Image quality
+jpeg_quality: 95                   # For evidence images (high quality)
+crop_padding_ratio: 0.1            # Pad the crop by 10% around the bounding box
+
+# Image quality thresholds for evidence
+min_blur_score: 100.0              # Laplacian variance — below this = too blurry
+min_brightness: 40                 # Mean pixel value — below this = too dark
+max_brightness: 220                # Mean pixel value — above this = overexposed
+
+# Event clip (short video around an event)
+clip_enabled: false                # Enable in later phase
+clip_duration_sec: 5
+clip_fps: 3

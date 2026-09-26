@@ -1,0 +1,23 @@
+# Camera Configuration
+
+# Resolution (Orbbec Astra 2 / Femto Mega)
+rgb_width: 1280
+rgb_height: 720
+depth_width: 640
+depth_height: 480
+
+# FPS target
+target_fps: 5  # 3-5 FPS confirmed acceptable by client
+
+# Camera source
+# For development: use a video file or webcam index
+# For production: use the Orbbec SDK or ROS topic (agreed with ROS engineer)
+source: 0  # 0 = webcam, or path to video file, or RTSP URL
+
+# Depth
+depth_enabled: false  # Set true when Orbbec camera is available
+depth_min_m: 0.4      # Orbbec minimum depth range
+depth_max_m: 5.5      # Orbbec maximum depth range
+
+# Calibration
+calibration_file: "data/calibration/camera_intrinsics.yaml"
