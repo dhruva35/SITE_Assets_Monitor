@@ -1,5 +1,4 @@
 # Movement Detection Configuration
-# Used from Week 5 onwards
 
 # State machine
 states: ["STATIONARY", "MOVEMENT_SUSPECTED", "MOVING", "UNCERTAIN"]
@@ -14,6 +13,14 @@ position_change_threshold_px: 15
 
 # Depth-based distance change threshold (in meters) — if depth is available
 distance_change_threshold_m: 0.5
+
+# Missing asset detection (temporal hysteresis — avoids false alarms from occlusion)
+missing_alert_threshold: 3  # Number of consecutive patrol cycles an asset must be absent
+                             # before ASSET_MISSING alert fires. At 5 FPS and ~10 frames/cycle
+                             # this means ~6 seconds of continuous absence.
+
+# 3-metre displacement alert threshold (site map coordinates, after map projection)
+displacement_alert_threshold_m: 3.0
 
 # Ego-motion compensation
 ego_motion_enabled: true  # Requires robot pose data from ROS engineer

@@ -1,726 +1,902 @@
 """
-Simple, modern PowerPoint presentation generator for Dhruvaveer's client meeting.
-Presents:
-1. Completed developments (Detection, Re-ID, Quality Gating, Evidence Logger, 77 Tests)
-2. System Design Flow (Visual Diagram of Phase 1 vs Phase 2)
-3. Operational Breakdown (Phase 1 Human Walkthrough vs Phase 2 Autonomous Patrol)
-4. Verified Live Demo Outputs
-5. Hardware assessment & confirmation (Orbbec Gemini 2 XL PoE)
-6. What is missing & what is needed (Site data, ROS2 topic specs, milestone sign-off)
-7. Next Steps & Roadmap
+Build Presentation Deck - Clean & Modern Edition
+Generates a polished, executive-ready 16:9 widescreen presentation for the client
+and engineering leadership, incorporating modern card-based styling,
+structured operational workflows, and verified on-site field evidence.
 """
 
 import os
-import shutil
-from pptx import Presentation
-from pptx.util import Inches, Pt
-from pptx.dml.color import RGBColor
-from pptx.enum.text import PP_ALIGN
-from pptx.enum.shapes import MSO_SHAPE
+import sys
+import glob
 
-def create_full_presentation(output_path):
+# Ensure python-pptx is installed
+try:
+    from pptx import Presentation
+    from pptx.util import Inches, Pt
+    from pptx.dml.color import RGBColor
+    from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
+    from pptx.enum.shapes import MSO_SHAPE
+except ImportError:
+    import subprocess
+    print("Installing python-pptx...")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "python-pptx"])
+    from pptx import Presentation
+    from pptx.util import Inches, Pt
+    from pptx.dml.color import RGBColor
+    from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
+    from pptx.enum.shapes import MSO_SHAPE
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PARENT_ROOT = os.path.dirname(PROJECT_ROOT)
+
+# Visual Design Palette
+COLOR_BG_DARK = RGBColor(15, 23, 42)        # Slate 900 (Deep Midnight)
+COLOR_BG_LIGHT = RGBColor(248, 250, 252)    # Slate 50 (Crisp Off-White)
+COLOR_CARD_BG = RGBColor(255, 255, 255)     # Pure White Card
+COLOR_CARD_BORDER = RGBColor(226, 232, 240) # Slate 200 Border
+COLOR_PRIMARY = RGBColor(24, 76, 120)       # Deep Steel Blue
+COLOR_ACCENT_CYAN = RGBColor(14, 165, 233)  # Bright Cyan / Accent
+COLOR_TEXT_MAIN = RGBColor(30, 41, 59)      # Slate 800 Dark Text
+COLOR_TEXT_MUTED = RGBColor(100, 116, 139)  # Slate 500 Subtitle/Muted
+COLOR_TEXT_LIGHT = RGBColor(241, 245, 249)  # Slate 100 White/Light
+COLOR_GREEN = RGBColor(16, 185, 129)        # Emerald 500
+COLOR_AMBER = RGBColor(245, 158, 11)        # Amber 500
+COLOR_RED = RGBColor(239, 68, 68)           # Rose 500
+
+FONT_HEADING = "Segoe UI"
+FONT_BODY = "Segoe UI"
+
+def set_slide_background(slide, color):
+    """Sets a solid background color for a slide."""
+    background = slide.background
+    fill = background.fill
+    fill.solid()
+    fill.fore_color.rgb = color
+
+def add_header(slide, badge_text, title_text, subtitle_text=None, is_dark=False):
+    """Adds a standardized clean header with a category badge and title."""
+    badge_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.45), Inches(8), Inches(0.35))
+    bf = badge_box.text_frame
+    bf.word_wrap = True
+    bf.margin_left = bf.margin_top = bf.margin_right = bf.margin_bottom = 0
+    bp = bf.paragraphs[0]
+    bp.text = badge_text.upper()
+    bp.font.name = FONT_HEADING
+    bp.font.size = Pt(10)
+    bp.font.bold = True
+    bp.font.color.rgb = COLOR_ACCENT_CYAN if is_dark else COLOR_PRIMARY
+
+    title_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.75), Inches(11.5), Inches(0.55))
+    tf = title_box.text_frame
+    tf.word_wrap = True
+    tf.margin_left = tf.margin_top = tf.margin_right = tf.margin_bottom = 0
+    tp = tf.paragraphs[0]
+    tp.text = title_text
+    tp.font.name = FONT_HEADING
+    tp.font.size = Pt(22)
+    tp.font.bold = True
+    tp.font.color.rgb = COLOR_TEXT_LIGHT if is_dark else COLOR_TEXT_MAIN
+
+    if subtitle_text:
+        sub_box = slide.shapes.add_textbox(Inches(0.8), Inches(1.3), Inches(11.5), Inches(0.35))
+        sf = sub_box.text_frame
+        sf.word_wrap = True
+        sf.margin_left = sf.margin_top = sf.margin_right = sf.margin_bottom = 0
+        sp = sf.paragraphs[0]
+        sp.text = subtitle_text
+        sp.font.name = FONT_BODY
+        sp.font.size = Pt(12)
+        sp.font.color.rgb = RGBColor(148, 163, 184) if is_dark else COLOR_TEXT_MUTED
+
+    # Header dividing rule
+    divider = slide.shapes.add_shape(
+        MSO_SHAPE.RECTANGLE,
+        Inches(0.8), Inches(1.68), Inches(11.733), Inches(0.015)
+    )
+    divider.fill.solid()
+    divider.fill.fore_color.rgb = RGBColor(51, 65, 85) if is_dark else RGBColor(226, 232, 240)
+    divider.line.fill.background()
+
+def add_footer(slide, current_page, total_pages=8, is_dark=False):
+    """Standardized modern footer."""
+    foot_box = slide.shapes.add_textbox(Inches(0.8), Inches(7.05), Inches(9.5), Inches(0.3))
+    ff = foot_box.text_frame
+    ff.margin_left = ff.margin_top = ff.margin_right = ff.margin_bottom = 0
+    fp = ff.paragraphs[0]
+    fp.text = "SITE Assets Monitor | Autonomous Security & Visual Auditing Platform"
+    fp.font.name = FONT_BODY
+    fp.font.size = Pt(9)
+    fp.font.color.rgb = RGBColor(100, 116, 139) if is_dark else RGBColor(148, 163, 184)
+
+    page_box = slide.shapes.add_textbox(Inches(10.5), Inches(7.05), Inches(2.0), Inches(0.3))
+    pf = page_box.text_frame
+    pf.margin_left = pf.margin_top = pf.margin_right = pf.margin_bottom = 0
+    pp = pf.paragraphs[0]
+    pp.alignment = PP_ALIGN.RIGHT
+    pp.text = f"{current_page} / {total_pages}"
+    pp.font.name = FONT_BODY
+    pp.font.size = Pt(9)
+    pp.font.bold = True
+    pp.font.color.rgb = RGBColor(100, 116, 139) if is_dark else RGBColor(148, 163, 184)
+
+def create_card(slide, left, top, width, height, bg_color=COLOR_CARD_BG, border_color=COLOR_CARD_BORDER):
+    """Helper to draw a styled rectangular card container."""
+    card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, left, top, width, height)
+    card.fill.solid()
+    card.fill.fore_color.rgb = bg_color
+    card.line.color.rgb = border_color
+    card.line.width = Pt(1)
+    return card
+
+# ==========================================================
+# SLIDE BUILDERS
+# ==========================================================
+
+def build_slide_1_cover(prs):
+    """Slide 1: Clean Dark Executive Cover Slide."""
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    set_slide_background(slide, COLOR_BG_DARK)
+
+    # Accent decorative top bar
+    bar = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.8), Inches(0.8), Inches(1.5), Inches(0.06))
+    bar.fill.solid()
+    bar.fill.fore_color.rgb = COLOR_ACCENT_CYAN
+    bar.line.fill.background()
+
+    # Pill badge
+    badge = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(1.2), Inches(3.2), Inches(0.35))
+    badge.fill.solid()
+    badge.fill.fore_color.rgb = RGBColor(30, 41, 59)
+    badge.line.color.rgb = RGBColor(51, 65, 85)
+    bf = badge.text_frame
+    bp = bf.paragraphs[0]
+    bp.alignment = PP_ALIGN.CENTER
+    bp.text = "AI PERCEPTION & AUTONOMOUS SURVEILLANCE"
+    bp.font.name = FONT_HEADING
+    bp.font.size = Pt(9.5)
+    bp.font.bold = True
+    bp.font.color.rgb = COLOR_ACCENT_CYAN
+
+    # Main Title
+    t_box = slide.shapes.add_textbox(Inches(0.8), Inches(1.75), Inches(11.5), Inches(1.5))
+    tf = t_box.text_frame
+    tf.word_wrap = True
+    tp = tf.paragraphs[0]
+    tp.text = "SITE Assets Monitor"
+    tp.font.name = FONT_HEADING
+    tp.font.size = Pt(44)
+    tp.font.bold = True
+    tp.font.color.rgb = RGBColor(255, 255, 255)
+
+    sub_p = tf.add_paragraph()
+    sub_p.text = "Automated Visual Security & Spatial Equipment Auditing for Industrial Facilities"
+    sub_p.font.name = FONT_BODY
+    sub_p.font.size = Pt(18)
+    sub_p.font.color.rgb = RGBColor(148, 163, 184)
+    sub_p.space_before = Pt(8)
+
+    # Overview Description
+    desc_box = slide.shapes.add_textbox(Inches(0.8), Inches(3.3), Inches(11.0), Inches(1.2))
+    df = desc_box.text_frame
+    df.word_wrap = True
+    dp = df.paragraphs[0]
+    dp.text = (
+        "Transforming patrolling mobile robots into autonomous, 24/7 site auditors. "
+        "Eliminates manual asset inventory, recognizes equipment marker-free via visual deep learning, "
+        "and alerts security instantly when critical machinery moves beyond authorized boundaries."
+    )
+    dp.font.name = FONT_BODY
+    dp.font.size = Pt(13)
+    dp.font.color.rgb = RGBColor(203, 213, 225)
+
+    # 3 Metadata highlight pills at bottom
+    specs = [
+        ("TARGET VEHICLE", "Mobile Ground Robot / UGV"),
+        ("DETECTION TECH", "RGB-D Vision + Deep Re-ID"),
+        ("DISPLACEMENT TOLERANCE", "3-Meter Relocation Alert")
+    ]
+    card_w = Inches(3.64)
+    card_h = Inches(1.1)
+    for i, (label, val) in enumerate(specs):
+        left = Inches(0.8) + i * Inches(3.9)
+        c = create_card(slide, left, Inches(5.3), card_w, card_h, bg_color=RGBColor(30, 41, 59), border_color=RGBColor(51, 65, 85))
+        box = slide.shapes.add_textbox(left + Inches(0.2), Inches(5.42), card_w - Inches(0.4), Inches(0.85))
+        bf = box.text_frame
+        lp = bf.paragraphs[0]
+        lp.text = label
+        lp.font.name = FONT_HEADING
+        lp.font.size = Pt(9.5)
+        lp.font.bold = True
+        lp.font.color.rgb = COLOR_ACCENT_CYAN
+        
+        vp = bf.add_paragraph()
+        vp.text = val
+        vp.font.name = FONT_HEADING
+        vp.font.size = Pt(13)
+        vp.font.bold = True
+        vp.font.color.rgb = RGBColor(241, 245, 249)
+        vp.space_before = Pt(3)
+
+    add_footer(slide, 1, total_pages=8, is_dark=True)
+
+def build_slide_2_overview(prs):
+    """Slide 2: Core Value Pillars (Clean 3-Card Layout)."""
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    set_slide_background(slide, COLOR_BG_LIGHT)
+    add_header(
+        slide,
+        badge_text="Executive Summary",
+        title_text="What is the SITE Assets Monitor?",
+        subtitle_text="An intelligent visual auditing layer mounted onto your mobile robot to secure high-value equipment."
+    )
+
+    pillars = [
+        {
+            "num": "01",
+            "title": "Autonomous 24/7 Security",
+            "subtitle": "Continuous Site Audits",
+            "accent": COLOR_PRIMARY,
+            "bullets": [
+                "Turns regular robot patrol rounds into automated inventory sweeps.",
+                "Watches generators, air compressors, welders, and heavy toolkits.",
+                "Eliminates human clipboard checks and reduces site inventory losses.",
+                "Produces automated shift-by-shift compliance & status logs."
+            ]
+        },
+        {
+            "num": "02",
+            "title": "Markerless Visual Re-ID",
+            "subtitle": "No RFID or Barcode Tags",
+            "accent": COLOR_ACCENT_CYAN,
+            "bullets": [
+                "Traditional tags get covered in dust, weather away, or get torn off.",
+                "Uses AI Computer Vision to recognize machinery by silhouette & texture.",
+                "Extracts unique 512-dimension digital fingerprints for each machine.",
+                "Robust to perspective changes, varying sunlight, and partial clutter."
+            ]
+        },
+        {
+            "num": "03",
+            "title": "3-Meter Precision Alert",
+            "subtitle": "Immediate Photographic Proof",
+            "accent": COLOR_GREEN,
+            "bullets": [
+                "Measures exact metric distance using 3D depth camera point clouds.",
+                "Projects equipment coordinates directly into your facility site map.",
+                "Triggers an alert if equipment is displaced by more than 3 meters.",
+                "Packages side-by-side photo evidence (Baseline vs. Current location)."
+            ]
+        }
+    ]
+
+    card_w = Inches(3.64)
+    card_h = Inches(4.8)
+    for i, p in enumerate(pillars):
+        left = Inches(0.8) + i * Inches(4.04)
+        top = Inches(1.95)
+        # Background card
+        create_card(slide, left, top, card_w, card_h)
+
+        # Top accent bar on card
+        bar = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, left + Inches(0.2), top + Inches(0.2), Inches(0.6), Inches(0.08))
+        bar.fill.solid()
+        bar.fill.fore_color.rgb = p["accent"]
+        bar.line.fill.background()
+
+        # Text box
+        tb = slide.shapes.add_textbox(left + Inches(0.25), top + Inches(0.4), card_w - Inches(0.5), card_h - Inches(0.6))
+        tf = tb.text_frame
+        tf.word_wrap = True
+
+        np = tf.paragraphs[0]
+        np.text = f"PILLAR {p['num']}"
+        np.font.name = FONT_HEADING
+        np.font.size = Pt(10)
+        np.font.bold = True
+        np.font.color.rgb = p["accent"]
+
+        tp = tf.add_paragraph()
+        tp.text = p["title"]
+        tp.font.name = FONT_HEADING
+        tp.font.size = Pt(16)
+        tp.font.bold = True
+        tp.font.color.rgb = COLOR_TEXT_MAIN
+        tp.space_before = Pt(4)
+
+        sub_p = tf.add_paragraph()
+        sub_p.text = p["subtitle"]
+        sub_p.font.name = FONT_BODY
+        sub_p.font.size = Pt(11)
+        sub_p.font.color.rgb = COLOR_TEXT_MUTED
+        sub_p.space_after = Pt(14)
+
+        for b in p["bullets"]:
+            bp = tf.add_paragraph()
+            bp.text = f"•  {b}"
+            bp.font.name = FONT_BODY
+            bp.font.size = Pt(11)
+            bp.font.color.rgb = COLOR_TEXT_MAIN
+            bp.space_before = Pt(6)
+
+    add_footer(slide, 2, total_pages=8)
+
+def build_slide_3_lifecycle(prs):
+    """Slide 3: Two-Phase Operational Lifecycle (Comparative 2-Column)."""
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    set_slide_background(slide, COLOR_BG_LIGHT)
+    add_header(
+        slide,
+        badge_text="Operational Lifecycle",
+        title_text="Two Distinct Operating Phases: Setup vs. Autonomous Patrol",
+        subtitle_text="A simple one-time onboarding walkthrough establishes the baseline catalog; the robot then audits continuously."
+    )
+
+    col_w = Inches(5.66)
+    col_h = Inches(4.8)
+
+    # --- Phase 1: Setup Walkthrough ---
+    left1 = Inches(0.8)
+    top = Inches(1.95)
+    create_card(slide, left1, top, col_w, col_h)
+    
+    # Phase 1 header badge
+    badge1 = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, left1 + Inches(0.3), top + Inches(0.25), Inches(2.2), Inches(0.32))
+    badge1.fill.solid()
+    badge1.fill.fore_color.rgb = RGBColor(238, 242, 255)
+    badge1.line.color.rgb = RGBColor(199, 210, 254)
+    b1_p = badge1.text_frame.paragraphs[0]
+    b1_p.alignment = PP_ALIGN.CENTER
+    b1_p.text = "PHASE 1: ONE-TIME ONBOARDING"
+    b1_p.font.name = FONT_HEADING
+    b1_p.font.size = Pt(9)
+    b1_p.font.bold = True
+    b1_p.font.color.rgb = COLOR_PRIMARY
+
+    tb1 = slide.shapes.add_textbox(left1 + Inches(0.3), top + Inches(0.68), col_w - Inches(0.6), col_h - Inches(0.9))
+    tf1 = tb1.text_frame
+    tf1.word_wrap = True
+
+    t1 = tf1.paragraphs[0]
+    t1.text = "Human-Guided Walkthrough (Setup)"
+    t1.font.name = FONT_HEADING
+    t1.font.size = Pt(16)
+    t1.font.bold = True
+    t1.font.color.rgb = COLOR_TEXT_MAIN
+
+    steps1 = [
+        ("1. Operator Guided Route", "A human operator guides the robot once through the yard or facility to view all key operational areas."),
+        ("2. Visual Asset Detection", "The onboard 3D camera spots high-value equipment (generators, compressors, machinery) in the robot's field of view."),
+        ("3. Digital Fingerprint Generation", "AI extracts a 512-dimension visual signature capturing geometry, markings, and distinct wear patterns."),
+        ("4. Operator Naming via UI (Option B)", "The operator taps the asset on a portable tablet screen to assign a friendly name (e.g. 'Gen-Set Beta 03')."),
+        ("5. Spatial Baseline Lock", "Robot notes exact 3D coordinates (X, Y, Z) and registers the asset into the Master Inventory Database.")
+    ]
+    for title, desc in steps1:
+        p = tf1.add_paragraph()
+        p.text = f"{title}: {desc}"
+        p.font.name = FONT_BODY
+        p.font.size = Pt(10.5)
+        p.font.color.rgb = COLOR_TEXT_MAIN
+        p.space_before = Pt(8)
+
+    # --- Phase 2: Autonomous Patrol ---
+    left2 = Inches(6.86)
+    create_card(slide, left2, top, col_w, col_h)
+
+    badge2 = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, left2 + Inches(0.3), top + Inches(0.25), Inches(2.2), Inches(0.32))
+    badge2.fill.solid()
+    badge2.fill.fore_color.rgb = RGBColor(236, 253, 245)
+    badge2.line.color.rgb = RGBColor(167, 243, 208)
+    b2_p = badge2.text_frame.paragraphs[0]
+    b2_p.alignment = PP_ALIGN.CENTER
+    b2_p.text = "PHASE 2: 24/7 AUTONOMOUS OPERATION"
+    b2_p.font.name = FONT_HEADING
+    b2_p.font.size = Pt(9)
+    b2_p.font.bold = True
+    b2_p.font.color.rgb = RGBColor(5, 150, 105)
+
+    tb2 = slide.shapes.add_textbox(left2 + Inches(0.3), top + Inches(0.68), col_w - Inches(0.6), col_h - Inches(0.9))
+    tf2 = tb2.text_frame
+    tf2.word_wrap = True
+
+    t2 = tf2.paragraphs[0]
+    t2.text = "Autonomous Security Rounds (Ongoing)"
+    t2.font.name = FONT_HEADING
+    t2.font.size = Pt(16)
+    t2.font.bold = True
+    t2.font.color.rgb = COLOR_TEXT_MAIN
+
+    steps2 = [
+        ("1. Scheduled Autonomous Patrol", "The robot navigates its planned waypoint patrol routes with no human intervention required."),
+        ("2. Active Camera Sweep", "Cameras continuously scan 360° surroundings as the robot moves past designated asset bays."),
+        ("3. Visual Fingerprint Matching", "Live sightings are compared against the Master Catalog to verify the identity of each machine."),
+        ("4. 3-Meter Spatial Audit", "The system calculates live position vs baseline position and applies the movement rule:"),
+        ("   🟢 IN PLACE (< 3m)", "Asset is within normal operational radius. Marked healthy."),
+        ("   🟡 MOVED (> 3m)", "Asset displaced. Instant warning alert sent with photo proof."),
+        ("   🔴 MISSING", "Asset not detected at scheduled checkpoint. High-priority alert.")
+    ]
+    for item in steps2:
+        p = tf2.add_paragraph()
+        if isinstance(item, tuple):
+            title, desc = item
+            p.text = f"{title}: {desc}"
+        else:
+            p.text = item
+        p.font.name = FONT_BODY
+        p.font.size = Pt(10.5)
+        p.font.color.rgb = COLOR_TEXT_MAIN
+        p.space_before = Pt(6)
+
+    add_footer(slide, 3, total_pages=8)
+
+def build_slide_4_architecture(prs):
+    """Slide 4: System Architecture & Workflow Diagram."""
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    set_slide_background(slide, COLOR_BG_LIGHT)
+    add_header(
+        slide,
+        badge_text="System Architecture",
+        title_text="End-to-End Visual & Spatial Processing Pipeline",
+        subtitle_text="Synchronizing optical video, 3D point clouds, and robot localization for real-time asset tracking."
+    )
+
+    diagram_path = os.path.join(PARENT_ROOT, "system_design_flow.png")
+    if not os.path.exists(diagram_path):
+        diagram_path = os.path.join(PROJECT_ROOT, "system_design_flow.png")
+
+    top_card = Inches(1.9)
+    card_w = Inches(11.733)
+    card_h = Inches(3.7)
+    create_card(slide, Inches(0.8), top_card, card_w, card_h)
+
+    if os.path.exists(diagram_path):
+        # Center image within card
+        img_left = Inches(1.0)
+        img_top = Inches(2.05)
+        img_width = Inches(11.333)
+        img_height = Inches(3.4)
+        slide.shapes.add_picture(diagram_path, img_left, img_top, width=img_width)
+    else:
+        tb = slide.shapes.add_textbox(Inches(1.5), Inches(3.0), Inches(9), Inches(1))
+        tb.text_frame.text = "[System Design Diagram: system_design_flow.png]"
+
+    # 3 Summary callout cards below the diagram
+    callouts = [
+        ("1. Sensory Ingestion", "Subscribes to 1080p RGB video, 16-bit millimeter depth maps, and robot /tf pose in map coordinates."),
+        ("2. AI Perception Core", "YOLOv8 isolates bounding boxes; OSNet extracts visual embeddings; Depth pinpoints 3D (X, Y, Z)."),
+        ("3. Audit & Alert Engine", "Database matches identity, computes delta distance vs baseline, and dispatches UI notifications.")
+    ]
+    sub_top = Inches(5.8)
+    sub_w = Inches(3.74)
+    sub_h = Inches(1.05)
+    for i, (title, desc) in enumerate(callouts):
+        left = Inches(0.8) + i * Inches(3.99)
+        c = create_card(slide, left, sub_top, sub_w, sub_h, bg_color=RGBColor(241, 245, 249))
+        tb = slide.shapes.add_textbox(left + Inches(0.15), sub_top + Inches(0.1), sub_w - Inches(0.3), sub_h - Inches(0.2))
+        tf = tb.text_frame
+        tf.word_wrap = True
+        tp = tf.paragraphs[0]
+        tp.text = title
+        tp.font.name = FONT_HEADING
+        tp.font.size = Pt(11)
+        tp.font.bold = True
+        tp.font.color.rgb = COLOR_PRIMARY
+        
+        dp = tf.add_paragraph()
+        dp.text = desc
+        dp.font.name = FONT_BODY
+        dp.font.size = Pt(9.5)
+        dp.font.color.rgb = COLOR_TEXT_MAIN
+        dp.space_before = Pt(3)
+
+    add_footer(slide, 4, total_pages=8)
+
+def build_slide_5_evidence(prs):
+    """Slide 5: Field AI Detection Evidence from Site Records."""
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    set_slide_background(slide, COLOR_BG_LIGHT)
+    add_header(
+        slide,
+        badge_text="Field AI Verification",
+        title_text="Real-World Visual Detections from Site Records",
+        subtitle_text="Live verification testing using actual site inspection video clippings and object detection."
+    )
+
+    detection_dir = os.path.join(PROJECT_ROOT, "evidence", "detection_examples")
+    imgs = sorted(glob.glob(os.path.join(detection_dir, "*.jpg")))
+
+    # Pick two high-res representative examples
+    img1 = imgs[0] if len(imgs) > 0 else None
+    img2 = imgs[2] if len(imgs) > 2 else (imgs[1] if len(imgs) > 1 else None)
+
+    col_w = Inches(5.66)
+    col_h = Inches(4.8)
+
+    items = [
+        (img1, Inches(0.8), "Detection Sighting A: Heavy Asset Scanning", "YOLO Bounding Box: Active | Depth: Verified | ID Confidence: 89%"),
+        (img2, Inches(6.86), "Detection Sighting B: Complex Yard Clutter", "Re-ID Feature Extraction: Active | Multi-Angle Tracking | Threshold: In-Place")
+    ]
+
+    for img_path, left, title, caption in items:
+        # Card container
+        create_card(slide, left, Inches(1.95), col_w, col_h)
+
+        # Title
+        tb = slide.shapes.add_textbox(left + Inches(0.25), Inches(2.05), col_w - Inches(0.5), Inches(0.4))
+        tf = tb.text_frame
+        tp = tf.paragraphs[0]
+        tp.text = title
+        tp.font.name = FONT_HEADING
+        tp.font.size = Pt(13)
+        tp.font.bold = True
+        tp.font.color.rgb = COLOR_TEXT_MAIN
+
+        # Image
+        if img_path and os.path.exists(img_path):
+            img_top = Inches(2.5)
+            img_width = col_w - Inches(0.5)
+            slide.shapes.add_picture(img_path, left + Inches(0.25), img_top, width=img_width)
+        else:
+            ph = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, left + Inches(0.25), Inches(2.5), col_w - Inches(0.5), Inches(3.2))
+            ph.fill.solid()
+            ph.fill.fore_color.rgb = RGBColor(226, 232, 240)
+
+        # Metric caption bar at bottom of card
+        cap_box = slide.shapes.add_textbox(left + Inches(0.25), Inches(6.15), col_w - Inches(0.5), Inches(0.5))
+        cf = cap_box.text_frame
+        cf.word_wrap = True
+        cp = cf.paragraphs[0]
+        cp.text = caption
+        cp.font.name = FONT_BODY
+        cp.font.size = Pt(10)
+        cp.font.bold = True
+        cp.font.color.rgb = COLOR_PRIMARY
+
+        note_p = cf.add_paragraph()
+        note_p.text = "• Model baseline verified; site fine-tuning will provide custom asset classes."
+        note_p.font.name = FONT_BODY
+        note_p.font.size = Pt(9)
+        note_p.font.color.rgb = COLOR_TEXT_MUTED
+        note_p.space_before = Pt(2)
+
+    add_footer(slide, 5, total_pages=8)
+
+def build_slide_6_robotics_deliverables(prs):
+    """Slide 6: ROS & Navigation Team Requirements."""
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    set_slide_background(slide, COLOR_BG_LIGHT)
+    add_header(
+        slide,
+        badge_text="Robotics Integration",
+        title_text="Deliverables Needed from the ROS & Navigation Team",
+        subtitle_text="Four standardized engineering inputs required to link the perception engine with the physical robot."
+    )
+
+    deliverables = [
+        {
+            "tag": "INPUT 01: SENSORY STREAMS",
+            "title": "Camera Video & Depth Feeds",
+            "bullets": [
+                "Color Feed: /camera/color/image_raw (sensor_msgs/Image, 1080p @ 15-30Hz)",
+                "Depth Feed: /camera/depth/image_raw (16-bit mm depth, 16UC1 format)",
+                "Intrinsics: /camera/color/camera_info (focal length & distortion matrix)",
+                "Purpose: Enables visual bounding box isolation and precise 3D ranging."
+            ]
+        },
+        {
+            "tag": "INPUT 02: SPATIAL LOCALIZATION",
+            "title": "Robot Coordinates & TF Tree",
+            "bullets": [
+                "Coordinate Frames: /tf & /tf_static (map -> odom -> base_link -> camera_link)",
+                "Fallback Pose: /robot/pose (geometry_msgs/PoseWithCovarianceStamped)",
+                "Camera Extrinsics: Exact mounting height (Z) and pitch angle (tilt)",
+                "Purpose: Converts camera coordinates into absolute global site map coordinates."
+            ]
+        },
+        {
+            "tag": "INPUT 03: SIMULATION & TESTING",
+            "title": "5-Minute Test ROS2 Bag File",
+            "bullets": [
+                "Recording Format: ROS2 bag (.mcap or .db3) of 3 to 5 minutes duration",
+                "Scenario: Robot navigating past 2 or 3 stationary assets (generators, carts)",
+                "Included Topics: Camera RGB, Depth, CameraInfo, /tf, /tf_static, /odom",
+                "Purpose: Validates the entire pipeline offline before testing on live vehicle."
+            ]
+        },
+        {
+            "tag": "INPUT 04: NETWORK CONNECTIVITY",
+            "title": "Link to Dedicated Perception Pi",
+            "bullets": [
+                "Hardware: Gigabit Ethernet between Navigation PC and our Raspberry Pi 5",
+                "Middleware: Shared ROS_DOMAIN_ID for DDS communication",
+                "Time Sync: NTP / Chrony synchronization across both boards",
+                "Purpose: Enables our dedicated Pi to read your /tf and send alerts without sharing CPU."
+            ]
+        }
+    ]
+
+    card_w = Inches(5.66)
+    card_h = Inches(2.25)
+    positions = [
+        (Inches(0.8), Inches(1.95)),
+        (Inches(6.86), Inches(1.95)),
+        (Inches(0.8), Inches(4.5)),
+        (Inches(6.86), Inches(4.5))
+    ]
+
+    for i, d in enumerate(deliverables):
+        left, top = positions[i]
+        create_card(slide, left, top, card_w, card_h)
+
+        tb = slide.shapes.add_textbox(left + Inches(0.25), top + Inches(0.18), card_w - Inches(0.5), card_h - Inches(0.35))
+        tf = tb.text_frame
+        tf.word_wrap = True
+
+        tag_p = tf.paragraphs[0]
+        tag_p.text = d["tag"]
+        tag_p.font.name = FONT_HEADING
+        tag_p.font.size = Pt(9.5)
+        tag_p.font.bold = True
+        tag_p.font.color.rgb = COLOR_PRIMARY
+
+        tp = tf.add_paragraph()
+        tp.text = d["title"]
+        tp.font.name = FONT_HEADING
+        tp.font.size = Pt(14)
+        tp.font.bold = True
+        tp.font.color.rgb = COLOR_TEXT_MAIN
+        tp.space_before = Pt(2)
+        tp.space_after = Pt(6)
+
+        for b in d["bullets"]:
+            bp = tf.add_paragraph()
+            bp.text = f"•  {b}"
+            bp.font.name = FONT_BODY
+            bp.font.size = Pt(9.5)
+            bp.font.color.rgb = COLOR_TEXT_MAIN
+            bp.space_before = Pt(3)
+
+    add_footer(slide, 6, total_pages=8)
+
+def build_slide_7_roadmap(prs):
+    """Slide 7: Step-by-Step Delivery Roadmap."""
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    set_slide_background(slide, COLOR_BG_LIGHT)
+    add_header(
+        slide,
+        badge_text="Deployment Schedule",
+        title_text="Project Roadmap: Step-by-Step Delivery Schedule",
+        subtitle_text="Structured 4-phase rollout ensuring robust validation at each milestone before moving forward."
+    )
+
+    phases = [
+        {
+            "phase": "PHASE A",
+            "time": "Week 1",
+            "name": "Rosbag Verification & Calibration",
+            "status": "In Discussion",
+            "accent": COLOR_PRIMARY,
+            "details": [
+                "Navigation team provides 5-min test ROS2 bag recording.",
+                "Perception team validates depth camera optical calibration.",
+                "Verify coordinate transform integrity (map -> camera_link).",
+                "Milestone: Software talks cleanly to the robot's data format."
+            ]
+        },
+        {
+            "phase": "PHASE B",
+            "time": "Week 2",
+            "name": "On-Site Model Fine-Tuning",
+            "status": "Pending",
+            "accent": COLOR_ACCENT_CYAN,
+            "details": [
+                "Collect localized images of site-specific equipment types.",
+                "Train custom YOLOv8 classes for generators & compressors.",
+                "Benchmark Re-ID fingerprint matching accuracy (>92%).",
+                "Milestone: AI reliably recognizes all client equipment models."
+            ]
+        },
+        {
+            "phase": "PHASE C",
+            "time": "Week 3",
+            "name": "Initial Site Walkthrough",
+            "status": "Pending",
+            "accent": COLOR_AMBER,
+            "details": [
+                "Execute one-time guided walkthrough on the physical site.",
+                "Operator names assets via UI and locks baseline locations.",
+                "Generate the site's official Master Asset Catalog.",
+                "Milestone: Full facility baseline inventory locked into database."
+            ]
+        },
+        {
+            "phase": "PHASE D",
+            "time": "Week 4",
+            "name": "Autonomous Go-Live & Auditing",
+            "status": "Target",
+            "accent": COLOR_GREEN,
+            "details": [
+                "Enable autonomous patrol rounds with active 3D tracking.",
+                "Automated 3-meter displacement alert notifications active.",
+                "Automated daily inventory logs with photographic evidence.",
+                "Milestone: 24/7 autonomous asset security fully operational."
+            ]
+        }
+    ]
+
+    card_w = Inches(2.72)
+    card_h = Inches(4.8)
+    for i, p in enumerate(phases):
+        left = Inches(0.8) + i * Inches(3.0)
+        top = Inches(1.95)
+        create_card(slide, left, top, card_w, card_h)
+
+        # Header bar on card
+        bar = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, left, top, card_w, Inches(0.08))
+        bar.fill.solid()
+        bar.fill.fore_color.rgb = p["accent"]
+        bar.line.fill.background()
+
+        tb = slide.shapes.add_textbox(left + Inches(0.2), top + Inches(0.2), card_w - Inches(0.4), card_h - Inches(0.4))
+        tf = tb.text_frame
+        tf.word_wrap = True
+
+        ph_p = tf.paragraphs[0]
+        ph_p.text = f"{p['phase']} • {p['time']}"
+        ph_p.font.name = FONT_HEADING
+        ph_p.font.size = Pt(10)
+        ph_p.font.bold = True
+        ph_p.font.color.rgb = p["accent"]
+
+        np = tf.add_paragraph()
+        np.text = p["name"]
+        np.font.name = FONT_HEADING
+        np.font.size = Pt(13)
+        np.font.bold = True
+        np.font.color.rgb = COLOR_TEXT_MAIN
+        np.space_before = Pt(4)
+        np.space_after = Pt(10)
+
+        for d in p["details"]:
+            dp = tf.add_paragraph()
+            dp.text = f"•  {d}"
+            dp.font.name = FONT_BODY
+            dp.font.size = Pt(10)
+            dp.font.color.rgb = COLOR_TEXT_MAIN
+            dp.space_before = Pt(6)
+
+    add_footer(slide, 7, total_pages=8)
+
+def build_slide_8_closing(prs):
+    """Slide 8: Closing Summary & Immediate Alignment Action."""
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    set_slide_background(slide, COLOR_BG_DARK)
+
+    # Header badge
+    badge = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(1.0), Inches(2.8), Inches(0.35))
+    badge.fill.solid()
+    badge.fill.fore_color.rgb = RGBColor(30, 41, 59)
+    badge.line.color.rgb = RGBColor(51, 65, 85)
+    bp = badge.text_frame.paragraphs[0]
+    bp.alignment = PP_ALIGN.CENTER
+    bp.text = "NEXT STEPS & ALIGNMENT"
+    bp.font.name = FONT_HEADING
+    bp.font.size = Pt(9.5)
+    bp.font.bold = True
+    bp.font.color.rgb = COLOR_ACCENT_CYAN
+
+    # Big Title
+    t_box = slide.shapes.add_textbox(Inches(0.8), Inches(1.5), Inches(11.5), Inches(1.0))
+    tf = t_box.text_frame
+    tf.word_wrap = True
+    tp = tf.paragraphs[0]
+    tp.text = "Immediate Next Action: Team Confirmation"
+    tp.font.name = FONT_HEADING
+    tp.font.size = Pt(32)
+    tp.font.bold = True
+    tp.font.color.rgb = RGBColor(255, 255, 255)
+
+    sub_p = tf.add_paragraph()
+    sub_p.text = "Perception and Navigation team alignment to confirm topics and capture the test rosbag."
+    sub_p.font.name = FONT_BODY
+    sub_p.font.size = Pt(15)
+    sub_p.font.color.rgb = RGBColor(148, 163, 184)
+    sub_p.space_before = Pt(4)
+
+    # 2 Action Cards
+    actions = [
+        {
+            "num": "ACTION 01",
+            "title": "Navigation Alignment Meeting",
+            "points": [
+                "Review the 4 deliverables document with the robotics engineering team.",
+                "Confirm exact ROS2 topic strings (/camera/color/image_raw, /tf frames).",
+                "Confirm compute budget on the vehicle (Jetson vs Industrial PC).",
+                "Sign off on perception interface contract before node coding."
+            ]
+        },
+        {
+            "num": "ACTION 02",
+            "title": "5-Minute Practice Rosbag Recording",
+            "points": [
+                "Drive robot past 2-3 stationary target equipment assets in yard.",
+                "Record color, depth, camera_info, and /tf into an .mcap file.",
+                "Hand over rosbag to perception team for offline calibration.",
+                "Perception team verifies 3D coordinate projection accuracy."
+            ]
+        }
+    ]
+
+    card_w = Inches(5.66)
+    card_h = Inches(3.2)
+    for i, a in enumerate(actions):
+        left = Inches(0.8) + i * Inches(6.06)
+        top = Inches(2.9)
+        create_card(slide, left, top, card_w, card_h, bg_color=RGBColor(30, 41, 59), border_color=RGBColor(51, 65, 85))
+
+        tb = slide.shapes.add_textbox(left + Inches(0.3), top + Inches(0.25), card_w - Inches(0.6), card_h - Inches(0.5))
+        tf = tb.text_frame
+        tf.word_wrap = True
+
+        ap = tf.paragraphs[0]
+        ap.text = a["num"]
+        ap.font.name = FONT_HEADING
+        ap.font.size = Pt(10)
+        ap.font.bold = True
+        ap.font.color.rgb = COLOR_ACCENT_CYAN
+
+        tp = tf.add_paragraph()
+        tp.text = a["title"]
+        tp.font.name = FONT_HEADING
+        tp.font.size = Pt(16)
+        tp.font.bold = True
+        tp.font.color.rgb = RGBColor(255, 255, 255)
+        tp.space_before = Pt(4)
+        tp.space_after = Pt(10)
+
+        for p in a["points"]:
+            pp = tf.add_paragraph()
+            pp.text = f"•  {p}"
+            pp.font.name = FONT_BODY
+            pp.font.size = Pt(11)
+            pp.font.color.rgb = RGBColor(203, 213, 225)
+            pp.space_before = Pt(4)
+
+    add_footer(slide, 8, total_pages=8, is_dark=True)
+
+def build_presentation():
+    """Main function to create 16:9 widescreen presentation deck."""
+    print("Initializing 16:9 Presentation Deck...")
     prs = Presentation()
+    # Set 16:9 widescreen aspect ratio
     prs.slide_width = Inches(13.333)
     prs.slide_height = Inches(7.5)
 
-    # Modern, crisp color palette
-    C_BG = RGBColor(248, 250, 252)        # Slate 50
-    C_CARD = RGBColor(255, 255, 255)      # Pure White
-    C_BORDER = RGBColor(226, 232, 240)    # Slate 200
-    C_TEXT_MAIN = RGBColor(15, 23, 42)    # Slate 900
-    C_TEXT_MUTED = RGBColor(71, 85, 105)  # Slate 600
-    C_PRIMARY = RGBColor(37, 99, 235)     # Blue 600
-    C_PRIMARY_LIGHT = RGBColor(239, 246, 255) # Blue 50
-    C_GREEN = RGBColor(16, 185, 129)      # Emerald 500
-    C_GREEN_LIGHT = RGBColor(236, 253, 245) # Emerald 50
-    C_AMBER = RGBColor(217, 119, 6)       # Amber 600
-    C_AMBER_LIGHT = RGBColor(254, 243, 199) # Amber 50
-    C_PURPLE = RGBColor(124, 58, 237)     # Violet 600
-    C_PURPLE_LIGHT = RGBColor(245, 243, 255) # Violet 50
-
-    blank_layout = prs.slide_layouts[6]
-
-    def set_bg(slide, color=C_BG):
-        bg = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0, Inches(13.333), Inches(7.5))
-        bg.fill.solid()
-        bg.fill.fore_color.rgb = color
-        bg.line.fill.background()
-        return bg
-
-    def add_header(slide, title, subtitle=None, category="MILESTONE UPDATE"):
-        pill = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.9), Inches(0.45), Inches(2.6), Inches(0.32))
-        pill.fill.solid()
-        pill.fill.fore_color.rgb = C_PRIMARY_LIGHT
-        pill.line.color.rgb = C_PRIMARY
-        pill.line.width = Pt(1)
-        p_pill = pill.text_frame.paragraphs[0]
-        p_pill.text = category
-        p_pill.font.size = Pt(9.5)
-        p_pill.font.bold = True
-        p_pill.font.color.rgb = C_PRIMARY
-        p_pill.font.name = "Segoe UI"
-        p_pill.alignment = PP_ALIGN.CENTER
-
-        tb = slide.shapes.add_textbox(Inches(0.9), Inches(0.85), Inches(11.5), Inches(0.9))
-        tf = tb.text_frame
-        tf.word_wrap = True
-        tf.margin_left = tf.margin_right = tf.margin_top = tf.margin_bottom = 0
-
-        p = tf.paragraphs[0]
-        p.text = title
-        p.font.size = Pt(23)
-        p.font.bold = True
-        p.font.color.rgb = C_TEXT_MAIN
-        p.font.name = "Segoe UI"
-
-        if subtitle:
-            p_sub = tf.add_paragraph()
-            p_sub.text = subtitle
-            p_sub.font.size = Pt(11.5)
-            p_sub.font.color.rgb = C_TEXT_MUTED
-            p_sub.font.name = "Segoe UI"
-            p_sub.space_before = Pt(3)
-
-    def make_card(slide, left, top, width, height, bg_color=C_CARD, border_color=C_BORDER):
-        card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, left, top, width, height)
-        card.fill.solid()
-        card.fill.fore_color.rgb = bg_color
-        card.line.color.rgb = border_color
-        card.line.width = Pt(1.5)
-        return card
-
-    slides_with_notes = []
-
-    # =========================================================
-    # SLIDE 1: TITLE SLIDE
-    # =========================================================
-    s1 = prs.slides.add_slide(blank_layout)
-    set_bg(s1, RGBColor(241, 245, 249))
-
-    make_card(s1, Inches(1.5), Inches(1.3), Inches(10.333), Inches(4.9), bg_color=C_CARD)
-
-    # Accent top strip on card
-    strip = s1.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(1.5), Inches(1.3), Inches(10.333), Inches(0.12))
-    strip.fill.solid()
-    strip.fill.fore_color.rgb = C_PRIMARY
-    strip.line.fill.background()
-
-    # Pill badge
-    pill1 = s1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(2.0), Inches(1.75), Inches(2.6), Inches(0.35))
-    pill1.fill.solid()
-    pill1.fill.fore_color.rgb = C_GREEN_LIGHT
-    pill1.line.color.rgb = C_GREEN
-    pill1.line.width = Pt(1)
-    p_p1 = pill1.text_frame.paragraphs[0]
-    p_p1.text = "MILESTONE 1 : 50% COMPLETE"
-    p_p1.font.size = Pt(10)
-    p_p1.font.bold = True
-    p_p1.font.color.rgb = C_GREEN
-    p_p1.alignment = PP_ALIGN.CENTER
-
-    tb_title = s1.shapes.add_textbox(Inches(2.0), Inches(2.25), Inches(9.3), Inches(1.8))
-    tf_t = tb_title.text_frame
-    tf_t.word_wrap = True
-
-    p = tf_t.paragraphs[0]
-    p.text = "SITE Assets Monitor"
-    p.font.size = Pt(36)
-    p.font.bold = True
-    p.font.color.rgb = C_TEXT_MAIN
-    p.font.name = "Segoe UI"
-
-    p_sub = tf_t.add_paragraph()
-    p_sub.text = "Core AI Perception & Equipment Re-ID System — Progress Update"
-    p_sub.font.size = Pt(16)
-    p_sub.font.color.rgb = C_PRIMARY
-    p_sub.font.name = "Segoe UI"
-    p_sub.space_before = Pt(6)
-
-    div = s1.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(2.0), Inches(4.1), Inches(9.3), Inches(0.02))
-    div.fill.solid()
-    div.fill.fore_color.rgb = C_BORDER
-    div.line.fill.background()
-
-    tb_info = s1.shapes.add_textbox(Inches(2.0), Inches(4.3), Inches(9.3), Inches(1.5))
-    tf_info = tb_info.text_frame
-    tf_info.word_wrap = True
-
-    p_info = tf_info.paragraphs[0]
-    p_info.text = "Author / Engineer: Dhruvaveer (AI Perception Specialist)"
-    p_info.font.size = Pt(13)
-    p_info.font.bold = True
-    p_info.font.color.rgb = C_TEXT_MAIN
-    p_info.font.name = "Segoe UI"
-
-    p_agenda = tf_info.add_paragraph()
-    p_agenda.text = "Agenda: 1. Core Engine Built  •  2. System Design Flow (Phase 1 vs 2)  •  3. Orbbec Camera  •  4. Next Steps"
-    p_agenda.font.size = Pt(11.5)
-    p_agenda.font.color.rgb = C_TEXT_MUTED
-    p_agenda.font.name = "Segoe UI"
-    p_agenda.space_before = Pt(4)
-
-    slides_with_notes.append((s1, (
-        "Hi team. Today I want to give you a clear, concise update on the SITE Assets Monitor perception system. "
-        "We have reached our 50% milestone: the core AI perception engine—including object detection, quality gating, "
-        "and vehicle re-identification—is fully built, tested with 77 passing unit tests, and verified end-to-end. "
-        "Today I will also walk through our two-phase operational design—showing exactly how the human walkthrough enrollment works "
-        "versus ongoing autonomous robot monitoring, followed by our camera validation and next steps."
-    )))
-
-    # =========================================================
-    # SLIDE 2: CURRENT UPDATES & DEVELOPMENTS (WHAT'S BUILT)
-    # =========================================================
-    s2 = prs.slides.add_slide(blank_layout)
-    set_bg(s2)
-    add_header(s2, "Current Developments: Core AI Engine Complete", 
-               "Full end-to-end perception pipeline built, tested, and passing 77 automated test suites.",
-               "DEVELOPMENT PROGRESS")
-
-    modules = [
-        ("1. Image Quality Gating", "Pre-Filter Guard",
-         "Automatically evaluates brightness, blurriness, and solar glare. Drops unviable frames early so corrupted images never pollute the database or trigger false positives.",
-         C_PRIMARY, C_PRIMARY_LIGHT),
-        ("2. Heavy Equipment Detection", "YOLOv8 Detection Engine",
-         "Accurately localizes site machinery (trucks, excavators, cranes, loaders) with tight bounding boxes, high confidence scoring, and configurable detection thresholds.",
-         C_GREEN, C_GREEN_LIGHT),
-        ("3. Equipment Re-ID (Identity)", "OSNet Deep Feature Matcher",
-         "Moves beyond simple detection to identify specific units (e.g. 'Truck #04' vs 'Truck #02'). Extracts deep visual feature embeddings and compares them using cosine similarity.",
-         C_PURPLE, C_PURPLE_LIGHT),
-        ("4. Reference Store & Evidence", "Audit Database & Logger",
-         "Stores enrolled equipment signatures, clusters unknown vehicles, and automatically captures timestamped crop photos + JSON metadata logs for complete accountability.",
-         C_AMBER, C_AMBER_LIGHT)
-    ]
-
-    card_w = Inches(2.7)
-    card_gap = Inches(0.24)
-    start_x = Inches(0.9)
-
-    for i, (m_tag, m_title, m_desc, col, bg_light) in enumerate(modules):
-        x = start_x + i * (card_w + card_gap)
-        make_card(s2, x, Inches(1.9), card_w, Inches(4.3))
-
-        tag_rect = s2.shapes.add_shape(MSO_SHAPE.RECTANGLE, x, Inches(1.9), card_w, Inches(0.08))
-        tag_rect.fill.solid()
-        tag_rect.fill.fore_color.rgb = col
-        tag_rect.line.fill.background()
-
-        tb = s2.shapes.add_textbox(x + Inches(0.2), Inches(2.1), card_w - Inches(0.4), Inches(3.9))
-        tf = tb.text_frame
-        tf.word_wrap = True
-
-        p1 = tf.paragraphs[0]
-        p1.text = m_tag
-        p1.font.size = Pt(11)
-        p1.font.bold = True
-        p1.font.color.rgb = col
-        p1.font.name = "Segoe UI"
-
-        p2 = tf.add_paragraph()
-        p2.text = m_title
-        p2.font.size = Pt(14)
-        p2.font.bold = True
-        p2.font.color.rgb = C_TEXT_MAIN
-        p2.font.name = "Segoe UI"
-        p2.space_before = Pt(4)
-
-        p3 = tf.add_paragraph()
-        p3.text = m_desc
-        p3.font.size = Pt(10.5)
-        p3.font.color.rgb = C_TEXT_MUTED
-        p3.font.name = "Segoe UI"
-        p3.space_before = Pt(10)
-
-    banner = make_card(s2, Inches(0.9), Inches(6.35), Inches(11.533), Inches(0.65), bg_color=C_GREEN_LIGHT, border_color=C_GREEN)
-    tb_b = s2.shapes.add_textbox(Inches(1.1), Inches(6.42), Inches(11.1), Inches(0.5))
-    tf_b = tb_b.text_frame
-    p_b = tf_b.paragraphs[0]
-    p_b.text = "✓ Quality & Stability Verified: 77 Unit Tests Passing (100% test pass rate across Quality, Detection, Re-ID, and Reference Store)"
-    p_b.font.size = Pt(11.5)
-    p_b.font.bold = True
-    p_b.font.color.rgb = C_GREEN
-    p_b.font.name = "Segoe UI"
-
-    slides_with_notes.append((s2, (
-        "Here is what is completely built and functional right now: First, an image quality gating filter that rejects blurry or glare-blinded images. "
-        "Second, a custom YOLOv8 detector for construction machinery. "
-        "Third, our Re-ID engine using OSNet—this allows the system to recognize specific assets, like distinguishing Truck #04 from Truck #02. "
-        "Fourth, a persistent reference store that logs cropped photos, timestamps, and metadata. "
-        "Most importantly, the entire codebase has 77 automated unit tests, and all 77 are passing cleanly."
-    )))
-
-    # =========================================================
-    # SLIDE 3: SYSTEM DESIGN FLOW (VISUAL DIAGRAM)
-    # =========================================================
-    s3 = prs.slides.add_slide(blank_layout)
-    set_bg(s3)
-    add_header(s3, "System Design Flow: Operational Architecture",
-               "Visual end-to-end pipeline: Phase 1 Enrollment creates Ground Truth; Phase 2 Autonomous Patrol verifies it.",
-               "SYSTEM ARCHITECTURE")
-
-    flow_img_path = os.path.abspath("evidence/system_design_flow.png")
-    if not os.path.exists(flow_img_path):
-        flow_img_path = os.path.abspath("../system_design_flow.png")
-    
-    make_card(s3, Inches(0.9), Inches(1.85), Inches(11.533), Inches(5.2))
-    
-    if os.path.exists(flow_img_path):
-        s3.shapes.add_picture(flow_img_path, Inches(1.0), Inches(1.95), width=Inches(11.333))
-
-    slides_with_notes.append((s3, (
-        "This diagram illustrates the full system operational workflow. "
-        "At the top is Phase 1: Human Walkthrough, which is a one-time onboarding setup where a human guides the robot to capture and lock the site's ground truth database. "
-        "At the bottom is Phase 2: Autonomous Patrol, where the robot drives ongoing patrol routes, detects equipment in real time, "
-        "matches visual fingerprints against the locked database, and compares current real-world positions with stored positions to trigger instant movement alerts."
-    )))
-
-    # =========================================================
-    # SLIDE 4: PHASE 1 VS PHASE 2 COMPARATIVE BREAKDOWN
-    # =========================================================
-    s4 = prs.slides.add_slide(blank_layout)
-    set_bg(s4)
-    add_header(s4, "Operational Phases: Setup vs. Autonomous Patrol",
-               "Clear separation between one-time baseline enrollment and continuous automated site monitoring.",
-               "OPERATIONAL BREAKDOWN")
-
-    # Left: Phase 1 Card
-    make_card(s4, Inches(0.9), Inches(1.85), Inches(5.6), Inches(5.15))
-    strip_p1 = s4.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.9), Inches(1.85), Inches(5.6), Inches(0.1))
-    strip_p1.fill.solid()
-    strip_p1.fill.fore_color.rgb = C_PRIMARY
-    strip_p1.line.fill.background()
-
-    tb_p1 = s4.shapes.add_textbox(Inches(1.2), Inches(2.1), Inches(5.0), Inches(4.7))
-    tf_p1 = tb_p1.text_frame
-    tf_p1.word_wrap = True
-
-    p_p1_t = tf_p1.paragraphs[0]
-    p_p1_t.text = "PHASE 1: Human Walkthrough"
-    p_p1_t.font.size = Pt(16)
-    p_p1_t.font.bold = True
-    p_p1_t.font.color.rgb = C_PRIMARY
-    p_p1_t.font.name = "Segoe UI"
-
-    p_p1_sub = tf_p1.add_paragraph()
-    p_p1_sub.text = "One-Time Setup & Baseline Enrollment"
-    p_p1_sub.font.size = Pt(11.5)
-    p_p1_sub.font.color.rgb = C_TEXT_MUTED
-    p_p1_sub.font.name = "Segoe UI"
-    p_p1_sub.space_before = Pt(2)
-
-    p1_details = [
-        ("When It Happens", "Day 1 site deployment, or when new contractor machinery arrives."),
-        ("Human Operator Role", "Guides the robot or carries camera past all parked machinery."),
-        ("Multi-Modal Capture", "Orbbec camera records RGB image while robot SLAM/GPS logs precise (X,Y) coordinates."),
-        ("Fingerprint Extraction", "YOLOv8 detects asset; OSNet extracts invariant 512D Re-ID embedding."),
-        ("Database Lock", "Stored as Ground Truth: [Asset ID, Class, Stored Pose, Embedding, Crop Photo]. No false alerts possible.")
-    ]
-    for tag, desc in p1_details:
-        p = tf_p1.add_paragraph()
-        p.text = f"• {tag}: "
-        p.font.size = Pt(10.5)
-        p.font.bold = True
-        p.font.color.rgb = C_TEXT_MAIN
-        p.font.name = "Segoe UI"
-        p.space_before = Pt(8)
-
-        run = p.add_run()
-        run.text = desc
-        run.font.bold = False
-        run.font.color.rgb = C_TEXT_MUTED
-
-    # Right: Phase 2 Card
-    make_card(s4, Inches(6.8), Inches(1.85), Inches(5.633), Inches(5.15))
-    strip_p2 = s4.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(6.8), Inches(1.85), Inches(5.633), Inches(0.1))
-    strip_p2.fill.solid()
-    strip_p2.fill.fore_color.rgb = C_GREEN
-    strip_p2.line.fill.background()
-
-    tb_p2 = s4.shapes.add_textbox(Inches(7.1), Inches(2.1), Inches(5.0), Inches(4.7))
-    tf_p2 = tb_p2.text_frame
-    tf_p2.word_wrap = True
-
-    p_p2_t = tf_p2.paragraphs[0]
-    p_p2_t.text = "PHASE 2: Autonomous Patrol"
-    p_p2_t.font.size = Pt(16)
-    p_p2_t.font.bold = True
-    p_p2_t.font.color.rgb = C_GREEN
-    p_p2_t.font.name = "Segoe UI"
-
-    p_p2_sub = tf_p2.add_paragraph()
-    p_p2_sub.text = "Continuous Ongoing Monitoring & Verification"
-    p_p2_sub.font.size = Pt(11.5)
-    p_p2_sub.font.color.rgb = C_TEXT_MUTED
-    p_p2_sub.font.name = "Segoe UI"
-    p_p2_sub.space_before = Pt(2)
-
-    p2_details = [
-        ("When It Happens", "Continuous daily/hourly autonomous patrol missions without human intervention."),
-        ("Real-Time Re-ID Matching", "Robot scans equipment; compares live 512D embedding against the locked Phase 1 database."),
-        ("Spatial Verification", "Computes live equipment coordinates using depth stream + robot pose. Compares against registered location."),
-        ("Outcome A : In Place", "Distance Delta ≤ 3.0m → 'ASSET IN PLACE'. Logged cleanly with timestamp."),
-        ("Outcome B : Relocation Alert", "Distance Delta > 3.0m → 'ALERT: ASSET MOVED'. Dispatches old vs new coordinates + crop evidence to dashboard.")
-    ]
-    for tag, desc in p2_details:
-        p = tf_p2.add_paragraph()
-        p.text = f"• {tag}: "
-        p.font.size = Pt(10.5)
-        p.font.bold = True
-        p.font.color.rgb = C_TEXT_MAIN
-        p.font.name = "Segoe UI"
-        p.space_before = Pt(8)
-
-        run = p.add_run()
-        run.text = desc
-        run.font.bold = False
-        run.font.color.rgb = C_TEXT_MUTED
-
-    slides_with_notes.append((s4, (
-        "To make the operational design crystal clear: In Phase 1, an operator walks the robot through the site just once. "
-        "The system spots each excavator, crane, or truck, records its GPS coordinates, generates a 512-dimensional fingerprint, "
-        "and locks this into the reference database as Ground Truth. "
-        "In Phase 2, the robot patrols autonomously. Every time it spots equipment, it identifies who it is using Re-ID, "
-        "calculates where the machine is, and compares that to the Phase 1 baseline. "
-        "If it is within 3 meters, it logs 'In Place'. If it has moved past 3 meters, it immediately raises an alert with the new coordinates and evidence photos."
-    )))
-
-    # =========================================================
-    # SLIDE 5: VISUAL PROOF & DEMO PIPELINE
-    # =========================================================
-    s5 = prs.slides.add_slide(blank_layout)
-    set_bg(s5)
-    add_header(s5, "Pipeline Architecture & Live Verification",
-               "Visual proof of equipment identification, audit cropping, and end-to-end execution.",
-               "VERIFIED DEMO")
-
-    demo_img_path = os.path.abspath("evidence/demo_output.jpg")
-    crop_img_path = os.path.abspath("evidence/2026-09-06/crop_20260906_162218_602_Truck_DEMO.jpg")
-
-    make_card(s5, Inches(0.9), Inches(1.85), Inches(5.6), Inches(5.15))
-    tb_flow = s5.shapes.add_textbox(Inches(1.1), Inches(2.05), Inches(5.2), Inches(4.7))
-    tf_flow = tb_flow.text_frame
-    tf_flow.word_wrap = True
-
-    p_f1 = tf_flow.paragraphs[0]
-    p_f1.text = "End-to-End Processing Flow"
-    p_f1.font.size = Pt(15)
-    p_f1.font.bold = True
-    p_f1.font.color.rgb = C_PRIMARY
-    p_f1.font.name = "Segoe UI"
-
-    flow_steps = [
-        ("Raw Video / Camera Frame", "Ingested via ROS2 topic (e.g. /camera/color/image_raw)."),
-        ("Quality Guard", "Evaluates sharpness, exposure, glare. Drops bad frames in <3ms."),
-        ("YOLOv8 Detection", "Generates bbox, class label ('Truck'), and detection confidence (99%)."),
-        ("OSNet Feature Extractor", "Extracts 512-dim visual embedding vector from vehicle crop."),
-        ("Reference Matcher", "Computes cosine distance against known gallery: matches known asset or flags 'UNKNOWN'."),
-        ("Evidence & Audit Logger", "Saves full image, cropped asset, timestamp, and JSON audit log.")
-    ]
-
-    for title, desc in flow_steps:
-        p = tf_flow.add_paragraph()
-        p.text = f"• {title}: "
-        p.font.size = Pt(10.5)
-        p.font.bold = True
-        p.font.color.rgb = C_TEXT_MAIN
-        p.font.name = "Segoe UI"
-        p.space_before = Pt(6)
-
-        run = p.add_run()
-        run.text = desc
-        run.font.bold = False
-        run.font.color.rgb = C_TEXT_MUTED
-
-    make_card(s5, Inches(6.8), Inches(1.85), Inches(5.633), Inches(5.15))
-    tb_img_t = s5.shapes.add_textbox(Inches(7.0), Inches(2.0), Inches(5.2), Inches(0.35))
-    p_it = tb_img_t.text_frame.paragraphs[0]
-    p_it.text = "Actual Demo Output: Detection & Cropped Evidence"
-    p_it.font.size = Pt(13)
-    p_it.font.bold = True
-    p_it.font.color.rgb = C_GREEN
-    p_it.font.name = "Segoe UI"
-
-    if os.path.exists(demo_img_path):
-        s5.shapes.add_picture(demo_img_path, Inches(7.0), Inches(2.4), width=Inches(3.3))
-
-    if os.path.exists(crop_img_path):
-        s5.shapes.add_picture(crop_img_path, Inches(10.5), Inches(2.4), width=Inches(1.75))
-
-    tb_live_desc = s5.shapes.add_textbox(Inches(7.0), Inches(5.0), Inches(5.2), Inches(1.8))
-    tf_ld = tb_live_desc.text_frame
-    tf_ld.word_wrap = True
-
-    p_ld1 = tf_ld.paragraphs[0]
-    p_ld1.text = "Demo Execution (`scripts/demo_reid.py`):"
-    p_ld1.font.size = Pt(11)
-    p_ld1.font.bold = True
-    p_ld1.font.color.rgb = C_TEXT_MAIN
-    p_ld1.font.name = "Segoe UI"
-
-    demo_bullets = [
-        "Tested with single and multi-vehicle frames.",
-        "Accurate bounding boxes generated at 99% & 93% confidence.",
-        "Zero memory leaks, self-contained reference database.",
-        "Ready to accept live camera streaming."
-    ]
-    for b in demo_bullets:
-        p = tf_ld.add_paragraph()
-        p.text = "✔ " + b
-        p.font.size = Pt(10)
-        p.font.color.rgb = C_TEXT_MUTED
-        p.font.name = "Segoe UI"
-        p.space_before = Pt(3)
-
-    slides_with_notes.append((s5, (
-        "Here is the visual proof from our test suite. On the left is the exact step-by-step pipeline from raw frame intake to audit logging. "
-        "On the right is the actual output from our test run: our YOLOv8 model detects the vehicle with 99% confidence, "
-        "and our Re-ID pipeline crops the vehicle and compares its visual signature against the site database. "
-        "The system has been verified using scripts/demo_reid.py and is ready for live stream integration."
-    )))
-
-    # =========================================================
-    # SLIDE 6: HARDWARE CONFIRMATION (ORBBEC GEMINI 2 XL POE)
-    # =========================================================
-    s6 = prs.slides.add_slide(blank_layout)
-    set_bg(s6)
-    add_header(s6, "Hardware Assessment: Orbbec Gemini 2 XL PoE",
-               "Technical validation for sunny outdoor environments & robot integration.",
-               "HARDWARE VALIDATION")
-
-    make_card(s6, Inches(0.9), Inches(1.85), Inches(5.6), Inches(5.15))
-    tb_hw1 = s6.shapes.add_textbox(Inches(1.2), Inches(2.05), Inches(5.0), Inches(4.7))
-    tf_hw1 = tb_hw1.text_frame
-    tf_hw1.word_wrap = True
-
-    p_h1 = tf_hw1.paragraphs[0]
-    p_h1.text = "Why It's a Strong Fit for the Robot"
-    p_h1.font.size = Pt(15)
-    p_h1.font.bold = True
-    p_h1.font.color.rgb = C_PRIMARY
-    p_h1.font.name = "Segoe UI"
-
-    strengths = [
-        ("Outdoor Sunlight Resilience", "Unlike standard structured-light cameras that get blinded by the sun, the Gemini 2 XL uses active stereo depth, making it stable under outdoor solar IR."),
-        ("PoE (Power over Ethernet)", "Single ruggedized Ethernet cable supplies both power and data. Prevents loose USB connectors or ribbon-cable failures on a vibrating robot chassis."),
-        ("Extended Range", "Offers reliable depth from 0.2m up to 5m+, perfect for large construction equipment patrol."),
-        ("Official ROS2 SDK", "Official Orbbec ROS2 driver publishes standard sensor_msgs/Image topics out-of-the-box.")
-    ]
-    for title, desc in strengths:
-        p = tf_hw1.add_paragraph()
-        p.text = f"• {title}: "
-        p.font.size = Pt(10.5)
-        p.font.bold = True
-        p.font.color.rgb = C_TEXT_MAIN
-        p.font.name = "Segoe UI"
-        p.space_before = Pt(8)
-
-        run = p.add_run()
-        run.text = desc
-        run.font.bold = False
-        run.font.color.rgb = C_TEXT_MUTED
-
-    make_card(s6, Inches(6.8), Inches(1.85), Inches(5.633), Inches(5.15))
-    tb_hw2 = s6.shapes.add_textbox(Inches(7.1), Inches(2.05), Inches(5.0), Inches(4.7))
-    tf_hw2 = tb_hw2.text_frame
-    tf_hw2.word_wrap = True
-
-    p_h2 = tf_hw2.paragraphs[0]
-    p_h2.text = "Perception Integration Compatibility"
-    p_h2.font.size = Pt(15)
-    p_h2.font.bold = True
-    p_h2.font.color.rgb = C_GREEN
-    p_h2.font.name = "Segoe UI"
-
-    compat = [
-        ("100% Pipeline Compatible", "Our YOLOv8 + OSNet pipeline takes standard RGB frames. We subscribe directly to `/camera/color/image_raw` with zero pipeline rework."),
-        ("Depth-Enhanced Spatial Bounding", "The aligned depth stream will allow us to filter out background objects and measure exact real-world distance to detected machinery."),
-        ("Network Topology", "PoE allows placing the camera anywhere on the chassis while routing cleanly into the onboard compute switch."),
-        ("Decision Item", "Approved from AI perception standpoint. Ready to integrate once hardware is ordered / delivered.")
-    ]
-    for title, desc in compat:
-        p = tf_hw2.add_paragraph()
-        p.text = f"• {title}: "
-        p.font.size = Pt(10.5)
-        p.font.bold = True
-        p.font.color.rgb = C_TEXT_MAIN
-        p.font.name = "Segoe UI"
-        p.space_before = Pt(8)
-
-        run = p.add_run()
-        run.text = desc
-        run.font.bold = False
-        run.font.color.rgb = C_TEXT_MUTED
-
-    slides_with_notes.append((s6, (
-        "Regarding the camera proposed by the team lead: I reviewed the Orbbec Gemini 2 XL PoE datasheet thoroughly. "
-        "It is an excellent choice for three reasons: First, it handles harsh outdoor sunlight much better than indoor depth cameras. "
-        "Second, PoE eliminates loose USB cable disconnects on a moving robot. "
-        "Third, it is 100% compatible with our perception software—we subscribe directly to its ROS2 RGB image stream, "
-        "and we can use its depth channel to compute real-world distance to equipment. "
-        "From the AI side, this gets a clear green light."
-    )))
-
-    # =========================================================
-    # SLIDE 7: WHAT IS MISSING & WHAT I NEED (THE ASKS)
-    # =========================================================
-    s7 = prs.slides.add_slide(blank_layout)
-    set_bg(s7)
-    add_header(s7, "Current Needs & Confirmations (The Asks)",
-               "Key inputs required from the robotics team to proceed smoothly into Phase 2.",
-               "ACTION ITEMS")
-
-    items_need = [
-        ("1. Real Site Photos / Rosbag", "Data for Calibration",
-         "A small sample of real site footage (or 10-15 phone photos of your actual equipment on site). This allows us to tune cosine similarity thresholds and calibrate detection for actual dust, shadows, and lighting.",
-         C_AMBER, C_AMBER_LIGHT),
-        ("2. ROS2 Topic Specifications", "Interface Alignment",
-         "Confirm your robot's ROS2 naming conventions (e.g. `/camera/color/image_raw`, `/patrol/robot_pose`) and preferred alert topic schema so our ROS2 wrapper publishes exactly what navigation expects.",
-         C_PRIMARY, C_PRIMARY_LIGHT),
-        ("3. Milestone 1 Sign-Off", "Progress Confirmation",
-         "Formal review and sign-off for the completed Core Perception Engine (detection, Re-ID, reference store, and 77 passing unit tests) to release the Milestone 1 deliverable.",
-         C_GREEN, C_GREEN_LIGHT)
-    ]
-
-    card_w7 = Inches(3.6)
-    card_gap7 = Inches(0.36)
-    start_x7 = Inches(0.9)
-
-    for i, (tag, title, desc, col, bg_l) in enumerate(items_need):
-        x = start_x7 + i * (card_w7 + card_gap7)
-        make_card(s7, x, Inches(1.85), card_w7, Inches(5.15))
-
-        tb = s7.shapes.add_textbox(x + Inches(0.25), Inches(2.1), card_w7 - Inches(0.5), Inches(4.5))
-        tf = tb.text_frame
-        tf.word_wrap = True
-
-        p1 = tf.paragraphs[0]
-        p1.text = tag
-        p1.font.size = Pt(12)
-        p1.font.bold = True
-        p1.font.color.rgb = col
-        p1.font.name = "Segoe UI"
-
-        p2 = tf.add_paragraph()
-        p2.text = title
-        p2.font.size = Pt(16)
-        p2.font.bold = True
-        p2.font.color.rgb = C_TEXT_MAIN
-        p2.font.name = "Segoe UI"
-        p2.space_before = Pt(6)
-
-        p3 = tf.add_paragraph()
-        p3.text = desc
-        p3.font.size = Pt(11)
-        p3.font.color.rgb = C_TEXT_MUTED
-        p3.font.name = "Segoe UI"
-        p3.space_before = Pt(14)
-
-        p4 = tf.add_paragraph()
-        p4.text = "Status: Pending Team Input"
-        p4.font.size = Pt(10)
-        p4.font.bold = True
-        p4.font.color.rgb = col
-        p4.font.name = "Segoe UI"
-        p4.space_before = Pt(20)
-
-    slides_with_notes.append((s7, (
-        "To keep our momentum going, here are the 3 key things I need from the team: "
-        "First, sample site photos or a short rosbag recording so I can calibrate our Re-ID similarity thresholds against actual site lighting and dust. "
-        "Second, confirmation of the ROS2 topic names and alert message formats your navigation system expects. "
-        "Third, sign-off on Milestone 1, which confirms the core perception engine meets your expectations."
-    )))
-
-    # =========================================================
-    # SLIDE 8: NEXT STEPS & ROADMAP
-    # =========================================================
-    s8 = prs.slides.add_slide(blank_layout)
-    set_bg(s8)
-    add_header(s8, "Next Steps & Phase 2 Roadmap",
-               "Target deliverables for the upcoming development cycle.",
-               "ROADMAP")
-
-    make_card(s8, Inches(0.9), Inches(1.85), Inches(5.6), Inches(5.15))
-    tb_nx1 = s8.shapes.add_textbox(Inches(1.2), Inches(2.05), Inches(5.0), Inches(4.7))
-    tf_nx1 = tb_nx1.text_frame
-    tf_nx1.word_wrap = True
-
-    p_n1 = tf_nx1.paragraphs[0]
-    p_n1.text = "Upcoming Engineering Tasks (Week 2)"
-    p_n1.font.size = Pt(15)
-    p_n1.font.bold = True
-    p_n1.font.color.rgb = C_PRIMARY
-    p_n1.font.name = "Segoe UI"
-
-    tasks = [
-        ("ROS2 Node Wrapper", "Package the perception engine into `site_asset_monitor_node` with standard ROS2 publishers and subscribers."),
-        ("Movement & Dwell Tracking", "Integrate temporal tracking to identify whether equipment is moving or stationary across patrol passes."),
-        ("ONNX Runtime Optimization", "Export OSNet and YOLO to ONNX with INT8/FP16 quantization for low-latency inference on the robot compute."),
-        ("Live Orbbec Stream Testing", "Validate image intake directly with the Orbbec ROS2 driver as soon as hardware is available.")
-    ]
-    for title, desc in tasks:
-        p = tf_nx1.add_paragraph()
-        p.text = f"• {title}: "
-        p.font.size = Pt(10.5)
-        p.font.bold = True
-        p.font.color.rgb = C_TEXT_MAIN
-        p.font.name = "Segoe UI"
-        p.space_before = Pt(8)
-
-        run = p.add_run()
-        run.text = desc
-        run.font.bold = False
-        run.font.color.rgb = C_TEXT_MUTED
-
-    make_card(s8, Inches(6.8), Inches(1.85), Inches(5.633), Inches(5.15))
-    tb_nx2 = s8.shapes.add_textbox(Inches(7.1), Inches(2.05), Inches(5.0), Inches(4.7))
-    tf_nx2 = tb_nx2.text_frame
-    tf_nx2.word_wrap = True
-
-    p_n2 = tf_nx2.paragraphs[0]
-    p_n2.text = "Summary & Open Discussion"
-    p_n2.font.size = Pt(15)
-    p_n2.font.bold = True
-    p_n2.font.color.rgb = C_GREEN
-    p_n2.font.name = "Segoe UI"
-
-    sum_points = [
-        "Milestone 1 is ready, verified, and backed by 77 automated tests.",
-        "System operation flow (Phase 1 Enrollment vs Phase 2 Patrol) is clearly defined.",
-        "Camera choice (Orbbec Gemini 2 XL PoE) is validated and ready for integration.",
-        "Clear path forward for ROS2 packaging and robot deployment.",
-        "Questions & Feedback: Let's discuss data availability, timeline, and next milestones."
-    ]
-    for pt in sum_points:
-        p = tf_nx2.add_paragraph()
-        p.text = "✔ " + pt
-        p.font.size = Pt(11)
-        p.font.color.rgb = C_TEXT_MAIN
-        p.font.name = "Segoe UI"
-        p.space_before = Pt(12)
-
-    slides_with_notes.append((s8, (
-        "To summarize: Our next immediate step is wrapping the perception engine into a ROS2 node, "
-        "adding movement and dwell time tracking, and optimizing our models for low latency. "
-        "Everything is on schedule, the foundation is rock solid, and I'm ready to answer any questions or discuss your feedback. Thank you!"
-    )))
-
-    for slide, note in slides_with_notes:
-        slide.notes_slide.notes_text_frame.text = note
-
-    prs.save(output_path)
-    print(f"Presentation saved successfully to: {output_path}")
+    build_slide_1_cover(prs)
+    build_slide_2_overview(prs)
+    build_slide_3_lifecycle(prs)
+    build_slide_4_architecture(prs)
+    build_slide_5_evidence(prs)
+    build_slide_6_robotics_deliverables(prs)
+    build_slide_7_roadmap(prs)
+    build_slide_8_closing(prs)
+
+    # Save to primary and clean paths
+    primary_path = os.path.join(PROJECT_ROOT, "Site_Assets_Monitor_Client_Deck.pptx")
+    clean_path = os.path.join(PROJECT_ROOT, "Site_Assets_Monitor_Presentation_Clean.pptx")
+    root_copy_path = os.path.join(PARENT_ROOT, "Site_Assets_Monitor_Presentation_Clean.pptx")
+
+    # Always write clean_path
+    prs.save(clean_path)
+    prs.save(root_copy_path)
+    print(f"Clean deck saved to: {clean_path}")
+    print(f"Clean deck root copy saved to: {root_copy_path}")
+
+    # Attempt to overwrite primary_path if not locked
+    try:
+        prs.save(primary_path)
+        print(f"Successfully updated primary deck: {primary_path}")
+    except PermissionError:
+        print(f"Notice: '{primary_path}' is currently open in PowerPoint. Clean version saved to '{clean_path}'.")
 
 if __name__ == "__main__":
-    out_dir = r"c:\Users\GANGARI DHRUVAVEER\Downloads\prozect"
-    
-    # Save to both standard names so whichever file the user opens is updated
-    f1 = os.path.join(out_dir, "Site_Assets_Monitor_Presentation.pptx")
-    f2 = os.path.join(out_dir, "Site_Assets_Monitor_Milestone_Update.pptx")
-    
-    create_full_presentation(f1)
-    shutil.copy(f1, f2)
-    
-    # Also sync into SITE_Assets_Monitor subdirectory
-    sub_dir = os.path.join(out_dir, "SITE_Assets_Monitor")
-    shutil.copy(f1, os.path.join(sub_dir, "Site_Assets_Monitor_Presentation.pptx"))
-    shutil.copy(f1, os.path.join(sub_dir, "Site_Assets_Monitor_Milestone_Update.pptx"))
-    print("All PPTX files updated successfully!")
+    build_presentation()

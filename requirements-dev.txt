@@ -1,0 +1,34 @@
+# ============================================================
+# ASI Perception System — DEV Dependencies (Engineer's Laptop)
+# ============================================================
+# Install this ONLY on your laptop / cloud GPU machine for:
+#   - Offline YOLO fine-tuning (Transfer Learning)
+#   - OSNet fine-tuning (if needed for identical-twin machines)
+#   - Dataset preparation and labeling utilities
+#
+# DO NOT install on Raspberry Pi 5 (too heavy, no GPU available)
+#
+# Install: pip install -r requirements-dev.txt
+# ============================================================
+
+# Includes all runtime deps too
+-r requirements.txt
+
+# PyTorch (for YOLO training — GPU-accelerated)
+# NOT needed on Pi 5 (Pi 5 uses onnxruntime for inference only)
+torch>=2.1.0
+torchvision>=0.16.0
+
+# Math utilities (used in training scripts)
+scipy>=1.12.0
+
+# PPTX generation (for generating presentation decks)
+python-pptx>=1.0.0
+
+# Dataset annotation helpers
+torchreid>=0.2.5     # For OSNet fine-tuning (if identical-twin scenario arises)
+                     # Install via: pip install torchreid
+
+# Presentation & visualization
+matplotlib>=3.8.0
+seaborn>=0.13.0

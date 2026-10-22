@@ -70,7 +70,9 @@ def run_demo(source, save_output=True):
     while True:
         ret, frame = cap.read()
         if not ret:
-            break
+            # Loop the video infinitely back to frame 0
+            cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            continue
 
         frame_count += 1
         start_time = time.time()
