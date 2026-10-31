@@ -47,12 +47,12 @@ class MapProjector:
     DEFAULT_HFOV_DEG        = 68.0       # Orbbec Femto Mega horizontal FoV
     DEFAULT_VFOV_DEG        = 45.0       # Orbbec Femto Mega vertical FoV
 
-    def __init__(self, config_path: str = "config/camera_config.yaml"):
+    def __init__(self, config_path: str = "config/camera_config.yaml", image_w: int = None, image_h: int = None):
         with open(config_path, "r") as f:
             cfg = yaml.safe_load(f)
 
-        self.image_w = cfg.get("rgb_width",  1280)
-        self.image_h = cfg.get("rgb_height", 720)
+        self.image_w = image_w or cfg.get("rgb_width",  1280)
+        self.image_h = image_h or cfg.get("rgb_height", 720)
 
         # Camera intrinsics — loaded from calibration file if available
         calibration_file = cfg.get("calibration_file", "data/calibration/camera_intrinsics.yaml")

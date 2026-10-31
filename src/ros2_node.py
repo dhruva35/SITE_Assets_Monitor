@@ -24,13 +24,18 @@ When the Nav team provides the bag file and topic names:
 """
 
 # ==========================================================================
-# TODO: Fill these in once Nav team provides bag file + topic names
+# CONFIRMED TOPIC NAMES (from Nav Team ROS2 bag files)
 # ==========================================================================
-TOPIC_CAMERA_RGB    = "/camera/color/image_raw"    # TODO: confirm with Nav team
-TOPIC_CAMERA_INFO   = "/camera/color/camera_info"  # TODO: confirm with Nav team
-TOPIC_ODOM          = "/odom"                      # TODO: confirm with Nav team (or /tf)
-TOPIC_DETECTIONS    = "/perception/detections"     # outbound — this side owns this
-TOPIC_EVIDENCE      = "/perception/evidence_events" # outbound — this side owns this
+TOPIC_CAMERA_COMPRESSED = "/benchmark/camera/image/compressed"  # sensor_msgs/CompressedImage (640x480)
+TOPIC_LOCALIZED_POSE    = "/benchmark/localized_pose"           # geometry_msgs/PoseStamped (x, y, z, quat)
+TOPIC_ODOM              = "/odom"                               # nav_msgs/Odometry
+TOPIC_GROUND_TRUTH      = "/niihan/ground_truth"                # nav_msgs/Odometry
+TOPIC_TF                = "/tf"                                 # tf2_msgs/TFMessage
+TOPIC_DETECTIONS        = "/perception/detections"              # Outbound JSON detections
+TOPIC_EVIDENCE          = "/perception/evidence_events"         # Outbound JSON alert evidence events
+# Legacy topic aliases:
+TOPIC_CAMERA_RGB        = TOPIC_CAMERA_COMPRESSED
+TOPIC_CAMERA_INFO       = "/benchmark/camera/camera_info"
 # ==========================================================================
 
 import sys

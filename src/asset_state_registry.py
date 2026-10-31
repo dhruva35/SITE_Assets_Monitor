@@ -51,6 +51,10 @@ class AssetStateRegistry:
         # Position change threshold in pixels (used if map projection unavailable)
         self.pos_threshold_px = cfg.get("position_change_threshold_px", 15)
 
+        # Ground-plane meter thresholds (used when map projection is available)
+        self.distance_change_threshold_m = cfg.get("distance_change_threshold_m", 0.5)
+        self.displacement_alert_threshold_m = cfg.get("displacement_alert_threshold_m", 3.0)
+
         # How many consecutive patrol misses before ASSET_MISSING alert fires
         self.missing_threshold = cfg.get("missing_alert_threshold", 3)
 
@@ -106,7 +110,8 @@ class AssetStateRegistry:
         class_name: str,
         position: tuple,
         identity_status: str,
-        similarity_score: float = 0.0
+        similarity_score: float = 0.0,
+        is_ground: bool = False
     ) -> dict:
         """
         Register a detection observation for an asset in the current patrol cycle.
@@ -119,6 +124,7 @@ class AssetStateRegistry:
             identity_status:  One of "CONFIRMED" / "PROBABLE" / "AMBIGUOUS" / "UNKNOWN"
                               from ReferenceStore.query().
             similarity_score: ReID cosine similarity score (0.0–1.0).
+            is_ground:        If True, position is in site ground meters; applies 3m displacement threshold.
 
         Returns:
             State update result dict:
@@ -183,7 +189,8 @@ class AssetStateRegistry:
             print(f"[AssetStateRegistry] {asset_id} reacquired after missing episode.")
 
         # --- Movement State Machine ---
-        motion_detected = displacement > self.pos_threshold_px
+        motion_threshold = self.distance_change_threshold_m if is_ground else self.pos_threshold_px
+        motion_detected = displacement > motion_threshold
         alert = None
 
         if motion_detected:
@@ -203,12 +210,17 @@ class AssetStateRegistry:
         elif prev_mv_state == self.STATE_SUSPECTED:
             if state["motion_evidence_count"] >= self.frames_to_confirm:
                 new_mv_state = self.STATE_MOVING
-                # Fire ASSET_MOVED alert
-                alert = self._make_alert("ASSET_MOVED", asset_id, state,
-                                         extra={"baseline_displacement": baseline_displacement,
-                                                "displacement_px": displacement})
-                print(f"[AssetStateRegistry] ALERT: {asset_id} MOVED. "
-                      f"Baseline displacement: {baseline_displacement:.1f}px.")
+                # Fire ASSET_MOVED alert:
+                # In ground meters mode, require baseline displacement >= 3.0m
+                should_alert = (baseline_displacement >= self.displacement_alert_threshold_m) if is_ground else True
+                if should_alert:
+                    alert = self._make_alert("ASSET_MOVED", asset_id, state,
+                                             extra={"baseline_displacement": baseline_displacement,
+                                                    "displacement_px": displacement,
+                                                    "is_ground": is_ground})
+                    unit = "m" if is_ground else "px"
+                    print(f"[AssetStateRegistry] ALERT: {asset_id} MOVED. "
+                          f"Baseline displacement: {baseline_displacement:.2f}{unit}.")
             elif state["still_evidence_count"] >= self.frames_to_suspect:
                 # Didn't sustain motion — false alarm, revert to STATIONARY
                 new_mv_state = self.STATE_STATIONARY
