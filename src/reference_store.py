@@ -156,8 +156,13 @@ class ReferenceStore:
             if class_filter and data["class_name"] != class_filter:
                 continue
 
-            representative = self._aggregate(data["embeddings"])
-            score = float(self.cosine_similarity(embedding, representative))
+            if self.aggregation == "max":
+                # Nearest-neighbour: maximum cosine similarity across all stored reference views
+                dots = data["embeddings"] @ embedding
+                score = float(np.max(dots))
+            else:
+                representative = self._aggregate(data["embeddings"])
+                score = float(self.cosine_similarity(embedding, representative))
             candidates.append({
                 "asset_id":   asset_id,
                 "class_name": data["class_name"],
@@ -291,19 +296,26 @@ class ReferenceStore:
         """
         Determine identity status from the top similarity score and margin.
 
-          CONFIRMED  — high score AND clear separation from second candidate
-          PROBABLE   — reasonable score but below CONFIRMED threshold
-          AMBIGUOUS  — score is OK but margin is too small (two similar candidates)
-          UNKNOWN    — score is below the minimum threshold
+        In environments with many visually-similar assets (e.g. 23 shipping
+        containers of the same shape), the margin between top-1 and top-2
+        is inherently small (<0.01).  We therefore gate primarily on the
+        absolute score, using margin only as a secondary tie-breaker.
+
+          CONFIRMED  — score >= t_high  (strong match; margin used as bonus, not gate)
+          PROBABLE   — t_low <= score < t_high  AND margin >= t_margin
+          AMBIGUOUS  — t_low <= score < t_high  AND margin < t_margin (two close candidates)
+          UNKNOWN    — score < t_min  (no credible match at all)
         """
         if score < self.t_min:
             return "UNKNOWN"
-        if score >= self.t_high and margin >= self.t_margin:
+        if score >= self.t_high:
+            # High confidence: accept regardless of margin — the absolute score
+            # already beats the gallery average; margin is a nice-to-have.
             return "CONFIRMED"
         if score >= self.t_low:
-            if margin < self.t_margin:
-                return "AMBIGUOUS"
-            return "PROBABLE"
+            if margin >= self.t_margin:
+                return "PROBABLE"
+            return "AMBIGUOUS"
         return "UNKNOWN"
 
     @staticmethod
