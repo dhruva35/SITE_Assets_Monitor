@@ -57,14 +57,15 @@ from src.reference_store import ReferenceStore
 class ContainerProposer:
     """
     Environment-agnostic object & container candidate proposer.
-    Identifies high-contrast digital ID display boards and colored rectangular structures.
+    Identifies colored rectangular container structures and digital ID display boards.
+    Guarantees exactly ONE non-overlapping proposal per physical container.
     """
 
     @staticmethod
     def propose(frame: np.ndarray) -> list[tuple[int, int, int, int, str]]:
         """
         Returns a list of candidate bounding boxes: (x1, y1, x2, y2, tag),
-        ranked by visual prominence (centrality + area).
+        ranked by visual prominence (centrality + area), with strict containment suppression.
         """
         h, w = frame.shape[:2]
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -74,59 +75,61 @@ class ContainerProposer:
 
         candidates = []
 
-        # 1. Digital ID display boards (dark rectangles with high-contrast text)
+        # 1. Prominent colored container faces (Blue, Green, Yellow, Orange, Red)
+        mask_col = ((sat > 35) & (val > 35) & (val < 240)).astype(np.uint8) * 255
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (15, 25))
+        closed = cv2.morphologyEx(mask_col, cv2.MORPH_CLOSE, kernel)
+        contours_col, _ = cv2.findContours(closed, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        min_area = w * h * 0.04
+        for c in contours_col:
+            x, y, bw, bh = cv2.boundingRect(c)
+            area = bw * bh
+            if bw > 75 and bh > 85 and area >= min_area and bw < int(w * 0.92):
+                aspect = bw / float(bh)
+                if 0.35 <= aspect <= 3.2:
+                    center_dist = abs(((x + x + bw) / 2.0) - (w / 2.0))
+                    score = area - (center_dist * 60)
+                    candidates.append((score, (x, y, x + bw, y + bh), "Container Body", area))
+
+        # 2. Digital ID display boards (dark rectangles with high-contrast text)
         _, thresh_black = cv2.threshold(gray, 45, 255, cv2.THRESH_BINARY_INV)
         contours_board, _ = cv2.findContours(thresh_black, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
         for c in contours_board:
             bx, by, bw, bh = cv2.boundingRect(c)
-            aspect = bw / float(bh)
-            is_edge = (bx <= 12 or (bx + bw) >= w - 12)
-
-            if bw > 28 and bh > 22 and (bw * bh) > 900:
-                if (1.0 <= aspect <= 3.8) or (is_edge and aspect >= 0.35):
+            if bw > 40 and bh > 40 and (bw * bh) > 2500 and (bw / float(bh) < 2.5):
+                # Check if this board is already inside an existing container candidate
+                inside_existing = False
+                for _, cb, _, _ in candidates:
+                    if cb[0] <= bx + 15 and cb[2] >= (bx + bw - 15) and cb[1] <= by + 15 and cb[3] >= (by + bh - 15):
+                        inside_existing = True
+                        break
+                if not inside_existing:
                     # Expand around board to encompass the container body
-                    pad_x = int(bw * 0.45)
-                    pad_y_top = int(by * 0.3)
-                    pad_y_bot = int(bh * 0.9)
-
+                    pad_x = int(bw * 0.60)
+                    pad_y_top = int(by * 0.35)
+                    pad_y_bot = int(bh * 1.0)
                     cx1 = max(0, bx - pad_x)
                     cy1 = max(0, by - pad_y_top)
                     cx2 = min(w, bx + bw + pad_x)
-                    cy2 = min(int(h * 0.88), by + bh + pad_y_bot)
-
+                    cy2 = min(int(h * 0.90), by + bh + pad_y_bot)
                     area = (cx2 - cx1) * (cy2 - cy1)
                     center_dist = abs(((cx1 + cx2) / 2.0) - (w / 2.0))
-                    # Score favours larger area and closer to camera/center
-                    score = area - (center_dist * 80)
-                    candidates.append((score, (cx1, cy1, cx2, cy2), f"ID Board ({bw}x{bh})"))
-
-        # 2. Prominent colored container faces (Blue, Green, Yellow, Orange, Red)
-        mask_col = ((sat > 45) & (val > 40) & (val < 235)).astype(np.uint8) * 255
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 15))
-        closed = cv2.morphologyEx(mask_col, cv2.MORPH_CLOSE, kernel)
-        contours_col, _ = cv2.findContours(closed, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-        for c in contours_col:
-            x, y, bw, bh = cv2.boundingRect(c)
-            # Avoid full-screen span that merges both sides of corridor
-            if bw > 75 and bh > 75 and bw < int(w * 0.82) and (bw * bh) > (w * h * 0.04):
-                area = bw * bh
-                center_dist = abs(((x + x + bw) / 2.0) - (w / 2.0))
-                score = area - (center_dist * 80)
-                candidates.append((score, (x, y, x + bw, y + bh), "Container Body"))
+                    score = area - (center_dist * 60)
+                    candidates.append((score, (cx1, cy1, cx2, cy2), f"ID Board ({bw}x{bh})", area))
 
         if not candidates:
             return []
 
-        # Sort by prominence descending
-        candidates.sort(key=lambda x: x[0], reverse=True)
+        # Sort by area descending so full container bodies take precedence over partial slivers
+        candidates.sort(key=lambda x: x[3], reverse=True)
 
-        # Non-maximum suppression to merge overlapping proposals
+        # Non-maximum suppression with IoMin (containment) suppression
         final_proposals = []
-        for score, b, tag in candidates:
+        for score, b, tag, area in candidates:
             keep = True
-            for fs, fb, ftag in final_proposals:
+            for fs, fb, ftag, farea in final_proposals:
                 ix1 = max(b[0], fb[0])
                 iy1 = max(b[1], fb[1])
                 ix2 = min(b[2], fb[2])
@@ -134,15 +137,20 @@ class ContainerProposer:
                 inter = max(0, ix2 - ix1) * max(0, iy2 - iy1)
                 area_b = (b[2] - b[0]) * (b[3] - b[1])
                 area_fb = (fb[2] - fb[0]) * (fb[3] - fb[1])
+                min_a = min(area_b, area_fb)
+                iomin = inter / float(min_a) if min_a > 0 else 0
                 union = area_b + area_fb - inter
                 iou = inter / float(union) if union > 0 else 0
-                if iou > 0.35:
+                # Suppress if either IoU > 0.35 OR one box is contained in the other (IoMin > 0.35)
+                if iou > 0.35 or iomin > 0.35:
                     keep = False
                     break
             if keep:
-                final_proposals.append((score, b, tag))
+                final_proposals.append((score, b, tag, area))
 
-        return [(b[0], b[1], b[2], b[3], tag) for s, b, tag in final_proposals]
+        # Re-sort final proposals by visual prominence (score) for operator convenience
+        final_proposals.sort(key=lambda x: x[0], reverse=True)
+        return [(b[0], b[1], b[2], b[3], tag) for s, b, tag, a in final_proposals]
 
 
 class HITLEnrollmentTool:

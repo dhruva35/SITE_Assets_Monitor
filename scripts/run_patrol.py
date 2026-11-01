@@ -21,6 +21,7 @@ from datetime import datetime, timezone
 
 import cv2
 import numpy as np
+from collections import defaultdict, deque
 
 # Ensure project root is in sys.path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -35,10 +36,168 @@ from src.asset_state_registry import AssetStateRegistry
 from scripts.hitl_enrollment import ContainerProposer
 
 
+class SpatialVoter:
+    """
+    Temporal voting buffer for Re-ID disambiguation.
+
+    Each 'track' is a spatial region (bbox) that persists across frames via IoU matching.
+    For each track we accumulate a rolling window of per-frame top-1 candidate votes
+    (weighted by similarity score). The majority winner with enough votes and score
+    consistency is returned as the definitive identity.
+
+    This handles the case where OSNet margins are tiny (0.001–0.005) within the same
+    color family — a container that truly is CONT-021 will vote for CONT-021 in
+    most frames even when individual margins are small.
+    """
+
+    VOTE_WINDOW  = 12      # rolling window size (frames)
+    MIN_VOTES    = 4       # minimum votes before voting decision takes over
+    IOU_LINK     = 0.20    # IoU threshold to link a new bbox to an existing track
+    LOCK_THRESH  = 0.50    # fraction of votes for majority winner to call CONFIRMED
+    PROBABLE_THR = 0.35    # fraction of votes for PROBABLE
+    MAX_IDLE     = 8       # frames without detection before a track is considered lost
+
+    def __init__(self):
+        # track_id → {"bbox": last bbox, "votes": deque of (asset_id, score), "color": str|None, "last_frame": int}
+        self._tracks: dict = {}
+        self._next_tid = 0
+
+    # ------------------------------------------------------------------
+    def update(
+        self,
+        bbox: tuple,
+        raw_match: dict,
+        color_family: str | None = None,
+        frame_idx: int = 0
+    ) -> dict:
+        """
+        Register a new per-frame match observation for the bbox region.
+
+        Args:
+            bbox:         (x1, y1, x2, y2) of the current detection.
+            raw_match:    result dict from ReferenceStore.query().
+            color_family: detected color family ("RED", "BLUE", etc.) — prevents
+                          cross-color track merging.
+            frame_idx:    current frame index for track lifecycle management.
+
+        Returns:
+            Enriched match dict with voted 'identity_status' and 'asset_id'.
+        """
+        # Periodic cleanup of dead tracks (> 30 frames inactive)
+        if frame_idx % 20 == 0:
+            dead = [t for t, tr in self._tracks.items() if frame_idx - tr["last_frame"] > 30]
+            for t in dead:
+                del self._tracks[t]
+
+        tid = self._find_or_create_track(bbox, color_family, frame_idx)
+        track = self._tracks[tid]
+
+        # Record this frame's vote
+        raw_id    = raw_match.get("asset_id") or "UNKNOWN"
+        raw_score = raw_match.get("similarity_score", 0.0)
+        track["votes"].append((raw_id, raw_score))
+        track["bbox"] = bbox
+        track["last_frame"] = frame_idx
+
+        # Tally votes
+        return self._tally(track, raw_match)
+
+    # ------------------------------------------------------------------
+    def _find_or_create_track(
+        self,
+        bbox: tuple,
+        color_family: str | None = None,
+        frame_idx: int = 0
+    ) -> int:
+        best_tid   = None
+        best_iou   = 0.0
+
+        for tid, track in self._tracks.items():
+            # Don't link to stale tracks
+            if (frame_idx - track["last_frame"]) > self.MAX_IDLE:
+                continue
+            # Don't link across different color families
+            if color_family and track.get("color") and track["color"] != color_family:
+                continue
+
+            iou = self._iou(bbox, track["bbox"])
+            if iou > best_iou:
+                best_iou = iou
+                best_tid = tid
+
+        if best_iou >= self.IOU_LINK and best_tid is not None:
+            if color_family and not self._tracks[best_tid].get("color"):
+                self._tracks[best_tid]["color"] = color_family
+            return best_tid
+
+        # New track
+        tid = self._next_tid
+        self._next_tid += 1
+        self._tracks[tid] = {
+            "bbox":       bbox,
+            "votes":      deque(maxlen=self.VOTE_WINDOW),
+            "color":      color_family,
+            "last_frame": frame_idx
+        }
+        return tid
+
+    # ------------------------------------------------------------------
+    def _tally(self, track: dict, raw_match: dict) -> dict:
+        votes = list(track["votes"])
+        n = len(votes)
+
+        # Not enough votes yet — return raw match result (passthrough)
+        if n < self.MIN_VOTES:
+            return raw_match
+
+        # Count per-ID votes and sum scores
+        id_counts: dict = defaultdict(int)
+        id_scores: dict = defaultdict(float)
+        for vid, vscore in votes:
+            id_counts[vid] += 1
+            id_scores[vid] += vscore
+
+        winner_id  = max(id_counts, key=id_counts.get)
+        winner_cnt = id_counts[winner_id]
+        frac       = winner_cnt / n
+        avg_score  = id_scores[winner_id] / winner_cnt
+
+        if winner_id == "UNKNOWN" or avg_score < 0.40:
+            return {**raw_match, "identity_status": "UNKNOWN", "asset_id": None,
+                    "voted_by": f"{winner_cnt}/{n}"}
+
+        if frac >= self.LOCK_THRESH and avg_score >= 0.65:
+            status = "CONFIRMED"
+        elif frac >= self.PROBABLE_THR and avg_score >= 0.55:
+            status = "PROBABLE"
+        else:
+            status = "AMBIGUOUS"
+
+        return {
+            **raw_match,
+            "asset_id":         winner_id,
+            "similarity_score": round(avg_score, 4),
+            "identity_status":  status,
+            "voted_by":         f"{winner_cnt}/{n}",
+        }
+
+    # ------------------------------------------------------------------
+    @staticmethod
+    def _iou(a: tuple, b: tuple) -> float:
+        ix1 = max(a[0], b[0]); iy1 = max(a[1], b[1])
+        ix2 = min(a[2], b[2]); iy2 = min(a[3], b[3])
+        inter = max(0, ix2 - ix1) * max(0, iy2 - iy1)
+        if inter == 0:
+            return 0.0
+        area_a = (a[2]-a[0]) * (a[3]-a[1])
+        area_b = (b[2]-b[0]) * (b[3]-b[1])
+        return inter / (area_a + area_b - inter)
+
+
 class AutonomousPatrolRunner:
     """Autonomous patrol runner that validates Re-ID identification and tracking."""
 
-    def __init__(self, video_path: str, output_path: str = None, display: bool = True):
+    def __init__(self, video_path: str, output_path: str = None, display: bool = True, realtime: bool = True):
         self.video_path = Path(video_path)
         if not self.video_path.exists():
             raise FileNotFoundError(f"Video file not found: {self.video_path}")
@@ -49,10 +208,11 @@ class AutonomousPatrolRunner:
             out_dir.mkdir(parents=True, exist_ok=True)
             self.output_path = out_dir / f"patrol_verified_{datetime.now().strftime('%Y%m%d_%H%M%S')}.mp4"
         else:
-            self.output_path = Path(output_path)
+            self.output_path = Path(output_path).resolve()
             self.output_path.parent.mkdir(parents=True, exist_ok=True)
 
         self.display = display
+        self.realtime = realtime
 
         print("\n" + "=" * 65)
         print("  ASI PERCEPTION — AUTONOMOUS PATROL & RE-ID RUNNER")
@@ -64,6 +224,7 @@ class AutonomousPatrolRunner:
         self.reference_store = ReferenceStore("config/reid_config.yaml")
         self.state_registry = AssetStateRegistry("config/movement_config.yaml")
         self.proposer = ContainerProposer()
+        self.voter = SpatialVoter()   # temporal voting buffer for stable Re-ID
 
         # Enrolled gallery info (extract list of asset ID strings)
         raw_assets = self.reference_store.list_assets()
@@ -121,11 +282,20 @@ class AutonomousPatrolRunner:
         self.state_registry.begin_patrol_cycle()
         frame_idx = 0
         start_time = time.time()
+        paused = False
+
+        # Pacing delay: native fps interval (~100ms for 10fps), or 1ms if not realtime
+        delay_ms = max(1, int(1000 / self.native_fps)) if self.realtime else 1
 
         if self.display:
             win_name = "ASI Autonomous Patrol — Live Re-ID & Spatial Tracking"
             cv2.namedWindow(win_name, cv2.WINDOW_NORMAL)
             cv2.resizeWindow(win_name, min(1280, self.frame_w), min(720, self.frame_h))
+            print("  Controls:")
+            print("    [SPACE] : Pause / Resume live playback")
+            print("    [+]     : Speed up playback")
+            print("    [-]     : Slow down playback")
+            print("    [Q]/ESC : Exit patrol")
 
         while True:
             ret, frame = self.cap.read()
@@ -154,13 +324,24 @@ class AutonomousPatrolRunner:
 
                 self.stats["detections_total"] += 1
 
-                # 3. Extract OSNet Re-ID embedding (512-D)
+                # 3. Detect dominant color family
+                color_family = self.detect_color(crop)
+
+                # 4. Extract OSNet Re-ID embedding (512-D)
                 embedding = self.reid_engine.extract_embedding(crop)
                 if embedding is None:
                     continue
 
-                # 4. Query reference store
-                match = self.reference_store.query(embedding)
+                # 5. Query reference store with color-consistency constraint
+                raw_match = self.reference_store.query(embedding, color_filter=color_family)
+
+                # 5b. Temporal voting — stabilise identity across frames
+                match  = self.voter.update(
+                    (x1, y1, x2, y2),
+                    raw_match,
+                    color_family=color_family,
+                    frame_idx=frame_idx
+                )
                 status = match.get("identity_status", "UNKNOWN")
                 best_id = match.get("asset_id") or "UNKNOWN"
                 best_score = match.get("similarity_score", 0.0)
@@ -178,7 +359,7 @@ class AutonomousPatrolRunner:
                 else:
                     self.stats["unknown_matches"] += 1
 
-                # 5. Update State Machine
+                # 6. Update State Machine
                 if best_id != "UNKNOWN" and status != "UNKNOWN":
                     center_pt = ((x1 + x2) / 2.0, (y1 + y2) / 2.0)
                     state_record = self.state_registry.update(
@@ -197,12 +378,14 @@ class AutonomousPatrolRunner:
                     "asset_id": best_id,
                     "status": status,
                     "score": best_score,
+                    "color": color_family,
                     "state": movement_state,
-                    "tag": tag
+                    "tag": tag,
+                    "voted_by": match.get("voted_by", ""),
                 }
                 frame_detections.append(det_info)
 
-                # 6. Render bounding box and label
+                # 7. Render bounding box and label
                 self._draw_asset_box(display, det_info)
 
             # 7. Render HUD overlay
@@ -214,10 +397,32 @@ class AutonomousPatrolRunner:
 
             if self.display:
                 cv2.imshow(win_name, display)
-                key = cv2.waitKey(1) & 0xFF
+                key = cv2.waitKey(delay_ms) & 0xFF
                 if key in [ord("q"), ord("Q"), 27]:
                     print("\n[Patrol] Interrupted by user.")
                     break
+                elif key == 32:  # SPACE
+                    paused = not paused
+                    while paused:
+                        pause_display = display.copy()
+                        cv2.rectangle(pause_display, (self.frame_w//2 - 160, self.frame_h//2 - 25),
+                                      (self.frame_w//2 + 160, self.frame_h//2 + 25), (0, 0, 0), -1)
+                        cv2.putText(pause_display, "PAUSED — Press SPACE to resume",
+                                    (self.frame_w//2 - 150, self.frame_h//2 + 8),
+                                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
+                        cv2.imshow(win_name, pause_display)
+                        pk = cv2.waitKey(50) & 0xFF
+                        if pk == 32:
+                            paused = False
+                            break
+                        elif pk in [ord("q"), ord("Q"), 27]:
+                            break
+                    if key in [ord("q"), ord("Q"), 27]:
+                        break
+                elif key in [ord("+"), ord("=")]:
+                    delay_ms = max(1, delay_ms - 20)
+                elif key in [ord("-"), ord("_")]:
+                    delay_ms = min(300, delay_ms + 20)
 
             if frame_idx % 100 == 0:
                 elapsed = time.time() - start_time
@@ -234,6 +439,24 @@ class AutonomousPatrolRunner:
         total_time = time.time() - start_time
         self._print_summary(total_time)
 
+    @staticmethod
+    def detect_color(crop: np.ndarray) -> str | None:
+        """Estimate the dominant container color family from HSV histogram."""
+        hsv = cv2.cvtColor(crop, cv2.COLOR_BGR2HSV)
+        sat = hsv[:, :, 1]
+        val = hsv[:, :, 2]
+        colored = (sat > 45) & (val > 40)
+        if colored.sum() < 350:
+            return None
+        hues = hsv[colored, 0]
+        counts, _ = np.histogram(hues, bins=[0, 15, 35, 85, 135, 180])
+        red_cnt = counts[0] + counts[4]
+        yellow_cnt = counts[1]
+        green_cnt = counts[2]
+        blue_cnt = counts[3]
+        best_idx = int(np.argmax([red_cnt, yellow_cnt, green_cnt, blue_cnt]))
+        return ["RED", "YELLOW", "GREEN", "BLUE"][best_idx]
+
     def _draw_asset_box(self, display: np.ndarray, det: dict):
         """Render polished bounding box, ID banner, match %, and state machine tag."""
         x1, y1, x2, y2 = det["bbox"]
@@ -241,19 +464,25 @@ class AutonomousPatrolRunner:
         asset_id = det["asset_id"]
         score_pct = int(det["score"] * 100)
         state = det["state"]
+        c_fam = det.get("color")
+        color_tag = f" {c_fam}" if c_fam else ""
 
         if status == "CONFIRMED":
             color = self.color_confirmed
-            label = f"{asset_id} [{score_pct}% CONFIRMED]"
+            voted = det.get("voted_by", "")
+            vote_str = f" v{voted}" if voted else ""
+            label = f"{asset_id}{color_tag}{vote_str} [{score_pct}% CONFIRMED]"
         elif status == "PROBABLE":
             color = self.color_probable
-            label = f"{asset_id} [{score_pct}% PROBABLE]"
+            voted = det.get("voted_by", "")
+            vote_str = f" v{voted}" if voted else ""
+            label = f"{asset_id}{color_tag}{vote_str} [{score_pct}% PROBABLE]"
         elif status == "AMBIGUOUS":
             color = (0, 200, 255)
-            label = f"{asset_id} [{score_pct}% AMBIGUOUS]"
+            label = f"{asset_id}{color_tag} [{score_pct}% AMBIGUOUS]"
         else:
             color = self.color_unknown
-            label = f"UNKNOWN [{score_pct}%]"
+            label = f"UNKNOWN CONTAINER{color_tag} [{score_pct}%]"
 
         # Box outline
         cv2.rectangle(display, (x1, y1), (x2, y2), color, 2)
@@ -338,12 +567,14 @@ def main():
     parser.add_argument("--video", "-v", default=default_vid, help="Path to test patrol video")
     parser.add_argument("--output", "-o", default=None, help="Path to save annotated video")
     parser.add_argument("--no-display", action="store_true", help="Run headless without OpenCV GUI window")
+    parser.add_argument("--fast", "-f", action="store_true", help="Process at maximum GPU/CPU speed rather than real-time")
     args = parser.parse_args()
 
     runner = AutonomousPatrolRunner(
         video_path=args.video,
         output_path=args.output,
-        display=not args.no_display
+        display=not args.no_display,
+        realtime=not args.fast
     )
     runner.run()
 

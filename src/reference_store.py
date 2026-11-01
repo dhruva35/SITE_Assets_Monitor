@@ -124,7 +124,12 @@ class ReferenceStore:
     # Query
     # ------------------------------------------------------------------
 
-    def query(self, embedding: np.ndarray, class_filter: str | None = None) -> dict:
+    def query(
+        self,
+        embedding: np.ndarray,
+        class_filter: str | None = None,
+        color_filter: str | None = None
+    ) -> dict:
         """
         Find the closest matching asset in the store.
 
@@ -132,6 +137,8 @@ class ReferenceStore:
             embedding:    512D float32 L2-normalised numpy array from ReIDEngine.
             class_filter: If provided, only compare against assets of this class.
                           Prevents cross-class false matches (e.g., generator vs excavator).
+            color_filter: If provided, only compare against assets sharing this color
+                          family (e.g., "RED", "BLUE", "GREEN", "YELLOW").
 
         Returns:
             Match result dict:
@@ -155,6 +162,8 @@ class ReferenceStore:
         for asset_id, data in self._store.items():
             if class_filter and data["class_name"] != class_filter:
                 continue
+            if color_filter and data.get("color") and data["color"] != color_filter:
+                continue
 
             if self.aggregation == "max":
                 # Nearest-neighbour: maximum cosine similarity across all stored reference views
@@ -166,11 +175,15 @@ class ReferenceStore:
             candidates.append({
                 "asset_id":   asset_id,
                 "class_name": data["class_name"],
+                "color":      data.get("color"),
                 "score":      round(score, 4)
             })
 
         if not candidates:
-            return self._no_match_result("UNKNOWN", "No candidates after class filter.")
+            # If color filter eliminated all candidates, fall back to unconstrained query
+            if color_filter:
+                return self.query(embedding, class_filter=class_filter, color_filter=None)
+            return self._no_match_result("UNKNOWN", "No candidates after filter.")
 
         # Sort by score descending
         candidates.sort(key=lambda x: x["score"], reverse=True)
@@ -203,14 +216,25 @@ class ReferenceStore:
     def load(self):
         """Load all .npz files from the database directory into memory."""
         self._store = {}
+        metadata_file = Path("data/asset_metadata.json")
+        meta = {}
+        if metadata_file.exists():
+            try:
+                with open(metadata_file, "r") as mf:
+                    meta = json.load(mf)
+            except Exception:
+                meta = {}
+
         npz_files = list(self.db_dir.glob("*.npz"))
         for f in npz_files:
             try:
                 data = np.load(f, allow_pickle=True)
                 asset_id = f.stem
+                asset_meta = meta.get(asset_id, {})
                 self._store[asset_id] = {
                     "class_name": str(data["class_name"]),
                     "embeddings": data["embeddings"],
+                    "color":      asset_meta.get("color"),
                     "added_at":   str(data.get("added_at", "unknown"))
                 }
             except Exception as e:
@@ -296,21 +320,14 @@ class ReferenceStore:
         """
         Determine identity status from the top similarity score and margin.
 
-        In environments with many visually-similar assets (e.g. 23 shipping
-        containers of the same shape), the margin between top-1 and top-2
-        is inherently small (<0.01).  We therefore gate primarily on the
-        absolute score, using margin only as a secondary tie-breaker.
-
-          CONFIRMED  — score >= t_high  (strong match; margin used as bonus, not gate)
-          PROBABLE   — t_low <= score < t_high  AND margin >= t_margin
-          AMBIGUOUS  — t_low <= score < t_high  AND margin < t_margin (two close candidates)
-          UNKNOWN    — score < t_min  (no credible match at all)
+          CONFIRMED  — score >= t_high AND margin >= t_margin (distinct, unambiguous match)
+          PROBABLE   — score >= t_low  AND margin >= t_margin
+          AMBIGUOUS  — score >= t_low  AND margin < t_margin (two or more close candidates)
+          UNKNOWN    — score < t_min   (no credible match at all)
         """
         if score < self.t_min:
             return "UNKNOWN"
-        if score >= self.t_high:
-            # High confidence: accept regardless of margin — the absolute score
-            # already beats the gallery average; margin is a nice-to-have.
+        if score >= self.t_high and margin >= self.t_margin:
             return "CONFIRMED"
         if score >= self.t_low:
             if margin >= self.t_margin:

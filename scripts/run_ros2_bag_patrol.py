@@ -38,6 +38,7 @@ from src.reference_store import ReferenceStore
 from src.asset_state_registry import AssetStateRegistry
 from src.map_projection import MapProjector
 from scripts.hitl_enrollment import ContainerProposer
+from scripts.run_patrol import SpatialVoter
 
 
 class ROS2BagPatrolRunner:
@@ -79,6 +80,7 @@ class ROS2BagPatrolRunner:
         self.reference_store = ReferenceStore("config/reid_config.yaml")
         self.state_registry = AssetStateRegistry("config/movement_config.yaml")
         self.proposer = ContainerProposer()
+        self.voter = SpatialVoter()
 
         # Enrolled gallery info
         raw_assets = self.reference_store.list_assets()
@@ -216,13 +218,20 @@ class ROS2BagPatrolRunner:
 
                 self.stats["detections_total"] += 1
 
-                # 3. Re-ID Embedding
+                # 3. Detect Color & Extract Re-ID Embedding
+                color_family = self.detect_color(crop)
                 embedding = self.reid_engine.extract_embedding(crop)
                 if embedding is None:
                     continue
 
-                # 4. Query Gallery
-                match = self.reference_store.query(embedding)
+                # 4. Query Gallery with Color Consistency Constraint & Temporal Voting
+                raw_match = self.reference_store.query(embedding, color_filter=color_family)
+                match = self.voter.update(
+                    (x1, y1, x2, y2),
+                    raw_match,
+                    color_family=color_family,
+                    frame_idx=frame_idx
+                )
                 status = match.get("identity_status", "UNKNOWN")
                 best_id = match.get("asset_id") or "UNKNOWN"
                 best_score = match.get("similarity_score", 0.0)
@@ -282,9 +291,28 @@ class ROS2BagPatrolRunner:
 
             if self.display:
                 cv2.imshow(win_name, display)
-                if cv2.waitKey(1) & 0xFF in [ord("q"), ord("Q"), 27]:
+                key = cv2.waitKey(int(1000 / self.fps)) & 0xFF
+                if key in [ord("q"), ord("Q"), 27]:
                     print("\n[Patrol] Interrupted by user.")
                     break
+                elif key == 32:  # SPACE
+                    paused = True
+                    while paused:
+                        pause_display = display.copy()
+                        cv2.rectangle(pause_display, (self.frame_w//2 - 160, self.frame_h//2 - 25),
+                                      (self.frame_w//2 + 160, self.frame_h//2 + 25), (0, 0, 0), -1)
+                        cv2.putText(pause_display, "PAUSED — Press SPACE to resume",
+                                    (self.frame_w//2 - 150, self.frame_h//2 + 8),
+                                    cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 255, 255), 2)
+                        cv2.imshow(win_name, pause_display)
+                        pk = cv2.waitKey(50) & 0xFF
+                        if pk == 32:
+                            paused = False
+                            break
+                        elif pk in [ord("q"), ord("Q"), 27]:
+                            break
+                    if key in [ord("q"), ord("Q"), 27]:
+                        break
 
             if frame_idx % 100 == 0:
                 elapsed = time.time() - start_time
@@ -300,6 +328,24 @@ class ROS2BagPatrolRunner:
 
         total_time = time.time() - start_time
         self._print_summary(total_time)
+
+    @staticmethod
+    def detect_color(crop: np.ndarray) -> str | None:
+        """Estimate the dominant container color family from HSV histogram."""
+        hsv = cv2.cvtColor(crop, cv2.COLOR_BGR2HSV)
+        sat = hsv[:, :, 1]
+        val = hsv[:, :, 2]
+        colored = (sat > 45) & (val > 40)
+        if colored.sum() < 350:
+            return None
+        hues = hsv[colored, 0]
+        counts, _ = np.histogram(hues, bins=[0, 15, 35, 85, 135, 180])
+        red_cnt = counts[0] + counts[4]
+        yellow_cnt = counts[1]
+        green_cnt = counts[2]
+        blue_cnt = counts[3]
+        best_idx = int(np.argmax([red_cnt, yellow_cnt, green_cnt, blue_cnt]))
+        return ["RED", "YELLOW", "GREEN", "BLUE"][best_idx]
 
     def _draw_asset_box(self, display: np.ndarray, det: dict):
         x1, y1, x2, y2 = det["bbox"]
@@ -320,7 +366,7 @@ class ROS2BagPatrolRunner:
             label = f"{asset_id} [{score_pct}% AMB]"
         else:
             color = (150, 150, 150)
-            label = f"UNKNOWN [{score_pct}%]"
+            label = f"UNKNOWN CONTAINER [{score_pct}%]"
 
         # Box
         cv2.rectangle(display, (x1, y1), (x2, y2), color, 2)
