@@ -1,26 +1,74 @@
 {
-  "CONT-001": {"color": "RED"},
-  "CONT-002": {"color": "BLUE"},
-  "CONT-003": {"color": "GREEN"},
-  "CONT-004": {"color": "YELLOW"},
-  "CONT-005": {"color": "YELLOW"},
-  "CONT-006": {"color": "RED"},
-  "CONT-007": {"color": "BLUE"},
-  "CONT-008": {"color": "GREEN"},
-  "CONT-009": {"color": "YELLOW"},
-  "CONT-010": {"color": "RED"},
-  "CONT-011": {"color": "RED"},
-  "CONT-012": {"color": "BLUE"},
-  "CONT-014": {"color": "YELLOW"},
-  "CONT-015": {"color": "YELLOW"},
-  "CONT-016": {"color": "RED"},
-  "CONT-017": {"color": "BLUE"},
-  "CONT-018": {"color": "GREEN"},
-  "CONT-019": {"color": "YELLOW"},
-  "CONT-020": {"color": "RED"},
-  "CONT-021": {"color": "RED"},
-  "CONT-022": {"color": "BLUE"},
-  "CONT-023": {"color": "GREEN"},
-  "CONT-024": {"color": "YELLOW"}
+  "CONT-001": {
+    "color": "RED"
+  },
+  "CONT-002": {
+    "color": "BLUE"
+  },
+  "CONT-003": {
+    "color": "GREEN"
+  },
+  "CONT-004": {
+    "color": "YELLOW"
+  },
+  "CONT-005": {
+    "color": "RED"
+  },
+  "CONT-006": {
+    "color": "RED"
+  },
+  "CONT-007": {
+    "color": "BLUE"
+  },
+  "CONT-008": {
+    "color": "GREEN"
+  },
+  "CONT-009": {
+    "color": "YELLOW"
+  },
+  "CONT-010": {
+    "color": "RED"
+  },
+  "CONT-011": {
+    "color": "RED"
+  },
+  "CONT-012": {
+    "color": "BLUE"
+  },
+  "CONT-013": {
+    "color": "GREEN"
+  },
+  "CONT-014": {
+    "color": "YELLOW"
+  },
+  "CONT-015": {
+    "color": "RED"
+  },
+  "CONT-016": {
+    "color": "RED"
+  },
+  "CONT-017": {
+    "color": "BLUE"
+  },
+  "CONT-018": {
+    "color": "GREEN"
+  },
+  "CONT-019": {
+    "color": "YELLOW"
+  },
+  "CONT-020": {
+    "color": "RED"
+  },
+  "CONT-021": {
+    "color": "RED"
+  },
+  "CONT-022": {
+    "color": "BLUE"
+  },
+  "CONT-023": {
+    "color": "GREEN"
+  },
+  "CONT-024": {
+    "color": "YELLOW"
+  }
 }
-

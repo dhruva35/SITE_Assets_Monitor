@@ -2,1921 +2,2225 @@
   {
     "asset_id": "CONT-001",
     "class_name": "container",
-    "timestamp": "2026-10-31T15:17:51.029268+00:00",
-    "frame_idx": 181,
-    "timestamp_sec": 18.1,
+    "timestamp": "2026-11-04T08:21:04.516458+00:00",
+    "frame_idx": 351,
+    "timestamp_sec": 35.58,
     "bbox_xyxy": [
-      14,
-      43,
-      775,
-      551
+      298,
+      34,
+      640,
+      380
     ],
     "embedding_dim": 512,
     "ref_image": "data\\reference_images\\CONT-001\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_000181.jpg"
-  },
-  {
-    "asset_id": "CONT-001",
-    "class_name": "container",
-    "timestamp": "2026-10-31T15:18:28.470273+00:00",
-    "frame_idx": 193,
-    "timestamp_sec": 19.3,
-    "bbox_xyxy": [
-      58,
-      43,
-      820,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-001\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_000193.jpg"
+    "yolo_image": "data\\datasets\\containers\\images\\frame_000351.jpg"
   },
   {
     "asset_id": "CONT-002",
     "class_name": "container",
-    "timestamp": "2026-10-31T15:19:25.330046+00:00",
-    "frame_idx": 551,
-    "timestamp_sec": 55.1,
+    "timestamp": "2026-11-04T08:22:26.679874+00:00",
+    "frame_idx": 927,
+    "timestamp_sec": 93.96,
     "bbox_xyxy": [
-      0,
-      43,
-      737,
-      551
+      282,
+      30,
+      640,
+      387
     ],
     "embedding_dim": 512,
     "ref_image": "data\\reference_images\\CONT-002\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_000551.jpg"
+    "yolo_image": "data\\datasets\\containers\\images\\frame_000927.jpg"
   },
   {
     "asset_id": "CONT-002",
     "class_name": "container",
-    "timestamp": "2026-10-31T15:19:47.249828+00:00",
-    "frame_idx": 562,
-    "timestamp_sec": 56.2,
+    "timestamp": "2026-11-04T08:22:43.286202+00:00",
+    "frame_idx": 930,
+    "timestamp_sec": 94.27,
     "bbox_xyxy": [
-      30,
-      43,
-      791,
-      551
+      298,
+      36,
+      640,
+      377
     ],
     "embedding_dim": 512,
     "ref_image": "data\\reference_images\\CONT-002\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_000562.jpg"
+    "yolo_image": "data\\datasets\\containers\\images\\frame_000930.jpg"
   },
   {
     "asset_id": "CONT-002",
     "class_name": "container",
-    "timestamp": "2026-10-31T15:29:10.254627+00:00",
-    "frame_idx": 589,
-    "timestamp_sec": 58.9,
+    "timestamp": "2026-11-04T08:23:19.881910+00:00",
+    "frame_idx": 971,
+    "timestamp_sec": 98.42,
     "bbox_xyxy": [
-      92,
-      42,
-      853,
-      552
+      25,
+      51,
+      589,
+      287
     ],
     "embedding_dim": 512,
     "ref_image": "data\\reference_images\\CONT-002\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_000589.jpg"
+    "yolo_image": "data\\datasets\\containers\\images\\frame_000971.jpg"
+  },
+  {
+    "asset_id": "CONT-002",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:23:35.713302+00:00",
+    "frame_idx": 997,
+    "timestamp_sec": 101.06,
+    "bbox_xyxy": [
+      43,
+      52,
+      607,
+      294
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-002\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_000997.jpg"
+  },
+  {
+    "asset_id": "CONT-002",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:23:56.298362+00:00",
+    "frame_idx": 975,
+    "timestamp_sec": 98.83,
+    "bbox_xyxy": [
+      27,
+      44,
+      587,
+      288
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-002\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_000975.jpg"
   },
   {
     "asset_id": "CONT-003",
     "class_name": "container",
-    "timestamp": "2026-10-31T15:30:02.448985+00:00",
-    "frame_idx": 931,
-    "timestamp_sec": 93.1,
+    "timestamp": "2026-11-04T08:24:40.937810+00:00",
+    "frame_idx": 1524,
+    "timestamp_sec": 154.48,
     "bbox_xyxy": [
-      0,
-      43,
-      748,
-      551
+      64,
+      59,
+      627,
+      288
     ],
     "embedding_dim": 512,
     "ref_image": "data\\reference_images\\CONT-003\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_000931.jpg"
+    "yolo_image": "data\\datasets\\containers\\images\\frame_001524.jpg"
   },
   {
     "asset_id": "CONT-003",
     "class_name": "container",
-    "timestamp": "2026-10-31T15:30:23.613283+00:00",
-    "frame_idx": 962,
-    "timestamp_sec": 96.2,
+    "timestamp": "2026-11-04T08:24:53.212939+00:00",
+    "frame_idx": 1533,
+    "timestamp_sec": 155.39,
     "bbox_xyxy": [
-      86,
-      43,
-      846,
-      551
+      39,
+      53,
+      600,
+      291
     ],
     "embedding_dim": 512,
     "ref_image": "data\\reference_images\\CONT-003\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_000962.jpg"
+    "yolo_image": "data\\datasets\\containers\\images\\frame_001533.jpg"
   },
   {
     "asset_id": "CONT-003",
     "class_name": "container",
-    "timestamp": "2026-10-31T15:30:45.812023+00:00",
-    "frame_idx": 1062,
-    "timestamp_sec": 106.2,
+    "timestamp": "2026-11-04T08:25:04.071824+00:00",
+    "frame_idx": 1545,
+    "timestamp_sec": 156.6,
     "bbox_xyxy": [
-      241,
-      43,
-      960,
-      551
+      27,
+      50,
+      588,
+      284
     ],
     "embedding_dim": 512,
     "ref_image": "data\\reference_images\\CONT-003\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_001062.jpg"
+    "yolo_image": "data\\datasets\\containers\\images\\frame_001545.jpg"
   },
   {
-    "asset_id": "CONT-004",
+    "asset_id": "CONT-003",
     "class_name": "container",
-    "timestamp": "2026-10-31T15:31:43.130529+00:00",
-    "frame_idx": 1300,
-    "timestamp_sec": 130.0,
+    "timestamp": "2026-11-04T08:25:17.240901+00:00",
+    "frame_idx": 1567,
+    "timestamp_sec": 158.83,
     "bbox_xyxy": [
-      0,
-      43,
-      701,
-      551
+      29,
+      50,
+      592,
+      288
     ],
     "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-004\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_001300.jpg"
+    "ref_image": "data\\reference_images\\CONT-003\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_001567.jpg"
   },
   {
-    "asset_id": "CONT-004",
+    "asset_id": "CONT-003",
     "class_name": "container",
-    "timestamp": "2026-10-31T15:31:56.135763+00:00",
-    "frame_idx": 1316,
-    "timestamp_sec": 131.6,
-    "bbox_xyxy": [
-      22,
-      43,
-      782,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-004\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_001316.jpg"
-  },
-  {
-    "asset_id": "CONT-004",
-    "class_name": "container",
-    "timestamp": "2026-10-31T15:32:12.189848+00:00",
-    "frame_idx": 1375,
-    "timestamp_sec": 137.5,
+    "timestamp": "2026-11-04T08:25:31.856038+00:00",
+    "frame_idx": 1580,
+    "timestamp_sec": 160.15,
     "bbox_xyxy": [
       105,
-      43,
-      862,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-004\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_001375.jpg"
-  },
-  {
-    "asset_id": "CONT-004",
-    "class_name": "container",
-    "timestamp": "2026-10-31T15:32:28.483683+00:00",
-    "frame_idx": 1437,
-    "timestamp_sec": 143.7,
-    "bbox_xyxy": [
-      226,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-004\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_001437.jpg"
-  },
-  {
-    "asset_id": "CONT-005",
-    "class_name": "container",
-    "timestamp": "2026-10-31T15:37:39.341602+00:00",
-    "frame_idx": 1688,
-    "timestamp_sec": 168.8,
-    "bbox_xyxy": [
-      0,
-      43,
-      753,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-005\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_001688.jpg"
-  },
-  {
-    "asset_id": "CONT-005",
-    "class_name": "container",
-    "timestamp": "2026-10-31T15:37:46.263838+00:00",
-    "frame_idx": 1698,
-    "timestamp_sec": 169.8,
-    "bbox_xyxy": [
-      38,
-      43,
-      799,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-005\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_001698.jpg"
-  },
-  {
-    "asset_id": "CONT-005",
-    "class_name": "container",
-    "timestamp": "2026-10-31T15:37:55.670239+00:00",
-    "frame_idx": 1740,
-    "timestamp_sec": 174.0,
-    "bbox_xyxy": [
-      103,
-      43,
-      863,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-005\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_001740.jpg"
-  },
-  {
-    "asset_id": "CONT-005",
-    "class_name": "container",
-    "timestamp": "2026-10-31T15:38:09.176750+00:00",
-    "frame_idx": 1814,
-    "timestamp_sec": 181.4,
-    "bbox_xyxy": [
-      222,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-005\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_001814.jpg"
-  },
-  {
-    "asset_id": "CONT-006",
-    "class_name": "container",
-    "timestamp": "2026-10-31T15:59:31.293703+00:00",
-    "frame_idx": 2045,
-    "timestamp_sec": 204.5,
-    "bbox_xyxy": [
-      0,
-      42,
-      646,
-      552
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-006\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_002045.jpg"
-  },
-  {
-    "asset_id": "CONT-006",
-    "class_name": "container",
-    "timestamp": "2026-10-31T15:59:46.177423+00:00",
-    "frame_idx": 2057,
-    "timestamp_sec": 205.7,
-    "bbox_xyxy": [
-      0,
-      43,
-      708,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-006\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_002057.jpg"
-  },
-  {
-    "asset_id": "CONT-006",
-    "class_name": "container",
-    "timestamp": "2026-10-31T15:59:54.516491+00:00",
-    "frame_idx": 2069,
-    "timestamp_sec": 206.9,
-    "bbox_xyxy": [
-      9,
-      43,
-      770,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-006\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_002069.jpg"
-  },
-  {
-    "asset_id": "CONT-006",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:00:04.239211+00:00",
-    "frame_idx": 2094,
-    "timestamp_sec": 209.4,
-    "bbox_xyxy": [
-      83,
-      43,
-      844,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-006\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_002094.jpg"
-  },
-  {
-    "asset_id": "CONT-006",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:00:23.187345+00:00",
-    "frame_idx": 2194,
-    "timestamp_sec": 219.4,
-    "bbox_xyxy": [
-      235,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-006\\ref_005.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_002194.jpg"
-  },
-  {
-    "asset_id": "CONT-006",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:00:29.353869+00:00",
-    "frame_idx": 2205,
-    "timestamp_sec": 220.5,
-    "bbox_xyxy": [
-      292,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-006\\ref_006.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_002205.jpg"
-  },
-  {
-    "asset_id": "CONT-012",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:01:57.584414+00:00",
-    "frame_idx": 2805,
-    "timestamp_sec": 280.5,
-    "bbox_xyxy": [
-      0,
-      35,
-      660,
-      563
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-012\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_002805.jpg"
-  },
-  {
-    "asset_id": "CONT-012",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:02:07.862762+00:00",
-    "frame_idx": 2834,
-    "timestamp_sec": 283.4,
-    "bbox_xyxy": [
-      12,
-      35,
-      781,
-      563
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-012\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_002834.jpg"
-  },
-  {
-    "asset_id": "CONT-012",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:02:23.730434+00:00",
-    "frame_idx": 2906,
-    "timestamp_sec": 290.6,
-    "bbox_xyxy": [
-      98,
-      43,
-      851,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-012\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_002906.jpg"
-  },
-  {
-    "asset_id": "CONT-012",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:02:36.401345+00:00",
-    "frame_idx": 2964,
-    "timestamp_sec": 296.4,
-    "bbox_xyxy": [
-      231,
-      45,
-      960,
-      549
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-012\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_002964.jpg"
-  },
-  {
-    "asset_id": "CONT-012",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:46:38.136087+00:00",
-    "frame_idx": 2971,
-    "timestamp_sec": 297.1,
-    "bbox_xyxy": [
-      267,
-      45,
-      960,
-      548
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-012\\ref_005.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_002971.jpg"
-  },
-  {
-    "asset_id": "CONT-011",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:47:16.331676+00:00",
-    "frame_idx": 3208,
-    "timestamp_sec": 320.8,
-    "bbox_xyxy": [
-      0,
-      43,
-      720,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-011\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_003208.jpg"
-  },
-  {
-    "asset_id": "CONT-011",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:47:24.912638+00:00",
-    "frame_idx": 3218,
-    "timestamp_sec": 321.8,
-    "bbox_xyxy": [
-      11,
-      43,
-      771,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-011\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_003218.jpg"
-  },
-  {
-    "asset_id": "CONT-011",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:47:35.105731+00:00",
-    "frame_idx": 3243,
-    "timestamp_sec": 324.3,
-    "bbox_xyxy": [
-      83,
-      43,
-      843,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-011\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_003243.jpg"
-  },
-  {
-    "asset_id": "CONT-011",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:47:54.826239+00:00",
-    "frame_idx": 3347,
-    "timestamp_sec": 334.7,
-    "bbox_xyxy": [
-      256,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-011\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_003347.jpg"
-  },
-  {
-    "asset_id": "CONT-010",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:48:32.399081+00:00",
-    "frame_idx": 3575,
-    "timestamp_sec": 357.5,
-    "bbox_xyxy": [
-      0,
-      43,
-      665,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-010\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_003575.jpg"
-  },
-  {
-    "asset_id": "CONT-010",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:48:41.399198+00:00",
-    "frame_idx": 3589,
-    "timestamp_sec": 358.9,
-    "bbox_xyxy": [
-      0,
-      43,
-      737,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-010\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_003589.jpg"
-  },
-  {
-    "asset_id": "CONT-010",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:48:49.030964+00:00",
-    "frame_idx": 3597,
-    "timestamp_sec": 359.7,
-    "bbox_xyxy": [
-      18,
-      43,
-      778,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-010\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_003597.jpg"
-  },
-  {
-    "asset_id": "CONT-010",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:49:15.857096+00:00",
-    "frame_idx": 3723,
-    "timestamp_sec": 372.3,
-    "bbox_xyxy": [
-      246,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-010\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_003723.jpg"
-  },
-  {
-    "asset_id": "CONT-009",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:50:33.238316+00:00",
-    "frame_idx": 4007,
-    "timestamp_sec": 400.7,
-    "bbox_xyxy": [
-      95,
-      43,
-      855,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-009\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_004007.jpg"
-  },
-  {
-    "asset_id": "CONT-009",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:50:59.736381+00:00",
-    "frame_idx": 4019,
-    "timestamp_sec": 401.9,
-    "bbox_xyxy": [
-      104,
-      43,
-      864,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-009\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_004019.jpg"
-  },
-  {
-    "asset_id": "CONT-009",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:51:16.621536+00:00",
-    "frame_idx": 4087,
-    "timestamp_sec": 408.7,
-    "bbox_xyxy": [
-      174,
-      43,
-      934,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-009\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_004087.jpg"
-  },
-  {
-    "asset_id": "CONT-009",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:51:26.296685+00:00",
-    "frame_idx": 4105,
-    "timestamp_sec": 410.5,
-    "bbox_xyxy": [
-      267,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-009\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_004105.jpg"
-  },
-  {
-    "asset_id": "CONT-008",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:52:01.961203+00:00",
-    "frame_idx": 4329,
-    "timestamp_sec": 432.9,
-    "bbox_xyxy": [
-      0,
-      43,
-      654,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-008\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_004329.jpg"
-  },
-  {
-    "asset_id": "CONT-008",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:52:09.296566+00:00",
-    "frame_idx": 4342,
-    "timestamp_sec": 434.2,
-    "bbox_xyxy": [
-      0,
-      43,
-      721,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-008\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_004342.jpg"
-  },
-  {
-    "asset_id": "CONT-008",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:52:15.340348+00:00",
-    "frame_idx": 4353,
-    "timestamp_sec": 435.3,
-    "bbox_xyxy": [
-      26,
-      43,
-      786,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-008\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_004353.jpg"
-  },
-  {
-    "asset_id": "CONT-008",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:52:36.006787+00:00",
-    "frame_idx": 4461,
-    "timestamp_sec": 446.1,
-    "bbox_xyxy": [
-      154,
-      43,
-      914,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-008\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_004461.jpg"
-  },
-  {
-    "asset_id": "CONT-008",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:52:45.481547+00:00",
-    "frame_idx": 4486,
-    "timestamp_sec": 448.6,
-    "bbox_xyxy": [
-      282,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-008\\ref_005.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_004486.jpg"
-  },
-  {
-    "asset_id": "CONT-007",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:53:19.929210+00:00",
-    "frame_idx": 4710,
-    "timestamp_sec": 471.0,
-    "bbox_xyxy": [
-      0,
-      43,
-      670,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-007\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_004710.jpg"
-  },
-  {
-    "asset_id": "CONT-007",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:53:27.379516+00:00",
-    "frame_idx": 4723,
-    "timestamp_sec": 472.3,
-    "bbox_xyxy": [
-      0,
-      43,
-      737,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-007\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_004723.jpg"
-  },
-  {
-    "asset_id": "CONT-007",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:53:33.399258+00:00",
-    "frame_idx": 4732,
-    "timestamp_sec": 473.2,
-    "bbox_xyxy": [
-      22,
-      43,
-      782,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-007\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_004732.jpg"
-  },
-  {
-    "asset_id": "CONT-007",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:53:58.048625+00:00",
-    "frame_idx": 4859,
-    "timestamp_sec": 485.9,
-    "bbox_xyxy": [
-      256,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-007\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_004859.jpg"
-  },
-  {
-    "asset_id": "CONT-007",
-    "class_name": "container",
-    "timestamp": "2026-10-31T16:54:05.291455+00:00",
-    "frame_idx": 4869,
-    "timestamp_sec": 486.9,
-    "bbox_xyxy": [
-      308,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-007\\ref_005.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_004869.jpg"
-  },
-  {
-    "asset_id": "CONT-014",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:14:53.398136+00:00",
-    "frame_idx": 6420,
-    "timestamp_sec": 642.0,
-    "bbox_xyxy": [
-      0,
-      43,
-      664,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-014\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_006420.jpg"
-  },
-  {
-    "asset_id": "CONT-014",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:15:00.121281+00:00",
-    "frame_idx": 6432,
-    "timestamp_sec": 643.2,
-    "bbox_xyxy": [
-      0,
-      43,
-      726,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-014\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_006432.jpg"
-  },
-  {
-    "asset_id": "CONT-014",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:15:05.270747+00:00",
-    "frame_idx": 6441,
-    "timestamp_sec": 644.1,
-    "bbox_xyxy": [
-      15,
-      43,
-      772,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-014\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_006441.jpg"
-  },
-  {
-    "asset_id": "CONT-014",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:15:10.585108+00:00",
-    "frame_idx": 6456,
-    "timestamp_sec": 645.6,
-    "bbox_xyxy": [
-      67,
-      43,
-      827,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-014\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_006456.jpg"
-  },
-  {
-    "asset_id": "CONT-014",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:15:28.331147+00:00",
-    "frame_idx": 6564,
-    "timestamp_sec": 656.4,
-    "bbox_xyxy": [
-      225,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-014\\ref_005.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_006564.jpg"
-  },
-  {
-    "asset_id": "CONT-014",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:15:32.378239+00:00",
-    "frame_idx": 6575,
-    "timestamp_sec": 657.5,
-    "bbox_xyxy": [
-      282,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-014\\ref_006.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_006575.jpg"
-  },
-  {
-    "asset_id": "CONT-015",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:16:03.158267+00:00",
-    "frame_idx": 6794,
-    "timestamp_sec": 679.4,
-    "bbox_xyxy": [
-      0,
-      43,
-      644,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-015\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_006794.jpg"
-  },
-  {
-    "asset_id": "CONT-015",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:16:12.002440+00:00",
-    "frame_idx": 6806,
-    "timestamp_sec": 680.6,
-    "bbox_xyxy": [
-      0,
-      43,
-      706,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-015\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_006806.jpg"
-  },
-  {
-    "asset_id": "CONT-015",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:16:16.900592+00:00",
-    "frame_idx": 6814,
-    "timestamp_sec": 681.4,
-    "bbox_xyxy": [
-      0,
-      43,
-      747,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-015\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_006814.jpg"
-  },
-  {
-    "asset_id": "CONT-015",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:16:21.816997+00:00",
-    "frame_idx": 6821,
-    "timestamp_sec": 682.1,
-    "bbox_xyxy": [
-      22,
-      43,
-      782,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-015\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_006821.jpg"
-  },
-  {
-    "asset_id": "CONT-015",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:16:26.577168+00:00",
-    "frame_idx": 6837,
-    "timestamp_sec": 683.7,
-    "bbox_xyxy": [
-      72,
-      43,
-      832,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-015\\ref_005.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_006837.jpg"
-  },
-  {
-    "asset_id": "CONT-015",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:16:42.815537+00:00",
-    "frame_idx": 6948,
-    "timestamp_sec": 694.8,
-    "bbox_xyxy": [
-      256,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-015\\ref_006.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_006948.jpg"
-  },
-  {
-    "asset_id": "CONT-015",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:16:46.546214+00:00",
-    "frame_idx": 6959,
-    "timestamp_sec": 695.9,
-    "bbox_xyxy": [
-      313,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-015\\ref_007.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_006959.jpg"
-  },
-  {
-    "asset_id": "CONT-016",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:17:18.825899+00:00",
-    "frame_idx": 7170,
-    "timestamp_sec": 717.0,
-    "bbox_xyxy": [
-      0,
-      43,
+      71,
       634,
-      551
+      286
     ],
     "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-016\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007170.jpg"
-  },
-  {
-    "asset_id": "CONT-016",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:17:23.719117+00:00",
-    "frame_idx": 7181,
-    "timestamp_sec": 718.1,
-    "bbox_xyxy": [
-      0,
-      43,
-      691,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-016\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007181.jpg"
-  },
-  {
-    "asset_id": "CONT-016",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:17:27.087292+00:00",
-    "frame_idx": 7191,
-    "timestamp_sec": 719.1,
-    "bbox_xyxy": [
-      0,
-      43,
-      742,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-016\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007191.jpg"
-  },
-  {
-    "asset_id": "CONT-016",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:17:30.678740+00:00",
-    "frame_idx": 7200,
-    "timestamp_sec": 720.0,
-    "bbox_xyxy": [
-      26,
-      43,
-      787,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-016\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007200.jpg"
-  },
-  {
-    "asset_id": "CONT-016",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:17:36.370621+00:00",
-    "frame_idx": 7219,
-    "timestamp_sec": 721.9,
-    "bbox_xyxy": [
-      80,
-      43,
-      841,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-016\\ref_005.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007219.jpg"
-  },
-  {
-    "asset_id": "CONT-016",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:20:31.708064+00:00",
-    "frame_idx": 7326,
-    "timestamp_sec": 732.6,
-    "bbox_xyxy": [
-      261,
-      43,
-      960,
-      553
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-016\\ref_006.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007326.jpg"
-  },
-  {
-    "asset_id": "CONT-017",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:21:03.011821+00:00",
-    "frame_idx": 7553,
-    "timestamp_sec": 755.3,
-    "bbox_xyxy": [
-      0,
-      43,
-      659,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-017\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007553.jpg"
-  },
-  {
-    "asset_id": "CONT-017",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:21:11.670502+00:00",
-    "frame_idx": 7565,
-    "timestamp_sec": 756.5,
-    "bbox_xyxy": [
-      0,
-      43,
-      726,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-017\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007565.jpg"
-  },
-  {
-    "asset_id": "CONT-017",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:21:16.350268+00:00",
-    "frame_idx": 7576,
-    "timestamp_sec": 757.6,
-    "bbox_xyxy": [
-      17,
-      43,
-      778,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-017\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007576.jpg"
-  },
-  {
-    "asset_id": "CONT-017",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:21:31.572384+00:00",
-    "frame_idx": 7673,
-    "timestamp_sec": 767.3,
-    "bbox_xyxy": [
-      117,
-      43,
-      878,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-017\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007673.jpg"
-  },
-  {
-    "asset_id": "CONT-017",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:21:37.470637+00:00",
-    "frame_idx": 7698,
-    "timestamp_sec": 769.8,
-    "bbox_xyxy": [
-      225,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-017\\ref_005.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007698.jpg"
-  },
-  {
-    "asset_id": "CONT-017",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:21:43.743430+00:00",
-    "frame_idx": 7717,
-    "timestamp_sec": 771.7,
-    "bbox_xyxy": [
-      322,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-017\\ref_006.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007717.jpg"
-  },
-  {
-    "asset_id": "CONT-018",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:22:15.756186+00:00",
-    "frame_idx": 7927,
-    "timestamp_sec": 792.7,
-    "bbox_xyxy": [
-      0,
-      43,
-      639,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-018\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007927.jpg"
-  },
-  {
-    "asset_id": "CONT-018",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:22:21.765199+00:00",
-    "frame_idx": 7935,
-    "timestamp_sec": 793.5,
-    "bbox_xyxy": [
-      0,
-      43,
-      680,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-018\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007935.jpg"
-  },
-  {
-    "asset_id": "CONT-018",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:22:25.682382+00:00",
-    "frame_idx": 7945,
-    "timestamp_sec": 794.5,
-    "bbox_xyxy": [
-      0,
-      43,
-      732,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-018\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007945.jpg"
-  },
-  {
-    "asset_id": "CONT-018",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:22:30.179182+00:00",
-    "frame_idx": 7964,
-    "timestamp_sec": 796.4,
-    "bbox_xyxy": [
-      54,
-      43,
-      815,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-018\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007964.jpg"
-  },
-  {
-    "asset_id": "CONT-018",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:22:34.930251+00:00",
-    "frame_idx": 7986,
-    "timestamp_sec": 798.6,
-    "bbox_xyxy": [
-      94,
-      43,
-      855,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-018\\ref_005.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_007986.jpg"
-  },
-  {
-    "asset_id": "CONT-018",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:22:48.972128+00:00",
-    "frame_idx": 8082,
-    "timestamp_sec": 808.2,
-    "bbox_xyxy": [
-      255,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-018\\ref_006.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_008082.jpg"
-  },
-  {
-    "asset_id": "CONT-024",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:24:15.980823+00:00",
-    "frame_idx": 8684,
-    "timestamp_sec": 868.4,
-    "bbox_xyxy": [
-      0,
-      35,
-      637,
-      563
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-024\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_008684.jpg"
-  },
-  {
-    "asset_id": "CONT-024",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:25:40.233353+00:00",
-    "frame_idx": 8692,
-    "timestamp_sec": 869.2,
-    "bbox_xyxy": [
-      0,
-      35,
-      675,
-      563
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-024\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_008692.jpg"
-  },
-  {
-    "asset_id": "CONT-024",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:25:50.280022+00:00",
-    "frame_idx": 8708,
-    "timestamp_sec": 870.8,
-    "bbox_xyxy": [
-      0,
-      35,
-      751,
-      563
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-024\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_008708.jpg"
-  },
-  {
-    "asset_id": "CONT-024",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:26:10.022265+00:00",
-    "frame_idx": 8708,
-    "timestamp_sec": 870.8,
-    "bbox_xyxy": [
-      0,
-      35,
-      751,
-      563
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-024\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_008708.jpg"
-  },
-  {
-    "asset_id": "CONT-024",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:27:26.732096+00:00",
-    "frame_idx": 8727,
-    "timestamp_sec": 872.7,
-    "bbox_xyxy": [
-      33,
-      35,
-      799,
-      563
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-024\\ref_005.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_008727.jpg"
-  },
-  {
-    "asset_id": "CONT-024",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:27:45.520039+00:00",
-    "frame_idx": 8848,
-    "timestamp_sec": 884.8,
-    "bbox_xyxy": [
-      231,
-      45,
-      960,
-      548
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-024\\ref_006.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_008848.jpg"
-  },
-  {
-    "asset_id": "CONT-023",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:28:31.972995+00:00",
-    "frame_idx": 9078,
-    "timestamp_sec": 907.8,
-    "bbox_xyxy": [
-      0,
-      43,
-      647,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-023\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009078.jpg"
-  },
-  {
-    "asset_id": "CONT-023",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:28:37.317685+00:00",
-    "frame_idx": 9085,
-    "timestamp_sec": 908.5,
-    "bbox_xyxy": [
-      0,
-      43,
-      684,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-023\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009085.jpg"
-  },
-  {
-    "asset_id": "CONT-023",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:28:42.371350+00:00",
-    "frame_idx": 9096,
-    "timestamp_sec": 909.6,
-    "bbox_xyxy": [
-      0,
-      43,
-      750,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-023\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009096.jpg"
-  },
-  {
-    "asset_id": "CONT-023",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:28:47.923317+00:00",
-    "frame_idx": 9110,
-    "timestamp_sec": 911.0,
-    "bbox_xyxy": [
-      44,
-      43,
-      804,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-023\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009110.jpg"
-  },
-  {
-    "asset_id": "CONT-023",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:39:28.976084+00:00",
-    "frame_idx": 9122,
-    "timestamp_sec": 912.2,
-    "bbox_xyxy": [
-      75,
-      43,
-      835,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-023\\ref_005.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009122.jpg"
-  },
-  {
-    "asset_id": "CONT-023",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:39:46.515663+00:00",
-    "frame_idx": 9225,
-    "timestamp_sec": 922.5,
-    "bbox_xyxy": [
-      225,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-023\\ref_006.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009225.jpg"
-  },
-  {
-    "asset_id": "CONT-023",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:39:54.407902+00:00",
-    "frame_idx": 9237,
-    "timestamp_sec": 923.7,
-    "bbox_xyxy": [
-      287,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-023\\ref_007.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009237.jpg"
-  },
-  {
-    "asset_id": "CONT-022",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:40:25.500690+00:00",
-    "frame_idx": 9453,
-    "timestamp_sec": 945.3,
-    "bbox_xyxy": [
-      0,
-      43,
-      634,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-022\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009453.jpg"
-  },
-  {
-    "asset_id": "CONT-022",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:40:33.694689+00:00",
-    "frame_idx": 9466,
-    "timestamp_sec": 946.6,
-    "bbox_xyxy": [
-      0,
-      43,
-      700,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-022\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009466.jpg"
-  },
-  {
-    "asset_id": "CONT-022",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:40:39.917269+00:00",
-    "frame_idx": 9473,
-    "timestamp_sec": 947.3,
-    "bbox_xyxy": [
-      0,
-      43,
-      736,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-022\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009473.jpg"
-  },
-  {
-    "asset_id": "CONT-022",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:40:45.093732+00:00",
-    "frame_idx": 9480,
-    "timestamp_sec": 948.0,
-    "bbox_xyxy": [
-      12,
-      43,
-      773,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-022\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009480.jpg"
-  },
-  {
-    "asset_id": "CONT-022",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:41:08.964475+00:00",
-    "frame_idx": 9563,
-    "timestamp_sec": 956.3,
-    "bbox_xyxy": [
-      104,
-      43,
-      864,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-022\\ref_005.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009563.jpg"
-  },
-  {
-    "asset_id": "CONT-022",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:42:59.967252+00:00",
-    "frame_idx": 9605,
-    "timestamp_sec": 960.5,
-    "bbox_xyxy": [
-      234,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-022\\ref_006.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009605.jpg"
-  },
-  {
-    "asset_id": "CONT-021",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:53:49.608925+00:00",
-    "frame_idx": 9836,
-    "timestamp_sec": 983.6,
-    "bbox_xyxy": [
-      0,
-      43,
-      658,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-021\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009836.jpg"
-  },
-  {
-    "asset_id": "CONT-021",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:54:16.042767+00:00",
-    "frame_idx": 9845,
-    "timestamp_sec": 984.5,
-    "bbox_xyxy": [
-      0,
-      43,
-      705,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-021\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009845.jpg"
-  },
-  {
-    "asset_id": "CONT-021",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:54:21.187841+00:00",
-    "frame_idx": 9856,
-    "timestamp_sec": 985.6,
-    "bbox_xyxy": [
-      1,
-      43,
-      761,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-021\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009856.jpg"
-  },
-  {
-    "asset_id": "CONT-021",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:54:37.051501+00:00",
-    "frame_idx": 9874,
-    "timestamp_sec": 987.4,
-    "bbox_xyxy": [
-      67,
-      43,
-      827,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-021\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009874.jpg"
-  },
-  {
-    "asset_id": "CONT-021",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:55:08.343602+00:00",
-    "frame_idx": 9908,
-    "timestamp_sec": 990.8,
-    "bbox_xyxy": [
-      103,
-      43,
-      863,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-021\\ref_005.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009908.jpg"
-  },
-  {
-    "asset_id": "CONT-021",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:55:52.216724+00:00",
-    "frame_idx": 9982,
-    "timestamp_sec": 998.2,
-    "bbox_xyxy": [
-      231,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-021\\ref_006.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009982.jpg"
-  },
-  {
-    "asset_id": "CONT-021",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:57:36.388564+00:00",
-    "frame_idx": 9989,
-    "timestamp_sec": 998.9,
-    "bbox_xyxy": [
-      267,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-021\\ref_007.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_009989.jpg"
-  },
-  {
-    "asset_id": "CONT-020",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:58:14.303885+00:00",
-    "frame_idx": 10263,
-    "timestamp_sec": 1026.3,
-    "bbox_xyxy": [
-      88,
-      43,
-      848,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-020\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_010263.jpg"
-  },
-  {
-    "asset_id": "CONT-020",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:58:21.334555+00:00",
-    "frame_idx": 10289,
-    "timestamp_sec": 1028.9,
-    "bbox_xyxy": [
-      104,
-      43,
-      864,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-020\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_010289.jpg"
-  },
-  {
-    "asset_id": "CONT-020",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:58:48.629746+00:00",
-    "frame_idx": 10309,
-    "timestamp_sec": 1030.9,
-    "bbox_xyxy": [
-      104,
-      43,
-      864,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-020\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_010309.jpg"
-  },
-  {
-    "asset_id": "CONT-020",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:59:00.857822+00:00",
-    "frame_idx": 10361,
-    "timestamp_sec": 1036.1,
-    "bbox_xyxy": [
-      235,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-020\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_010361.jpg"
-  },
-  {
-    "asset_id": "CONT-020",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:59:05.436734+00:00",
-    "frame_idx": 10371,
-    "timestamp_sec": 1037.1,
-    "bbox_xyxy": [
-      287,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-020\\ref_005.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_010371.jpg"
-  },
-  {
-    "asset_id": "CONT-020",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:59:10.831713+00:00",
-    "frame_idx": 10382,
-    "timestamp_sec": 1038.2,
-    "bbox_xyxy": [
-      343,
-      43,
-      960,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-020\\ref_006.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_010382.jpg"
-  },
-  {
-    "asset_id": "CONT-019",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:59:44.335466+00:00",
-    "frame_idx": 10586,
-    "timestamp_sec": 1058.6,
-    "bbox_xyxy": [
-      0,
-      43,
-      628,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-019\\ref_001.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_010586.jpg"
-  },
-  {
-    "asset_id": "CONT-019",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:59:50.321683+00:00",
-    "frame_idx": 10599,
-    "timestamp_sec": 1059.9,
-    "bbox_xyxy": [
-      0,
-      43,
-      695,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-019\\ref_002.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_010599.jpg"
-  },
-  {
-    "asset_id": "CONT-019",
-    "class_name": "container",
-    "timestamp": "2026-10-31T17:59:55.560422+00:00",
-    "frame_idx": 10609,
-    "timestamp_sec": 1060.9,
-    "bbox_xyxy": [
-      0,
-      43,
-      746,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-019\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_010609.jpg"
-  },
-  {
-    "asset_id": "CONT-019",
-    "class_name": "container",
-    "timestamp": "2026-10-31T18:00:00.620135+00:00",
-    "frame_idx": 10617,
-    "timestamp_sec": 1061.7,
-    "bbox_xyxy": [
-      26,
-      43,
-      786,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-019\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_010617.jpg"
-  },
-  {
-    "asset_id": "CONT-019",
-    "class_name": "container",
-    "timestamp": "2026-10-31T18:00:18.750711+00:00",
-    "frame_idx": 10680,
-    "timestamp_sec": 1068.0,
-    "bbox_xyxy": [
-      104,
-      43,
-      864,
-      551
-    ],
-    "embedding_dim": 512,
-    "ref_image": "data\\reference_images\\CONT-019\\ref_005.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_010680.jpg"
+    "ref_image": "data\\reference_images\\CONT-003\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_001580.jpg"
   },
   {
     "asset_id": "CONT-001",
     "class_name": "container",
-    "timestamp": "2026-10-31T18:01:08.754454+00:00",
-    "frame_idx": 10890,
-    "timestamp_sec": 1089.0,
+    "timestamp": "2026-11-04T08:25:59.053560+00:00",
+    "frame_idx": 372,
+    "timestamp_sec": 37.71,
     "bbox_xyxy": [
-      0,
-      43,
-      710,
-      551
+      59,
+      58,
+      618,
+      288
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-001\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_000372.jpg"
+  },
+  {
+    "asset_id": "CONT-001",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:26:09.076026+00:00",
+    "frame_idx": 376,
+    "timestamp_sec": 38.11,
+    "bbox_xyxy": [
+      40,
+      55,
+      601,
+      292
     ],
     "embedding_dim": 512,
     "ref_image": "data\\reference_images\\CONT-001\\ref_003.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_010890.jpg"
+    "yolo_image": "data\\datasets\\containers\\images\\frame_000376.jpg"
   },
   {
     "asset_id": "CONT-001",
     "class_name": "container",
-    "timestamp": "2026-10-31T18:01:15.512883+00:00",
-    "frame_idx": 10905,
-    "timestamp_sec": 1090.5,
+    "timestamp": "2026-11-04T08:26:25.305443+00:00",
+    "frame_idx": 391,
+    "timestamp_sec": 39.63,
     "bbox_xyxy": [
-      25,
-      43,
-      786,
-      551
+      26,
+      53,
+      589,
+      287
     ],
     "embedding_dim": 512,
     "ref_image": "data\\reference_images\\CONT-001\\ref_004.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_010905.jpg"
+    "yolo_image": "data\\datasets\\containers\\images\\frame_000391.jpg"
   },
   {
     "asset_id": "CONT-001",
     "class_name": "container",
-    "timestamp": "2026-10-31T18:01:41.575972+00:00",
-    "frame_idx": 11011,
-    "timestamp_sec": 1101.1,
+    "timestamp": "2026-11-04T08:26:44.064987+00:00",
+    "frame_idx": 407,
+    "timestamp_sec": 41.25,
     "bbox_xyxy": [
-      230,
-      42,
-      960,
-      552
+      28,
+      53,
+      586,
+      289
     ],
     "embedding_dim": 512,
     "ref_image": "data\\reference_images\\CONT-001\\ref_005.jpg",
-    "yolo_image": "data\\datasets\\containers\\images\\frame_011011.jpg"
+    "yolo_image": "data\\datasets\\containers\\images\\frame_000407.jpg"
+  },
+  {
+    "asset_id": "CONT-004",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:27:17.414786+00:00",
+    "frame_idx": 2096,
+    "timestamp_sec": 212.46,
+    "bbox_xyxy": [
+      89,
+      69,
+      640,
+      293
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-004\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_002096.jpg"
+  },
+  {
+    "asset_id": "CONT-004",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:27:27.863899+00:00",
+    "frame_idx": 2103,
+    "timestamp_sec": 213.16,
+    "bbox_xyxy": [
+      60,
+      57,
+      617,
+      291
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-004\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_002103.jpg"
+  },
+  {
+    "asset_id": "CONT-004",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:27:38.922365+00:00",
+    "frame_idx": 2114,
+    "timestamp_sec": 214.28,
+    "bbox_xyxy": [
+      30,
+      54,
+      592,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-004\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_002114.jpg"
+  },
+  {
+    "asset_id": "CONT-004",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:27:50.328814+00:00",
+    "frame_idx": 2129,
+    "timestamp_sec": 215.8,
+    "bbox_xyxy": [
+      29,
+      52,
+      590,
+      287
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-004\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_002129.jpg"
+  },
+  {
+    "asset_id": "CONT-004",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:28:05.407776+00:00",
+    "frame_idx": 2147,
+    "timestamp_sec": 217.62,
+    "bbox_xyxy": [
+      46,
+      57,
+      608,
+      287
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-004\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_002147.jpg"
+  },
+  {
+    "asset_id": "CONT-004",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:28:25.557981+00:00",
+    "frame_idx": 2153,
+    "timestamp_sec": 218.23,
+    "bbox_xyxy": [
+      82,
+      63,
+      637,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-004\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_002153.jpg"
+  },
+  {
+    "asset_id": "CONT-005",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:33:51.193370+00:00",
+    "frame_idx": 2667,
+    "timestamp_sec": 270.33,
+    "bbox_xyxy": [
+      99,
+      71,
+      634,
+      295
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-005\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_002667.jpg"
+  },
+  {
+    "asset_id": "CONT-005",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:34:00.093777+00:00",
+    "frame_idx": 2674,
+    "timestamp_sec": 271.04,
+    "bbox_xyxy": [
+      61,
+      59,
+      619,
+      292
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-005\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_002674.jpg"
+  },
+  {
+    "asset_id": "CONT-005",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:34:10.296060+00:00",
+    "frame_idx": 2685,
+    "timestamp_sec": 272.16,
+    "bbox_xyxy": [
+      31,
+      52,
+      592,
+      294
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-005\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_002685.jpg"
+  },
+  {
+    "asset_id": "CONT-005",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:34:41.490027+00:00",
+    "frame_idx": 2693,
+    "timestamp_sec": 272.97,
+    "bbox_xyxy": [
+      29,
+      54,
+      591,
+      288
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-005\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_002693.jpg"
+  },
+  {
+    "asset_id": "CONT-005",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:34:57.447514+00:00",
+    "frame_idx": 2716,
+    "timestamp_sec": 275.3,
+    "bbox_xyxy": [
+      37,
+      55,
+      591,
+      284
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-005\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_002716.jpg"
+  },
+  {
+    "asset_id": "CONT-005",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:35:09.495497+00:00",
+    "frame_idx": 2721,
+    "timestamp_sec": 275.81,
+    "bbox_xyxy": [
+      59,
+      59,
+      620,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-005\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_002721.jpg"
+  },
+  {
+    "asset_id": "CONT-006",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:35:32.768257+00:00",
+    "frame_idx": 3236,
+    "timestamp_sec": 328.01,
+    "bbox_xyxy": [
+      129,
+      0,
+      640,
+      304
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-006\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_003236.jpg"
+  },
+  {
+    "asset_id": "CONT-006",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:35:42.770426+00:00",
+    "frame_idx": 3242,
+    "timestamp_sec": 328.62,
+    "bbox_xyxy": [
+      130,
+      0,
+      640,
+      300
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-006\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_003242.jpg"
+  },
+  {
+    "asset_id": "CONT-006",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:36:16.664785+00:00",
+    "frame_idx": 3253,
+    "timestamp_sec": 329.73,
+    "bbox_xyxy": [
+      55,
+      59,
+      613,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-006\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_003253.jpg"
+  },
+  {
+    "asset_id": "CONT-006",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:36:29.856048+00:00",
+    "frame_idx": 3259,
+    "timestamp_sec": 330.34,
+    "bbox_xyxy": [
+      37,
+      54,
+      598,
+      289
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-006\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_003259.jpg"
+  },
+  {
+    "asset_id": "CONT-006",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:36:45.945046+00:00",
+    "frame_idx": 3268,
+    "timestamp_sec": 331.25,
+    "bbox_xyxy": [
+      26,
+      51,
+      584,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-006\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_003268.jpg"
+  },
+  {
+    "asset_id": "CONT-006",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:37:01.798907+00:00",
+    "frame_idx": 3292,
+    "timestamp_sec": 333.68,
+    "bbox_xyxy": [
+      29,
+      52,
+      587,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-006\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_003292.jpg"
+  },
+  {
+    "asset_id": "CONT-012",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:37:59.635099+00:00",
+    "frame_idx": 4054,
+    "timestamp_sec": 410.92,
+    "bbox_xyxy": [
+      89,
+      65,
+      631,
+      289
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-012\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_004054.jpg"
+  },
+  {
+    "asset_id": "CONT-012",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:38:21.247026+00:00",
+    "frame_idx": 4058,
+    "timestamp_sec": 411.33,
+    "bbox_xyxy": [
+      62,
+      61,
+      625,
+      291
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-012\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_004058.jpg"
+  },
+  {
+    "asset_id": "CONT-012",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:38:32.472740+00:00",
+    "frame_idx": 4064,
+    "timestamp_sec": 411.94,
+    "bbox_xyxy": [
+      46,
+      56,
+      593,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-012\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_004064.jpg"
+  },
+  {
+    "asset_id": "CONT-012",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:38:49.250037+00:00",
+    "frame_idx": 4072,
+    "timestamp_sec": 412.75,
+    "bbox_xyxy": [
+      30,
+      52,
+      586,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-012\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_004072.jpg"
+  },
+  {
+    "asset_id": "CONT-012",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:39:03.040331+00:00",
+    "frame_idx": 4080,
+    "timestamp_sec": 413.56,
+    "bbox_xyxy": [
+      28,
+      53,
+      586,
+      287
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-012\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_004080.jpg"
+  },
+  {
+    "asset_id": "CONT-012",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:39:22.560664+00:00",
+    "frame_idx": 4109,
+    "timestamp_sec": 416.5,
+    "bbox_xyxy": [
+      80,
+      45,
+      636,
+      285
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-012\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_004109.jpg"
+  },
+  {
+    "asset_id": "CONT-011",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:40:02.861318+00:00",
+    "frame_idx": 4623,
+    "timestamp_sec": 468.6,
+    "bbox_xyxy": [
+      139,
+      59,
+      637,
+      294
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-011\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_004623.jpg"
+  },
+  {
+    "asset_id": "CONT-011",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:40:13.468796+00:00",
+    "frame_idx": 4630,
+    "timestamp_sec": 469.31,
+    "bbox_xyxy": [
+      84,
+      64,
+      635,
+      292
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-011\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_004630.jpg"
+  },
+  {
+    "asset_id": "CONT-011",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:40:25.686216+00:00",
+    "frame_idx": 4635,
+    "timestamp_sec": 469.81,
+    "bbox_xyxy": [
+      55,
+      59,
+      617,
+      287
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-011\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_004635.jpg"
+  },
+  {
+    "asset_id": "CONT-011",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:40:40.027009+00:00",
+    "frame_idx": 4647,
+    "timestamp_sec": 471.03,
+    "bbox_xyxy": [
+      29,
+      50,
+      595,
+      287
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-011\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_004647.jpg"
+  },
+  {
+    "asset_id": "CONT-011",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:41:07.467448+00:00",
+    "frame_idx": 4657,
+    "timestamp_sec": 472.04,
+    "bbox_xyxy": [
+      26,
+      50,
+      586,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-011\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_004657.jpg"
+  },
+  {
+    "asset_id": "CONT-011",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:41:22.692024+00:00",
+    "frame_idx": 4677,
+    "timestamp_sec": 474.07,
+    "bbox_xyxy": [
+      31,
+      45,
+      598,
+      291
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-011\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_004677.jpg"
+  },
+  {
+    "asset_id": "CONT-010",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:43:02.850979+00:00",
+    "frame_idx": 5199,
+    "timestamp_sec": 526.98,
+    "bbox_xyxy": [
+      124,
+      76,
+      634,
+      298
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-010\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_005199.jpg"
+  },
+  {
+    "asset_id": "CONT-010",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:43:10.588480+00:00",
+    "frame_idx": 5203,
+    "timestamp_sec": 527.39,
+    "bbox_xyxy": [
+      87,
+      62,
+      636,
+      296
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-010\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_005203.jpg"
+  },
+  {
+    "asset_id": "CONT-010",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:43:21.166948+00:00",
+    "frame_idx": 5215,
+    "timestamp_sec": 528.6,
+    "bbox_xyxy": [
+      40,
+      53,
+      598,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-010\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_005215.jpg"
+  },
+  {
+    "asset_id": "CONT-010",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:43:28.026442+00:00",
+    "frame_idx": 5219,
+    "timestamp_sec": 529.01,
+    "bbox_xyxy": [
+      33,
+      52,
+      595,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-010\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_005219.jpg"
+  },
+  {
+    "asset_id": "CONT-010",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:43:33.659124+00:00",
+    "frame_idx": 5227,
+    "timestamp_sec": 529.82,
+    "bbox_xyxy": [
+      28,
+      51,
+      590,
+      289
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-010\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_005227.jpg"
+  },
+  {
+    "asset_id": "CONT-009",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:44:13.606771+00:00",
+    "frame_idx": 5772,
+    "timestamp_sec": 585.06,
+    "bbox_xyxy": [
+      130,
+      70,
+      634,
+      294
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-009\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_005772.jpg"
+  },
+  {
+    "asset_id": "CONT-009",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:44:22.145462+00:00",
+    "frame_idx": 5778,
+    "timestamp_sec": 585.67,
+    "bbox_xyxy": [
+      79,
+      66,
+      635,
+      296
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-009\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_005778.jpg"
+  },
+  {
+    "asset_id": "CONT-009",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:44:30.953192+00:00",
+    "frame_idx": 5786,
+    "timestamp_sec": 586.48,
+    "bbox_xyxy": [
+      46,
+      57,
+      606,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-009\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_005786.jpg"
+  },
+  {
+    "asset_id": "CONT-009",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:44:40.313817+00:00",
+    "frame_idx": 5798,
+    "timestamp_sec": 587.7,
+    "bbox_xyxy": [
+      24,
+      51,
+      589,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-009\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_005798.jpg"
+  },
+  {
+    "asset_id": "CONT-009",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:44:50.418638+00:00",
+    "frame_idx": 5808,
+    "timestamp_sec": 588.71,
+    "bbox_xyxy": [
+      27,
+      53,
+      587,
+      288
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-009\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_005808.jpg"
+  },
+  {
+    "asset_id": "CONT-009",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:45:07.204015+00:00",
+    "frame_idx": 5829,
+    "timestamp_sec": 590.84,
+    "bbox_xyxy": [
+      50,
+      54,
+      613,
+      289
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-009\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_005829.jpg"
+  },
+  {
+    "asset_id": "CONT-008",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:45:35.560157+00:00",
+    "frame_idx": 6351,
+    "timestamp_sec": 643.75,
+    "bbox_xyxy": [
+      111,
+      68,
+      632,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-008\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_006351.jpg"
+  },
+  {
+    "asset_id": "CONT-008",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:45:45.614717+00:00",
+    "frame_idx": 6357,
+    "timestamp_sec": 644.36,
+    "bbox_xyxy": [
+      71,
+      62,
+      630,
+      294
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-008\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_006357.jpg"
+  },
+  {
+    "asset_id": "CONT-008",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:45:54.005839+00:00",
+    "frame_idx": 6366,
+    "timestamp_sec": 645.27,
+    "bbox_xyxy": [
+      42,
+      53,
+      598,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-008\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_006366.jpg"
+  },
+  {
+    "asset_id": "CONT-008",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:46:02.991775+00:00",
+    "frame_idx": 6379,
+    "timestamp_sec": 646.59,
+    "bbox_xyxy": [
+      26,
+      49,
+      590,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-008\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_006379.jpg"
+  },
+  {
+    "asset_id": "CONT-008",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:46:13.718529+00:00",
+    "frame_idx": 6403,
+    "timestamp_sec": 649.02,
+    "bbox_xyxy": [
+      38,
+      52,
+      596,
+      291
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-008\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_006403.jpg"
+  },
+  {
+    "asset_id": "CONT-008",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:46:24.439862+00:00",
+    "frame_idx": 6410,
+    "timestamp_sec": 649.73,
+    "bbox_xyxy": [
+      73,
+      58,
+      639,
+      293
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-008\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_006410.jpg"
+  },
+  {
+    "asset_id": "CONT-007",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:46:45.329264+00:00",
+    "frame_idx": 6931,
+    "timestamp_sec": 702.54,
+    "bbox_xyxy": [
+      73,
+      61,
+      638,
+      295
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-007\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_006931.jpg"
+  },
+  {
+    "asset_id": "CONT-007",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:52:09.911802+00:00",
+    "frame_idx": 6937,
+    "timestamp_sec": 703.15,
+    "bbox_xyxy": [
+      51,
+      58,
+      609,
+      292
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-007\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_006937.jpg"
+  },
+  {
+    "asset_id": "CONT-007",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:52:22.844049+00:00",
+    "frame_idx": 6947,
+    "timestamp_sec": 704.16,
+    "bbox_xyxy": [
+      29,
+      53,
+      593,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-007\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_006947.jpg"
+  },
+  {
+    "asset_id": "CONT-007",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:52:31.048335+00:00",
+    "frame_idx": 6954,
+    "timestamp_sec": 704.87,
+    "bbox_xyxy": [
+      26,
+      49,
+      587,
+      292
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-007\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_006954.jpg"
+  },
+  {
+    "asset_id": "CONT-007",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:52:40.493048+00:00",
+    "frame_idx": 6965,
+    "timestamp_sec": 705.99,
+    "bbox_xyxy": [
+      26,
+      45,
+      587,
+      287
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-007\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_006965.jpg"
+  },
+  {
+    "asset_id": "CONT-013",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:52:57.959199+00:00",
+    "frame_idx": 8180,
+    "timestamp_sec": 829.14,
+    "bbox_xyxy": [
+      38,
+      41,
+      596,
+      292
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-013\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_008180.jpg"
+  },
+  {
+    "asset_id": "CONT-013",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:53:10.811727+00:00",
+    "frame_idx": 8217,
+    "timestamp_sec": 832.89,
+    "bbox_xyxy": [
+      42,
+      42,
+      602,
+      283
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-013\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_008217.jpg"
+  },
+  {
+    "asset_id": "CONT-013",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:53:19.905981+00:00",
+    "frame_idx": 8221,
+    "timestamp_sec": 833.3,
+    "bbox_xyxy": [
+      22,
+      42,
+      586,
+      289
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-013\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_008221.jpg"
+  },
+  {
+    "asset_id": "CONT-013",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:53:46.931272+00:00",
+    "frame_idx": 8226,
+    "timestamp_sec": 833.81,
+    "bbox_xyxy": [
+      1,
+      42,
+      541,
+      293
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-013\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_008226.jpg"
+  },
+  {
+    "asset_id": "CONT-013",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:53:57.819362+00:00",
+    "frame_idx": 8230,
+    "timestamp_sec": 834.21,
+    "bbox_xyxy": [
+      4,
+      41,
+      517,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-013\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_008230.jpg"
+  },
+  {
+    "asset_id": "CONT-013",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:54:11.856103+00:00",
+    "frame_idx": 8236,
+    "timestamp_sec": 834.82,
+    "bbox_xyxy": [
+      3,
+      45,
+      466,
+      281
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-013\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_008236.jpg"
+  },
+  {
+    "asset_id": "CONT-014",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:54:29.470327+00:00",
+    "frame_idx": 8745,
+    "timestamp_sec": 886.41,
+    "bbox_xyxy": [
+      4,
+      46,
+      562,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-014\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_008745.jpg"
+  },
+  {
+    "asset_id": "CONT-014",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:58:23.997508+00:00",
+    "frame_idx": 8749,
+    "timestamp_sec": 886.82,
+    "bbox_xyxy": [
+      20,
+      44,
+      587,
+      285
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-014\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_008749.jpg"
+  },
+  {
+    "asset_id": "CONT-014",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:58:33.254668+00:00",
+    "frame_idx": 8758,
+    "timestamp_sec": 887.73,
+    "bbox_xyxy": [
+      46,
+      45,
+      604,
+      291
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-014\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_008758.jpg"
+  },
+  {
+    "asset_id": "CONT-014",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:58:45.806432+00:00",
+    "frame_idx": 8768,
+    "timestamp_sec": 888.74,
+    "bbox_xyxy": [
+      52,
+      50,
+      613,
+      283
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-014\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_008768.jpg"
+  },
+  {
+    "asset_id": "CONT-014",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:58:59.166237+00:00",
+    "frame_idx": 8780,
+    "timestamp_sec": 889.96,
+    "bbox_xyxy": [
+      51,
+      46,
+      614,
+      288
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-014\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_008780.jpg"
+  },
+  {
+    "asset_id": "CONT-014",
+    "class_name": "container",
+    "timestamp": "2026-11-04T08:59:13.449231+00:00",
+    "frame_idx": 8793,
+    "timestamp_sec": 891.28,
+    "bbox_xyxy": [
+      36,
+      45,
+      593,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-014\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_008793.jpg"
+  },
+  {
+    "asset_id": "CONT-015",
+    "class_name": "container",
+    "timestamp": "2026-11-04T09:01:03.066843+00:00",
+    "frame_idx": 9334,
+    "timestamp_sec": 946.12,
+    "bbox_xyxy": [
+      41,
+      44,
+      605,
+      284
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-015\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_009334.jpg"
+  },
+  {
+    "asset_id": "CONT-015",
+    "class_name": "container",
+    "timestamp": "2026-11-04T09:01:10.031132+00:00",
+    "frame_idx": 9338,
+    "timestamp_sec": 946.52,
+    "bbox_xyxy": [
+      48,
+      44,
+      613,
+      284
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-015\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_009338.jpg"
+  },
+  {
+    "asset_id": "CONT-015",
+    "class_name": "container",
+    "timestamp": "2026-11-04T09:01:21.661275+00:00",
+    "frame_idx": 9366,
+    "timestamp_sec": 949.36,
+    "bbox_xyxy": [
+      39,
+      42,
+      601,
+      284
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-015\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_009366.jpg"
+  },
+  {
+    "asset_id": "CONT-015",
+    "class_name": "container",
+    "timestamp": "2026-11-04T09:01:34.529133+00:00",
+    "frame_idx": 9371,
+    "timestamp_sec": 949.87,
+    "bbox_xyxy": [
+      8,
+      42,
+      572,
+      288
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-015\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_009371.jpg"
+  },
+  {
+    "asset_id": "CONT-015",
+    "class_name": "container",
+    "timestamp": "2026-11-04T09:01:44.610595+00:00",
+    "frame_idx": 9377,
+    "timestamp_sec": 950.47,
+    "bbox_xyxy": [
+      3,
+      41,
+      521,
+      281
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-015\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_009377.jpg"
+  },
+  {
+    "asset_id": "CONT-016",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:05:22.760284+00:00",
+    "frame_idx": 9894,
+    "timestamp_sec": 1002.88,
+    "bbox_xyxy": [
+      3,
+      43,
+      548,
+      288
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-016\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_009894.jpg"
+  },
+  {
+    "asset_id": "CONT-016",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:05:33.816283+00:00",
+    "frame_idx": 9899,
+    "timestamp_sec": 1003.39,
+    "bbox_xyxy": [
+      14,
+      45,
+      575,
+      282
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-016\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_009899.jpg"
+  },
+  {
+    "asset_id": "CONT-016",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:05:43.004456+00:00",
+    "frame_idx": 9906,
+    "timestamp_sec": 1004.09,
+    "bbox_xyxy": [
+      37,
+      44,
+      600,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-016\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_009906.jpg"
+  },
+  {
+    "asset_id": "CONT-016",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:05:53.538668+00:00",
+    "frame_idx": 9913,
+    "timestamp_sec": 1004.8,
+    "bbox_xyxy": [
+      47,
+      45,
+      612,
+      289
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-016\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_009913.jpg"
+  },
+  {
+    "asset_id": "CONT-016",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:06:03.678746+00:00",
+    "frame_idx": 9932,
+    "timestamp_sec": 1006.73,
+    "bbox_xyxy": [
+      55,
+      48,
+      611,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-016\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_009932.jpg"
+  },
+  {
+    "asset_id": "CONT-016",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:06:15.151240+00:00",
+    "frame_idx": 9943,
+    "timestamp_sec": 1007.85,
+    "bbox_xyxy": [
+      44,
+      49,
+      603,
+      288
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-016\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_009943.jpg"
+  },
+  {
+    "asset_id": "CONT-017",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:06:33.363376+00:00",
+    "frame_idx": 10467,
+    "timestamp_sec": 1060.96,
+    "bbox_xyxy": [
+      1,
+      43,
+      540,
+      282
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-017\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_010467.jpg"
+  },
+  {
+    "asset_id": "CONT-017",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:06:41.724763+00:00",
+    "frame_idx": 10474,
+    "timestamp_sec": 1061.67,
+    "bbox_xyxy": [
+      21,
+      43,
+      581,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-017\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_010474.jpg"
+  },
+  {
+    "asset_id": "CONT-017",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:06:53.026065+00:00",
+    "frame_idx": 10485,
+    "timestamp_sec": 1062.78,
+    "bbox_xyxy": [
+      46,
+      49,
+      605,
+      289
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-017\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_010485.jpg"
+  },
+  {
+    "asset_id": "CONT-017",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:07:01.572044+00:00",
+    "frame_idx": 10494,
+    "timestamp_sec": 1063.7,
+    "bbox_xyxy": [
+      55,
+      49,
+      612,
+      289
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-017\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_010494.jpg"
+  },
+  {
+    "asset_id": "CONT-017",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:07:11.192573+00:00",
+    "frame_idx": 10507,
+    "timestamp_sec": 1065.01,
+    "bbox_xyxy": [
+      52,
+      45,
+      611,
+      289
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-017\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_010507.jpg"
+  },
+  {
+    "asset_id": "CONT-017",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:07:20.158591+00:00",
+    "frame_idx": 10516,
+    "timestamp_sec": 1065.93,
+    "bbox_xyxy": [
+      46,
+      44,
+      600,
+      284
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-017\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_010516.jpg"
+  },
+  {
+    "asset_id": "CONT-018",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:07:35.568146+00:00",
+    "frame_idx": 11042,
+    "timestamp_sec": 1119.24,
+    "bbox_xyxy": [
+      4,
+      47,
+      540,
+      285
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-018\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_011042.jpg"
+  },
+  {
+    "asset_id": "CONT-018",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:07:46.358323+00:00",
+    "frame_idx": 11049,
+    "timestamp_sec": 1119.95,
+    "bbox_xyxy": [
+      24,
+      46,
+      583,
+      287
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-018\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_011049.jpg"
+  },
+  {
+    "asset_id": "CONT-018",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:07:59.120552+00:00",
+    "frame_idx": 11057,
+    "timestamp_sec": 1120.76,
+    "bbox_xyxy": [
+      45,
+      46,
+      607,
+      291
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-018\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_011057.jpg"
+  },
+  {
+    "asset_id": "CONT-018",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:08:11.042350+00:00",
+    "frame_idx": 11065,
+    "timestamp_sec": 1121.57,
+    "bbox_xyxy": [
+      51,
+      44,
+      610,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-018\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_011065.jpg"
+  },
+  {
+    "asset_id": "CONT-018",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:08:26.124060+00:00",
+    "frame_idx": 11077,
+    "timestamp_sec": 1122.79,
+    "bbox_xyxy": [
+      52,
+      45,
+      611,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-018\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_011077.jpg"
+  },
+  {
+    "asset_id": "CONT-018",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:08:46.022597+00:00",
+    "frame_idx": 11090,
+    "timestamp_sec": 1124.11,
+    "bbox_xyxy": [
+      44,
+      46,
+      600,
+      285
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-018\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_011090.jpg"
+  },
+  {
+    "asset_id": "CONT-024",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:09:27.310989+00:00",
+    "frame_idx": 12289,
+    "timestamp_sec": 1245.64,
+    "bbox_xyxy": [
+      66,
+      64,
+      620,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-024\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_012289.jpg"
+  },
+  {
+    "asset_id": "CONT-024",
+    "class_name": "container",
+    "timestamp": "2026-11-04T10:09:40.940640+00:00",
+    "frame_idx": 12294,
+    "timestamp_sec": 1246.15,
+    "bbox_xyxy": [
+      48,
+      57,
+      603,
+      289
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-024\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_012294.jpg"
+  },
+  {
+    "asset_id": "CONT-024",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:16:37.874290+00:00",
+    "frame_idx": 12294,
+    "timestamp_sec": 1246.15,
+    "bbox_xyxy": [
+      40,
+      57,
+      603,
+      295
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-024\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_012294.jpg"
+  },
+  {
+    "asset_id": "CONT-024",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:18:27.960202+00:00",
+    "frame_idx": 12299,
+    "timestamp_sec": 1246.65,
+    "bbox_xyxy": [
+      39,
+      57,
+      597,
+      283
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-024\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_012299.jpg"
+  },
+  {
+    "asset_id": "CONT-024",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:18:37.656524+00:00",
+    "frame_idx": 12310,
+    "timestamp_sec": 1247.77,
+    "bbox_xyxy": [
+      25,
+      52,
+      595,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-024\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_012310.jpg"
+  },
+  {
+    "asset_id": "CONT-024",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:18:48.650997+00:00",
+    "frame_idx": 12322,
+    "timestamp_sec": 1248.99,
+    "bbox_xyxy": [
+      30,
+      51,
+      588,
+      291
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-024\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_012322.jpg"
+  },
+  {
+    "asset_id": "CONT-023",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:19:10.236516+00:00",
+    "frame_idx": 12863,
+    "timestamp_sec": 1303.82,
+    "bbox_xyxy": [
+      55,
+      58,
+      612,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-023\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_012863.jpg"
+  },
+  {
+    "asset_id": "CONT-023",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:19:21.400006+00:00",
+    "frame_idx": 12870,
+    "timestamp_sec": 1304.53,
+    "bbox_xyxy": [
+      34,
+      53,
+      602,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-023\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_012870.jpg"
+  },
+  {
+    "asset_id": "CONT-023",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:19:29.300402+00:00",
+    "frame_idx": 12877,
+    "timestamp_sec": 1305.24,
+    "bbox_xyxy": [
+      27,
+      52,
+      589,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-023\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_012877.jpg"
+  },
+  {
+    "asset_id": "CONT-023",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:19:39.030837+00:00",
+    "frame_idx": 12895,
+    "timestamp_sec": 1307.07,
+    "bbox_xyxy": [
+      25,
+      49,
+      592,
+      289
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-023\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_012895.jpg"
+  },
+  {
+    "asset_id": "CONT-023",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:22:26.177502+00:00",
+    "frame_idx": 12901,
+    "timestamp_sec": 1307.67,
+    "bbox_xyxy": [
+      28,
+      53,
+      588,
+      288
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-023\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_012901.jpg"
+  },
+  {
+    "asset_id": "CONT-022",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:22:43.622566+00:00",
+    "frame_idx": 13434,
+    "timestamp_sec": 1361.7,
+    "bbox_xyxy": [
+      66,
+      60,
+      626,
+      288
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-022\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_013434.jpg"
+  },
+  {
+    "asset_id": "CONT-022",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:22:49.633856+00:00",
+    "frame_idx": 13440,
+    "timestamp_sec": 1362.31,
+    "bbox_xyxy": [
+      42,
+      51,
+      609,
+      288
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-022\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_013440.jpg"
+  },
+  {
+    "asset_id": "CONT-022",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:22:56.161821+00:00",
+    "frame_idx": 13449,
+    "timestamp_sec": 1363.22,
+    "bbox_xyxy": [
+      30,
+      52,
+      590,
+      289
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-022\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_013449.jpg"
+  },
+  {
+    "asset_id": "CONT-022",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:23:01.872902+00:00",
+    "frame_idx": 13458,
+    "timestamp_sec": 1364.13,
+    "bbox_xyxy": [
+      25,
+      52,
+      588,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-022\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_013458.jpg"
+  },
+  {
+    "asset_id": "CONT-022",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:23:10.232499+00:00",
+    "frame_idx": 13482,
+    "timestamp_sec": 1366.57,
+    "bbox_xyxy": [
+      59,
+      56,
+      616,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-022\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_013482.jpg"
+  },
+  {
+    "asset_id": "CONT-022",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:23:18.928732+00:00",
+    "frame_idx": 13485,
+    "timestamp_sec": 1366.87,
+    "bbox_xyxy": [
+      77,
+      58,
+      634,
+      292
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-022\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_013485.jpg"
+  },
+  {
+    "asset_id": "CONT-021",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:30:18.678076+00:00",
+    "frame_idx": 14006,
+    "timestamp_sec": 1419.68,
+    "bbox_xyxy": [
+      99,
+      72,
+      631,
+      291
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-021\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_014006.jpg"
+  },
+  {
+    "asset_id": "CONT-021",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:30:26.452596+00:00",
+    "frame_idx": 14013,
+    "timestamp_sec": 1420.39,
+    "bbox_xyxy": [
+      61,
+      56,
+      615,
+      292
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-021\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_014013.jpg"
+  },
+  {
+    "asset_id": "CONT-021",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:30:34.126124+00:00",
+    "frame_idx": 14020,
+    "timestamp_sec": 1421.1,
+    "bbox_xyxy": [
+      39,
+      51,
+      601,
+      291
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-021\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_014020.jpg"
+  },
+  {
+    "asset_id": "CONT-021",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:30:41.756831+00:00",
+    "frame_idx": 14033,
+    "timestamp_sec": 1422.42,
+    "bbox_xyxy": [
+      25,
+      51,
+      587,
+      286
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-021\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_014033.jpg"
+  },
+  {
+    "asset_id": "CONT-021",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:30:49.899206+00:00",
+    "frame_idx": 14039,
+    "timestamp_sec": 1423.02,
+    "bbox_xyxy": [
+      28,
+      48,
+      586,
+      288
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-021\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_014039.jpg"
+  },
+  {
+    "asset_id": "CONT-021",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:30:59.017477+00:00",
+    "frame_idx": 14047,
+    "timestamp_sec": 1423.84,
+    "bbox_xyxy": [
+      27,
+      47,
+      585,
+      287
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-021\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_014047.jpg"
+  },
+  {
+    "asset_id": "CONT-020",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:31:22.920531+00:00",
+    "frame_idx": 14585,
+    "timestamp_sec": 1478.37,
+    "bbox_xyxy": [
+      66,
+      61,
+      628,
+      294
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-020\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_014585.jpg"
+  },
+  {
+    "asset_id": "CONT-020",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:31:30.403668+00:00",
+    "frame_idx": 14592,
+    "timestamp_sec": 1479.08,
+    "bbox_xyxy": [
+      41,
+      52,
+      610,
+      293
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-020\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_014592.jpg"
+  },
+  {
+    "asset_id": "CONT-020",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:31:39.758328+00:00",
+    "frame_idx": 14599,
+    "timestamp_sec": 1479.79,
+    "bbox_xyxy": [
+      31,
+      52,
+      601,
+      288
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-020\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_014599.jpg"
+  },
+  {
+    "asset_id": "CONT-020",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:31:48.525066+00:00",
+    "frame_idx": 14604,
+    "timestamp_sec": 1480.29,
+    "bbox_xyxy": [
+      25,
+      49,
+      584,
+      288
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-020\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_014604.jpg"
+  },
+  {
+    "asset_id": "CONT-020",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:31:56.364592+00:00",
+    "frame_idx": 14617,
+    "timestamp_sec": 1481.61,
+    "bbox_xyxy": [
+      26,
+      50,
+      586,
+      289
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-020\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_014617.jpg"
+  },
+  {
+    "asset_id": "CONT-020",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:32:06.279062+00:00",
+    "frame_idx": 14630,
+    "timestamp_sec": 1482.93,
+    "bbox_xyxy": [
+      37,
+      49,
+      594,
+      287
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-020\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_014630.jpg"
+  },
+  {
+    "asset_id": "CONT-019",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:32:39.900749+00:00",
+    "frame_idx": 15158,
+    "timestamp_sec": 1536.45,
+    "bbox_xyxy": [
+      83,
+      60,
+      630,
+      287
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-019\\ref_001.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_015158.jpg"
+  },
+  {
+    "asset_id": "CONT-019",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:33:00.689905+00:00",
+    "frame_idx": 15166,
+    "timestamp_sec": 1537.26,
+    "bbox_xyxy": [
+      47,
+      55,
+      607,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-019\\ref_002.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_015166.jpg"
+  },
+  {
+    "asset_id": "CONT-019",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:33:08.738071+00:00",
+    "frame_idx": 15173,
+    "timestamp_sec": 1537.97,
+    "bbox_xyxy": [
+      33,
+      49,
+      594,
+      293
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-019\\ref_003.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_015173.jpg"
+  },
+  {
+    "asset_id": "CONT-019",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:33:17.237236+00:00",
+    "frame_idx": 15182,
+    "timestamp_sec": 1538.88,
+    "bbox_xyxy": [
+      27,
+      49,
+      590,
+      290
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-019\\ref_004.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_015182.jpg"
+  },
+  {
+    "asset_id": "CONT-019",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:33:27.849928+00:00",
+    "frame_idx": 15190,
+    "timestamp_sec": 1539.69,
+    "bbox_xyxy": [
+      28,
+      50,
+      587,
+      291
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-019\\ref_005.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_015190.jpg"
+  },
+  {
+    "asset_id": "CONT-019",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:33:39.357912+00:00",
+    "frame_idx": 15199,
+    "timestamp_sec": 1540.61,
+    "bbox_xyxy": [
+      27,
+      51,
+      581,
+      284
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-019\\ref_006.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_015199.jpg"
+  },
+  {
+    "asset_id": "CONT-019",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:42:28.298210+00:00",
+    "frame_idx": 15203,
+    "timestamp_sec": 1541.01,
+    "bbox_xyxy": [
+      31,
+      52,
+      591,
+      289
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-019\\ref_007.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_015203.jpg"
+  },
+  {
+    "asset_id": "CONT-019",
+    "class_name": "container",
+    "timestamp": "2026-11-04T12:42:38.402480+00:00",
+    "frame_idx": 15208,
+    "timestamp_sec": 1541.52,
+    "bbox_xyxy": [
+      50,
+      57,
+      613,
+      289
+    ],
+    "embedding_dim": 512,
+    "ref_image": "data\\reference_images\\CONT-019\\ref_008.jpg",
+    "yolo_image": "data\\datasets\\containers\\images\\frame_015208.jpg"
   }
 ]

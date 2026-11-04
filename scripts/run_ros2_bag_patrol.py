@@ -82,6 +82,17 @@ class ROS2BagPatrolRunner:
         self.proposer = ContainerProposer()
         self.voter = SpatialVoter()
 
+        # Initialize trained YOLO detector
+        self.detector = None
+        yolo_pt = PROJECT_ROOT / "models" / "detection" / "best.pt"
+        if yolo_pt.exists():
+            try:
+                from ultralytics import YOLO
+                self.detector = YOLO(str(yolo_pt))
+                print(f"[Detector] Loaded fine-tuned YOLO from '{yolo_pt.relative_to(PROJECT_ROOT)}'")
+            except Exception as e:
+                print(f"[Detector] Could not load YOLO model: {e}")
+
         # Enrolled gallery info
         raw_assets = self.reference_store.list_assets()
         self.enrolled_assets = [item["asset_id"] for item in raw_assets]
@@ -206,8 +217,8 @@ class ROS2BagPatrolRunner:
                 self.writer.write(display)
                 continue
 
-            # 2. Object Proposal
-            candidates = self.proposer.propose(frame)
+            # 2. Object Proposal (YOLO + heuristic fallback)
+            candidates = self.detect_candidates(frame)
             frame_detections = []
 
             for cand in candidates:
@@ -328,6 +339,47 @@ class ROS2BagPatrolRunner:
 
         total_time = time.time() - start_time
         self._print_summary(total_time)
+
+    def detect_candidates(self, frame: np.ndarray) -> list[tuple[int, int, int, int, str]]:
+        """
+        Propose container candidate bounding boxes using trained YOLOv8 detector
+        with heuristic fallback for complete coverage.
+        """
+        h, w = frame.shape[:2]
+        candidates = []
+
+        # 1. Primary: Trained YOLO detector
+        if self.detector is not None:
+            try:
+                res = self.detector.predict(frame, conf=0.25, imgsz=640, verbose=False)[0]
+                for box in res.boxes:
+                    xyxy = box.xyxy[0].cpu().numpy().astype(int)
+                    conf = float(box.conf[0])
+                    x1, y1 = max(0, int(xyxy[0])), max(0, int(xyxy[1]))
+                    x2, y2 = min(w, int(xyxy[2])), min(h, int(xyxy[3]))
+                    if (x2 - x1) > 40 and (y2 - y1) > 40:
+                        candidates.append((x1, y1, x2, y2, f"YOLO ({conf:.2f})", (x2 - x1) * (y2 - y1)))
+            except Exception:
+                pass
+
+        # 2. Secondary: Heuristic proposer fallback for any non-overlapping containers
+        heur_cands = self.proposer.propose(frame)
+        for hx1, hy1, hx2, hy2, htag in heur_cands:
+            h_area = (hx2 - hx1) * (hy2 - hy1)
+            # Check overlap with existing YOLO detections
+            overlap = False
+            for yx1, yy1, yx2, yy2, _, _ in candidates:
+                ix1, iy1 = max(hx1, yx1), max(hy1, yy1)
+                ix2, iy2 = min(hx2, yx2), min(hy2, yy2)
+                inter = max(0, ix2 - ix1) * max(0, iy2 - iy1)
+                min_a = min(h_area, (yx2 - yx1) * (yy2 - yy1))
+                if min_a > 0 and (inter / float(min_a)) > 0.35:
+                    overlap = True
+                    break
+            if not overlap:
+                candidates.append((hx1, hy1, hx2, hy2, htag, h_area))
+
+        return [(c[0], c[1], c[2], c[3], c[4]) for c in candidates]
 
     @staticmethod
     def detect_color(crop: np.ndarray) -> str | None:
