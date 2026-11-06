@@ -288,7 +288,9 @@ class HITLEnrollmentTool:
         cv2.setMouseCallback(self.win_name, self._on_mouse)
 
         # Pre-populate quick buttons from already-enrolled assets
-        for aid in self.reference_store.list_assets():
+        # list_assets() returns dicts like {'asset_id': 'CONT-001', ...}
+        for entry in self.reference_store.list_assets():
+            aid = entry["asset_id"] if isinstance(entry, dict) else str(entry)
             if aid not in self.quick_ids:
                 self.quick_ids.append(aid)
 
@@ -713,10 +715,14 @@ class HITLEnrollmentTool:
 
         # ── SESSION STATS ────────────────────────────────────────────────────
         y = self._draw_section_header(canvas, sx, sw, y, "SESSION STATS")
-        all_assets  = self.reference_store.list_assets()
-        yolo_imgs   = len(list(self.yolo_images_dir.glob("*.jpg")))
-        ref_imgs    = sum(len(list((self.ref_images_dir / a).glob("*.jpg")))
-                          for a in all_assets if (self.ref_images_dir / a).exists())
+        all_assets_raw = self.reference_store.list_assets()
+        all_assets = [
+            (e["asset_id"] if isinstance(e, dict) else str(e))
+            for e in all_assets_raw
+        ]
+        yolo_imgs  = len(list(self.yolo_images_dir.glob("*.jpg")))
+        ref_imgs   = sum(len(list((self.ref_images_dir / a).glob("*.jpg")))
+                         for a in all_assets if (self.ref_images_dir / a).exists())
 
         stats = [
             (f"Gallery total : {len(all_assets)} assets",  C_ACCENT),
@@ -933,7 +939,11 @@ class HITLEnrollmentTool:
         print("\n" + "=" * 65)
         print("  HITL ENROLLMENT SESSION SUMMARY")
         print("=" * 65)
-        all_assets = self.reference_store.list_assets()
+        all_assets_raw = self.reference_store.list_assets()
+        all_assets = [
+            (e["asset_id"] if isinstance(e, dict) else str(e))
+            for e in all_assets_raw
+        ]
         print(f"  Gallery (total)   : {len(all_assets)} assets")
         print(f"  Enrolled (session): {len(self.session_enrolled)}")
         for item in self.session_enrolled:
