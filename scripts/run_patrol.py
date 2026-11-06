@@ -51,8 +51,8 @@ class SpatialVoter:
     """
 
     VOTE_WINDOW  = 12      # rolling window size (frames)
-    MIN_VOTES    = 4       # minimum votes before voting decision takes over
-    IOU_LINK     = 0.20    # IoU threshold to link a new bbox to an existing track
+    MIN_VOTES    = 3       # minimum votes before voting decision takes over
+    IOU_LINK     = 0.30    # IoU threshold to link a new bbox to an existing track
     LOCK_THRESH  = 0.50    # fraction of votes for majority winner to call CONFIRMED
     PROBABLE_THR = 0.35    # fraction of votes for PROBABLE
     MAX_IDLE     = 8       # frames without detection before a track is considered lost
@@ -93,8 +93,18 @@ class SpatialVoter:
         track = self._tracks[tid]
 
         # Record this frame's vote
-        raw_id    = raw_match.get("asset_id") or "UNKNOWN"
-        raw_score = raw_match.get("similarity_score", 0.0)
+        raw_id     = raw_match.get("asset_id") or "UNKNOWN"
+        raw_score  = raw_match.get("similarity_score", 0.0)
+        raw_status = raw_match.get("identity_status", "UNKNOWN")
+
+        # Fast-track high-confidence matches: if this is a strong CONFIRMED match (>=0.72)
+        # and previous votes were weak or mostly UNKNOWN, purge stale history so clean
+        # stationary views immediately take effect without being dragged down by motion noise
+        if raw_status == "CONFIRMED" and raw_score >= 0.72 and raw_id != "UNKNOWN":
+            valid_prev = [v for v in track["votes"] if v[0] != "UNKNOWN" and v[1] >= 0.65]
+            if not valid_prev:
+                track["votes"].clear()
+
         track["votes"].append((raw_id, raw_score))
         track["bbox"] = bbox
         track["last_frame"] = frame_idx
@@ -150,25 +160,46 @@ class SpatialVoter:
         if n < self.MIN_VOTES:
             return raw_match
 
-        # Count per-ID votes and sum scores
-        id_counts: dict = defaultdict(int)
+        # Filter out UNKNOWN votes — UNKNOWN is absence of evidence, not a competitor
+        valid_votes = [(vid, vscore) for vid, vscore in votes if vid != "UNKNOWN"]
+        if not valid_votes:
+            return {
+                **raw_match,
+                "identity_status": "UNKNOWN",
+                "asset_id": None,
+                "voted_by": f"0/{n}"
+            }
+
+        # Weight votes by score squared so high-confidence observations easily dominate
+        id_weights: dict = defaultdict(float)
         id_scores: dict = defaultdict(float)
-        for vid, vscore in votes:
-            id_counts[vid] += 1
+        id_counts: dict = defaultdict(int)
+        total_weight = 0.0
+
+        for vid, vscore in valid_votes:
+            w = max(0.05, float(vscore) ** 2)
+            id_weights[vid] += w
             id_scores[vid] += vscore
+            id_counts[vid] += 1
+            total_weight += w
 
-        winner_id  = max(id_counts, key=id_counts.get)
+        winner_id = max(id_weights, key=id_weights.get)
+        winner_weight = id_weights[winner_id]
         winner_cnt = id_counts[winner_id]
-        frac       = winner_cnt / n
-        avg_score  = id_scores[winner_id] / winner_cnt
+        weight_frac = winner_weight / max(1e-6, total_weight)
+        avg_score = id_scores[winner_id] / winner_cnt
 
-        if winner_id == "UNKNOWN" or avg_score < 0.40:
-            return {**raw_match, "identity_status": "UNKNOWN", "asset_id": None,
-                    "voted_by": f"{winner_cnt}/{n}"}
+        if avg_score < 0.45:
+            return {
+                **raw_match,
+                "identity_status": "UNKNOWN",
+                "asset_id": None,
+                "voted_by": f"{winner_cnt}/{n}"
+            }
 
-        if frac >= self.LOCK_THRESH and avg_score >= 0.65:
+        if (weight_frac >= 0.50 and avg_score >= 0.65) or (winner_cnt >= 2 and avg_score >= 0.72):
             status = "CONFIRMED"
-        elif frac >= self.PROBABLE_THR and avg_score >= 0.55:
+        elif weight_frac >= 0.35 and avg_score >= 0.55:
             status = "PROBABLE"
         else:
             status = "AMBIGUOUS"
@@ -180,6 +211,7 @@ class SpatialVoter:
             "identity_status":  status,
             "voted_by":         f"{winner_cnt}/{n}",
         }
+
 
     # ------------------------------------------------------------------
     @staticmethod
@@ -197,7 +229,15 @@ class SpatialVoter:
 class AutonomousPatrolRunner:
     """Autonomous patrol runner that validates Re-ID identification and tracking."""
 
-    def __init__(self, video_path: str, output_path: str = None, display: bool = True, realtime: bool = True):
+    def __init__(
+        self,
+        video_path: str,
+        output_path: str = None,
+        display: bool = True,
+        realtime: bool = True,
+        max_frames: int | None = None,
+        save_snapshots: bool = True
+    ):
         self.video_path = Path(video_path)
         if not self.video_path.exists():
             raise FileNotFoundError(f"Video file not found: {self.video_path}")
@@ -206,13 +246,22 @@ class AutonomousPatrolRunner:
         if output_path is None:
             out_dir = PROJECT_ROOT / "evidence" / "patrol_runs"
             out_dir.mkdir(parents=True, exist_ok=True)
-            self.output_path = out_dir / f"patrol_verified_{datetime.now().strftime('%Y%m%d_%H%M%S')}.mp4"
+            run_tag = f"patrol_verified_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+            self.output_path = out_dir / f"{run_tag}.mp4"
+            self.snapshot_dir = out_dir / f"snapshots_{run_tag}"
         else:
             self.output_path = Path(output_path).resolve()
             self.output_path.parent.mkdir(parents=True, exist_ok=True)
+            self.snapshot_dir = self.output_path.parent / f"snapshots_{self.output_path.stem}"
 
         self.display = display
         self.realtime = realtime
+        self.max_frames = max_frames
+        self.save_snapshots = save_snapshots
+
+        if self.save_snapshots:
+            self.snapshot_dir.mkdir(parents=True, exist_ok=True)
+        self._last_snapshot_frame = {}
 
         print("\n" + "=" * 65)
         print("  ASI PERCEPTION — AUTONOMOUS PATROL & RE-ID RUNNER")
@@ -294,6 +343,8 @@ class AutonomousPatrolRunner:
         frame_idx = 0
         start_time = time.time()
         paused = False
+        prev_gray = None
+        motion_threshold = 6.0  # mean pixel diff indicating camera motion
 
         # Pacing delay: native fps interval (~100ms for 10fps), or 1ms if not realtime
         delay_ms = max(1, int(1000 / self.native_fps)) if self.realtime else 1
@@ -309,12 +360,26 @@ class AutonomousPatrolRunner:
             print("    [Q]/ESC : Exit patrol")
 
         while True:
+            if self.max_frames and frame_idx >= self.max_frames:
+                print(f"\n[Patrol] Reached max_frames limit ({self.max_frames}). Stopping run.")
+                break
+
             ret, frame = self.cap.read()
             if not ret:
                 break
 
             frame_idx += 1
             display = frame.copy()
+
+            # Measure frame-to-frame camera motion (robot moving vs stopped)
+            gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            if prev_gray is not None:
+                frame_diff = cv2.absdiff(gray_frame, prev_gray)
+                motion_score = float(np.mean(frame_diff))
+            else:
+                motion_score = 0.0
+            prev_gray = gray_frame
+            is_moving = motion_score > motion_threshold
 
             # 1. Image Quality Check
             quality = self.quality_checker.check(frame)
@@ -323,14 +388,20 @@ class AutonomousPatrolRunner:
                 self.writer.write(display)
                 continue
 
-            # 2. Auto-propose container candidates (YOLO + heuristic fallback)
-            candidates = self.detect_candidates(frame)
+            # 2. Auto-propose container candidates (YOLO + motion-gated heuristic fallback)
+            candidates = self.detect_candidates(frame, is_moving=is_moving)
             frame_detections = []
 
             for cand in candidates:
                 x1, y1, x2, y2, tag = cand
                 crop = frame[y1:y2, x1:x2]
                 if crop.size == 0 or crop.shape[0] < 30 or crop.shape[1] < 30:
+                    continue
+
+                # 2b. Crop blur check — filter out motion-blurred crops
+                crop_quality = self.quality_checker.check_crop_quality(crop, min_blur=45.0)
+                if not crop_quality["is_usable"]:
+                    # Crop is too blurry from motion — skip Re-ID to avoid polluting voter
                     continue
 
                 self.stats["detections_total"] += 1
@@ -402,6 +473,18 @@ class AutonomousPatrolRunner:
             # 7. Render HUD overlay
             self._draw_status_bar(display, frame_idx, quality, frame_detections)
 
+            # Save verification snapshots for matched assets (throttled to at most once per 30 frames per asset)
+            if self.save_snapshots:
+                for d in frame_detections:
+                    aid = d.get("asset_id")
+                    st = d.get("status")
+                    if aid and st in ["CONFIRMED", "PROBABLE"]:
+                        last_f = self._last_snapshot_frame.get(aid, -999)
+                        if frame_idx - last_f >= 30:
+                            self._last_snapshot_frame[aid] = frame_idx
+                            snap_path = self.snapshot_dir / f"frame_{frame_idx:05d}_{aid}_{st}.jpg"
+                            cv2.imwrite(str(snap_path), display)
+
             # Write annotated frame
             self.writer.write(display)
             self.stats["frames_processed"] += 1
@@ -427,6 +510,7 @@ class AutonomousPatrolRunner:
                             paused = False
                             break
                         elif pk in [ord("q"), ord("Q"), 27]:
+                            key = pk
                             break
                     if key in [ord("q"), ord("Q"), 27]:
                         break
@@ -450,10 +534,15 @@ class AutonomousPatrolRunner:
         total_time = time.time() - start_time
         self._print_summary(total_time)
 
-    def detect_candidates(self, frame: np.ndarray) -> list[tuple[int, int, int, int, str]]:
+    def detect_candidates(self, frame: np.ndarray, is_moving: bool = False) -> list[tuple[int, int, int, int, str]]:
         """
         Propose container candidate bounding boxes using trained YOLOv8 detector
         with heuristic fallback for complete coverage.
+
+        Args:
+            frame: Full BGR frame
+            is_moving: If True (robot in motion), disable heuristic fallback
+                       to avoid false proposals on moving walls and floors.
         """
         h, w = frame.shape[:2]
         candidates = []
@@ -473,21 +562,23 @@ class AutonomousPatrolRunner:
                 pass
 
         # 2. Secondary: Heuristic proposer fallback for any non-overlapping containers
-        heur_cands = self.proposer.propose(frame)
-        for hx1, hy1, hx2, hy2, htag in heur_cands:
-            h_area = (hx2 - hx1) * (hy2 - hy1)
-            # Check overlap with existing YOLO detections
-            overlap = False
-            for yx1, yy1, yx2, yy2, _, _ in candidates:
-                ix1, iy1 = max(hx1, yx1), max(hy1, yy1)
-                ix2, iy2 = min(hx2, yx2), min(hy2, yy2)
-                inter = max(0, ix2 - ix1) * max(0, iy2 - iy1)
-                min_a = min(h_area, (yx2 - yx1) * (yy2 - yy1))
-                if min_a > 0 and (inter / float(min_a)) > 0.35:
-                    overlap = True
-                    break
-            if not overlap:
-                candidates.append((hx1, hy1, hx2, hy2, htag, h_area))
+        # Only active when robot is stationary or moving slowly (prevents wall/floor false alarms)
+        if not is_moving:
+            heur_cands = self.proposer.propose(frame)
+            for hx1, hy1, hx2, hy2, htag in heur_cands:
+                h_area = (hx2 - hx1) * (hy2 - hy1)
+                # Check overlap with existing YOLO detections
+                overlap = False
+                for yx1, yy1, yx2, yy2, _, _ in candidates:
+                    ix1, iy1 = max(hx1, yx1), max(hy1, yy1)
+                    ix2, iy2 = min(hx2, yx2), min(hy2, yy2)
+                    inter = max(0, ix2 - ix1) * max(0, iy2 - iy1)
+                    min_a = min(h_area, (yx2 - yx1) * (yy2 - yy1))
+                    if min_a > 0 and (inter / float(min_a)) > 0.35:
+                        overlap = True
+                        break
+                if not overlap:
+                    candidates.append((hx1, hy1, hx2, hy2, htag, h_area))
 
         return [(c[0], c[1], c[2], c[3], c[4]) for c in candidates]
 
@@ -610,23 +701,27 @@ class AutonomousPatrolRunner:
         if self.stats["matched_unique_assets"]:
             print(f"    Recognized IDs: {', '.join(sorted(self.stats['matched_unique_assets']))}")
         print(f"  • Verified Output Video : {self.output_path}")
+        if self.save_snapshots:
+            print(f"  • Verification Snapshots: {self.snapshot_dir}")
         print("=" * 65 + "\n")
 
 
 def main():
     parser = argparse.ArgumentParser(description="Autonomous Patrol & Re-ID Verification Runner")
-    default_vid = r"C:\Users\GANGARI DHRUVAVEER\Downloads\WhatsApp Video 2026-10-30 at 7.55.50 PM.mp4"
+    default_vid = r"C:\Users\GANGARI DHRUVAVEER\Downloads\Phase2.mp4"
     parser.add_argument("--video", "-v", default=default_vid, help="Path to test patrol video")
     parser.add_argument("--output", "-o", default=None, help="Path to save annotated video")
     parser.add_argument("--no-display", action="store_true", help="Run headless without OpenCV GUI window")
     parser.add_argument("--fast", "-f", action="store_true", help="Process at maximum GPU/CPU speed rather than real-time")
+    parser.add_argument("--max-frames", "-m", type=int, default=None, help="Maximum number of frames to process")
     args = parser.parse_args()
 
     runner = AutonomousPatrolRunner(
         video_path=args.video,
         output_path=args.output,
         display=not args.no_display,
-        realtime=not args.fast
+        realtime=not args.fast,
+        max_frames=args.max_frames
     )
     runner.run()
 

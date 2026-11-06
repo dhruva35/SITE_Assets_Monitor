@@ -11,6 +11,9 @@ import numpy as np
 import yaml
 
 
+from pathlib import Path
+
+
 class ImageQualityChecker:
     """
     Evaluates image quality before passing to detector or saving as evidence.
@@ -20,7 +23,13 @@ class ImageQualityChecker:
     """
 
     def __init__(self, config_path: str = "config/evidence_config.yaml"):
-        with open(config_path, "r") as f:
+        cfg_file = Path(config_path)
+        if not cfg_file.exists():
+            candidate = Path(__file__).resolve().parent.parent / config_path
+            if candidate.exists():
+                cfg_file = candidate
+
+        with open(cfg_file, "r") as f:
             config = yaml.safe_load(f)
         
         self.min_blur_score = config.get("min_blur_score", 100.0)
@@ -87,3 +96,36 @@ class ImageQualityChecker:
         """Quick check — is this image good enough to process?"""
         result = self.check(image)
         return result["quality"] != "UNUSABLE"
+
+    def check_crop_quality(self, crop: np.ndarray, min_blur: float = 60.0) -> dict:
+        """
+        Evaluate whether an individual candidate crop is sharp enough for Re-ID.
+        Filters out motion-blurred crops caused by robot movement.
+
+        Args:
+            crop: BGR crop array (numpy ndarray)
+            min_blur: Minimum acceptable Laplacian variance (default: 60.0)
+
+        Returns:
+            dict with 'is_usable' (bool), 'blur_score' (float), and 'issues' (list)
+        """
+        if crop is None or crop.size == 0 or crop.shape[0] < 30 or crop.shape[1] < 30:
+            return {
+                "is_usable": False,
+                "blur_score": 0.0,
+                "issues": ["too_small_or_empty"]
+            }
+
+        gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
+        blur_score = float(cv2.Laplacian(gray, cv2.CV_64F).var())
+
+        issues = []
+        if blur_score < min_blur:
+            issues.append("crop_too_blurry")
+
+        return {
+            "is_usable": len(issues) == 0,
+            "blur_score": round(blur_score, 2),
+            "issues": issues
+        }
+

@@ -185,6 +185,8 @@ class ROS2BagPatrolRunner:
 
         frame_idx = 0
         start_time = time.time()
+        prev_gray = None
+        motion_threshold = 6.0
 
         if self.display:
             win_name = "ASI Phase 3 — Spatial Movement Tracking"
@@ -210,6 +212,16 @@ class ROS2BagPatrolRunner:
             display = frame.copy()
             robot_x, robot_y, robot_yaw = self._get_robot_pose(cam_ts)
 
+            # Measure frame-to-frame camera motion
+            gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            if prev_gray is not None:
+                diff = cv2.absdiff(gray_frame, prev_gray)
+                motion_score = float(np.mean(diff))
+            else:
+                motion_score = 0.0
+            prev_gray = gray_frame
+            is_moving = motion_score > motion_threshold
+
             # 1. Quality Check
             quality = self.quality_checker.check(frame)
             if quality["quality"] == "UNUSABLE":
@@ -217,14 +229,19 @@ class ROS2BagPatrolRunner:
                 self.writer.write(display)
                 continue
 
-            # 2. Object Proposal (YOLO + heuristic fallback)
-            candidates = self.detect_candidates(frame)
+            # 2. Object Proposal (YOLO + motion-gated heuristic fallback)
+            candidates = self.detect_candidates(frame, is_moving=is_moving)
             frame_detections = []
 
             for cand in candidates:
                 x1, y1, x2, y2, tag = cand
                 crop = frame[y1:y2, x1:x2]
                 if crop.size == 0 or crop.shape[0] < 25 or crop.shape[1] < 25:
+                    continue
+
+                # 2b. Crop blur check — filter out motion-blurred crops
+                crop_quality = self.quality_checker.check_crop_quality(crop, min_blur=45.0)
+                if not crop_quality["is_usable"]:
                     continue
 
                 self.stats["detections_total"] += 1
@@ -321,6 +338,7 @@ class ROS2BagPatrolRunner:
                             paused = False
                             break
                         elif pk in [ord("q"), ord("Q"), 27]:
+                            key = pk
                             break
                     if key in [ord("q"), ord("Q"), 27]:
                         break
@@ -340,10 +358,15 @@ class ROS2BagPatrolRunner:
         total_time = time.time() - start_time
         self._print_summary(total_time)
 
-    def detect_candidates(self, frame: np.ndarray) -> list[tuple[int, int, int, int, str]]:
+    def detect_candidates(self, frame: np.ndarray, is_moving: bool = False) -> list[tuple[int, int, int, int, str]]:
         """
         Propose container candidate bounding boxes using trained YOLOv8 detector
         with heuristic fallback for complete coverage.
+
+        Args:
+            frame: Full BGR frame
+            is_moving: If True (robot in motion), disable heuristic fallback
+                       to avoid false proposals on moving walls and floors.
         """
         h, w = frame.shape[:2]
         candidates = []
@@ -363,21 +386,23 @@ class ROS2BagPatrolRunner:
                 pass
 
         # 2. Secondary: Heuristic proposer fallback for any non-overlapping containers
-        heur_cands = self.proposer.propose(frame)
-        for hx1, hy1, hx2, hy2, htag in heur_cands:
-            h_area = (hx2 - hx1) * (hy2 - hy1)
-            # Check overlap with existing YOLO detections
-            overlap = False
-            for yx1, yy1, yx2, yy2, _, _ in candidates:
-                ix1, iy1 = max(hx1, yx1), max(hy1, yy1)
-                ix2, iy2 = min(hx2, yx2), min(hy2, yy2)
-                inter = max(0, ix2 - ix1) * max(0, iy2 - iy1)
-                min_a = min(h_area, (yx2 - yx1) * (yy2 - yy1))
-                if min_a > 0 and (inter / float(min_a)) > 0.35:
-                    overlap = True
-                    break
-            if not overlap:
-                candidates.append((hx1, hy1, hx2, hy2, htag, h_area))
+        # Only active when robot is stationary or moving slowly (prevents wall/floor false alarms)
+        if not is_moving:
+            heur_cands = self.proposer.propose(frame)
+            for hx1, hy1, hx2, hy2, htag in heur_cands:
+                h_area = (hx2 - hx1) * (hy2 - hy1)
+                # Check overlap with existing YOLO detections
+                overlap = False
+                for yx1, yy1, yx2, yy2, _, _ in candidates:
+                    ix1, iy1 = max(hx1, yx1), max(hy1, yy1)
+                    ix2, iy2 = min(hx2, yx2), min(hy2, yy2)
+                    inter = max(0, ix2 - ix1) * max(0, iy2 - iy1)
+                    min_a = min(h_area, (yx2 - yx1) * (yy2 - yy1))
+                    if min_a > 0 and (inter / float(min_a)) > 0.35:
+                        overlap = True
+                        break
+                if not overlap:
+                    candidates.append((hx1, hy1, hx2, hy2, htag, h_area))
 
         return [(c[0], c[1], c[2], c[3], c[4]) for c in candidates]
 
