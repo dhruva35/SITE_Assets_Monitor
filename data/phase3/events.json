@@ -1,0 +1,827 @@
+[
+  {
+    "asset": "001",
+    "extra_moved_view": false,
+    "start_s": 38.548,
+    "end_s": 40.548,
+    "start_frame": 283,
+    "end_frame": 296,
+    "camera_xyz": [
+      -20.321827146164136,
+      -10.351758068420416,
+      0.5465870292835726
+    ],
+    "camera_to_asset_surface_m": null,
+    "camera_to_asset_center_xy_m": 4.659369674806116,
+    "expected_absent_at_original_spot": true,
+    "base_xy": [
+      -20.324590411821642,
+      -10.261807326133598
+    ],
+    "heading": -1.5399833416473496,
+    "approach_s": 27.752,
+    "approach_frame": 193,
+    "approach_xy": [
+      -20.0709112935104,
+      -10.000000952731485
+    ],
+    "lane_y": -10,
+    "forward_heading_target": 0,
+    "forward_heading_before": 5.820370606530137e-06,
+    "forward_heading_after": -0.01632562143593411,
+    "back_forward_s": 51.276,
+    "back_forward_frame": 382
+  },
+  {
+    "asset": "002",
+    "extra_moved_view": false,
+    "start_s": 96.864,
+    "end_s": 98.864,
+    "start_frame": 756,
+    "end_frame": 773,
+    "camera_xyz": [
+      -12.32428404359697,
+      -10.351847821234161,
+      0.5465870292905427
+    ],
+    "camera_to_asset_surface_m": 3.4281521787658393,
+    "camera_to_asset_center_xy_m": 4.659450484541844,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      -12.327101823611743,
+      -10.261893902159649
+    ],
+    "heading": -1.5394187481988548,
+    "approach_s": 86.056,
+    "approach_frame": 667,
+    "approach_xy": [
+      -12.073570359708024,
+      -10.000021021202565
+    ],
+    "lane_y": -10,
+    "forward_heading_target": 0,
+    "forward_heading_before": 0.0002780100070637115,
+    "forward_heading_after": -0.016633084143578454,
+    "back_forward_s": 109.584,
+    "back_forward_frame": 863
+  },
+  {
+    "asset": "003",
+    "extra_moved_view": false,
+    "start_s": 155.288,
+    "end_s": 157.288,
+    "start_frame": 1262,
+    "end_frame": 1281,
+    "camera_xyz": [
+      -4.321871476173201,
+      -10.351866232351744,
+      0.5465870292990058
+    ],
+    "camera_to_asset_surface_m": 3.428133767648256,
+    "camera_to_asset_center_xy_m": 4.659264831400538,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      -4.324603394466879,
+      -10.261907119046256
+    ],
+    "heading": -1.5404146613133836,
+    "approach_s": 144.456,
+    "approach_frame": 1169,
+    "approach_xy": [
+      -4.070810650318993,
+      -10.000021499040061
+    ],
+    "lane_y": -10,
+    "forward_heading_target": 0,
+    "forward_heading_before": 0.0002958667770495818,
+    "forward_heading_after": -0.016651156178310353,
+    "back_forward_s": 168.004,
+    "back_forward_frame": 1370
+  },
+  {
+    "asset": "004",
+    "extra_moved_view": false,
+    "start_s": 213.664,
+    "end_s": 215.668,
+    "start_frame": 1758,
+    "end_frame": 1777,
+    "camera_xyz": [
+      3.6777870289437575,
+      -10.351861820792687,
+      0.5465870292804054
+    ],
+    "camera_to_asset_surface_m": 3.4281381792073136,
+    "camera_to_asset_center_xy_m": 4.659292836012947,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      3.675005132097245,
+      -10.261904029816291
+    ],
+    "heading": -1.5399004981915165,
+    "approach_s": 202.852,
+    "approach_frame": 1667,
+    "approach_xy": [
+      3.9286627005214148,
+      -10.000021878530296
+    ],
+    "lane_y": -10,
+    "forward_heading_target": 0,
+    "forward_heading_before": 0.00029887451903982026,
+    "forward_heading_after": -0.01660600961511631,
+    "back_forward_s": 226.384,
+    "back_forward_frame": 1869
+  },
+  {
+    "asset": "005",
+    "extra_moved_view": false,
+    "start_s": 271.964,
+    "end_s": 273.964,
+    "start_frame": 2259,
+    "end_frame": 2279,
+    "camera_xyz": [
+      11.67563292191089,
+      -10.351854304923176,
+      0.5465870292977806
+    ],
+    "camera_to_asset_surface_m": 3.4281456950768243,
+    "camera_to_asset_center_xy_m": 4.659449796275229,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      11.6728003457796,
+      -10.261900213625893
+    ],
+    "heading": -1.5393785093452945,
+    "approach_s": 261.152,
+    "approach_frame": 2166,
+    "approach_xy": [
+      11.926321473196687,
+      -10.000022575054098
+    ],
+    "lane_y": -10,
+    "forward_heading_target": 0,
+    "forward_heading_before": 0.00029845071893708767,
+    "forward_heading_after": -0.016594669425595655,
+    "back_forward_s": 284.688,
+    "back_forward_frame": 2377
+  },
+  {
+    "asset": "006",
+    "extra_moved_view": false,
+    "start_s": 330.368,
+    "end_s": 332.368,
+    "start_frame": 2775,
+    "end_frame": 2796,
+    "camera_xyz": [
+      19.677963712790675,
+      -10.351855799686847,
+      0.5465870292924102
+    ],
+    "camera_to_asset_surface_m": 3.4281442003131533,
+    "camera_to_asset_center_xy_m": 4.659286627498288,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      19.67518146728275,
+      -10.261904594741253
+    ],
+    "heading": -1.539979472598387,
+    "approach_s": 319.552,
+    "approach_frame": 2684,
+    "approach_xy": [
+      19.92885980114913,
+      -10.000021849325206
+    ],
+    "lane_y": -10,
+    "forward_heading_target": 0,
+    "forward_heading_before": 0.00029921198751651774,
+    "forward_heading_after": -0.01660072189466242,
+    "back_forward_s": 343.084,
+    "back_forward_frame": 2889
+  },
+  {
+    "asset": "012",
+    "extra_moved_view": false,
+    "start_s": 412.484,
+    "end_s": 414.484,
+    "start_frame": 3496,
+    "end_frame": 3513,
+    "camera_xyz": [
+      20.3224695494017,
+      -9.648050810980763,
+      0.5465870292899353
+    ],
+    "camera_to_asset_surface_m": 3.4280508109807633,
+    "camera_to_asset_center_xy_m": 4.659223427970616,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      20.325238907304023,
+      -9.73801464536277
+    ],
+    "heading": 1.6016727591141182,
+    "approach_s": 401.664,
+    "approach_frame": 3397,
+    "approach_xy": [
+      20.071575673615975,
+      -9.99996059851049
+    ],
+    "lane_y": -10,
+    "forward_heading_target": 3.141592653589793,
+    "forward_heading_before": -3.1410501253373733,
+    "forward_heading_after": 3.125019242954796,
+    "back_forward_s": 425.204,
+    "back_forward_frame": 3608
+  },
+  {
+    "asset": "011",
+    "extra_moved_view": false,
+    "start_s": 470.832,
+    "end_s": 472.832,
+    "start_frame": 4009,
+    "end_frame": 4027,
+    "camera_xyz": [
+      12.322176110383309,
+      -9.648134460752477,
+      0.5465870292916505
+    ],
+    "camera_to_asset_surface_m": 3.428134460752477,
+    "camera_to_asset_center_xy_m": 4.6592865775069505,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      12.324956969500937,
+      -9.7380932922069
+    ],
+    "heading": 1.601760844965938,
+    "approach_s": 460.056,
+    "approach_frame": 3912,
+    "approach_xy": [
+      12.071316617252727,
+      -9.999977448967716
+    ],
+    "lane_y": -10,
+    "forward_heading_target": 3.141592653589793,
+    "forward_heading_before": -3.1412843147446092,
+    "forward_heading_after": 3.1248371354705404,
+    "back_forward_s": 483.532,
+    "back_forward_frame": 4119
+  },
+  {
+    "asset": "010",
+    "extra_moved_view": false,
+    "start_s": 529.144,
+    "end_s": 531.144,
+    "start_frame": 4524,
+    "end_frame": 4543,
+    "camera_xyz": [
+      4.3230621322030975,
+      -9.648141230193415,
+      0.5465870292920003
+    ],
+    "camera_to_asset_surface_m": 3.4281412301934155,
+    "camera_to_asset_center_xy_m": 4.6593546803272625,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      4.3258641129477695,
+      -9.738097090276067
+    ],
+    "heading": 1.601955925601971,
+    "approach_s": 518.356,
+    "approach_frame": 4427,
+    "approach_xy": [
+      4.072275262818281,
+      -9.99997768612712
+    ],
+    "lane_y": -10,
+    "forward_heading_target": 3.141592653589793,
+    "forward_heading_before": -3.141291743284954,
+    "forward_heading_after": 3.1248400476668516,
+    "back_forward_s": 541.844,
+    "back_forward_frame": 4634
+  },
+  {
+    "asset": "009",
+    "extra_moved_view": false,
+    "start_s": 587.444,
+    "end_s": 589.444,
+    "start_frame": 5022,
+    "end_frame": 5038,
+    "camera_xyz": [
+      -3.6766323154567804,
+      -9.648144401567283,
+      0.5465870292899533
+    ],
+    "camera_to_asset_surface_m": 3.428144401567283,
+    "camera_to_asset_center_xy_m": 4.659379039875176,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      -3.6738158566625443,
+      -9.738099825526268
+    ],
+    "heading": 1.6020771572849106,
+    "approach_s": 576.656,
+    "approach_frame": 4926,
+    "approach_xy": [
+      -3.927372903640381,
+      -9.99997800157728
+    ],
+    "lane_y": -10,
+    "forward_heading_target": 3.141592653589793,
+    "forward_heading_before": -3.141297435798358,
+    "forward_heading_after": 3.124973613167092,
+    "back_forward_s": 600.164,
+    "back_forward_frame": 5131
+  },
+  {
+    "asset": "008",
+    "extra_moved_view": false,
+    "start_s": 645.764,
+    "end_s": 647.764,
+    "start_frame": 5530,
+    "end_frame": 5549,
+    "camera_xyz": [
+      -11.675815727909212,
+      -9.648142411392211,
+      0.5465870292923537
+    ],
+    "camera_to_asset_surface_m": 3.428142411392211,
+    "camera_to_asset_center_xy_m": 4.659433798097579,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      -11.672990072014844,
+      -9.738099896075912
+    ],
+    "heading": 1.602139661760619,
+    "approach_s": 634.952,
+    "approach_frame": 5434,
+    "approach_xy": [
+      -11.926530710378817,
+      -9.999977699849994
+    ],
+    "lane_y": -10,
+    "forward_heading_target": 3.141592653589793,
+    "forward_heading_before": -3.1412968395206136,
+    "forward_heading_after": 3.124909960250363,
+    "back_forward_s": 658.476,
+    "back_forward_frame": 5648
+  },
+  {
+    "asset": "007",
+    "extra_moved_view": false,
+    "start_s": 704.084,
+    "end_s": 706.084,
+    "start_frame": 6035,
+    "end_frame": 6052,
+    "camera_xyz": [
+      -19.675675146649414,
+      -9.648138547926536,
+      0.5465870292910847
+    ],
+    "camera_to_asset_surface_m": 3.428138547926536,
+    "camera_to_asset_center_xy_m": 4.659439727179812,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      -19.672839339929837,
+      -9.738100393442114
+    ],
+    "heading": 1.6022127626459814,
+    "approach_s": 693.272,
+    "approach_frame": 5947,
+    "approach_xy": [
+      -19.926360505875653,
+      -9.999977648125316
+    ],
+    "lane_y": -10,
+    "forward_heading_target": 3.141592653589793,
+    "forward_heading_before": -3.1412967937728453,
+    "forward_heading_after": 3.12498150272339,
+    "back_forward_s": 716.808,
+    "back_forward_frame": 6148
+  },
+  {
+    "asset": "013",
+    "extra_moved_view": false,
+    "start_s": 829.784,
+    "end_s": 831.784,
+    "start_frame": 7115,
+    "end_frame": 7128,
+    "camera_xyz": [
+      -20.322318717637053,
+      0.3250395702261439,
+      0.5465870293012293
+    ],
+    "camera_to_asset_surface_m": 3.4549604297738563,
+    "camera_to_asset_center_xy_m": 4.68605851176557,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      -20.325096552908068,
+      0.23507487980683855
+    ],
+    "heading": 1.5399077717879017,
+    "approach_s": 819.064,
+    "approach_frame": 7016,
+    "approach_xy": [
+      -20.07147069054316,
+      -0.022371909776063428
+    ],
+    "lane_y": 0,
+    "forward_heading_target": 0,
+    "forward_heading_before": 0.01664041089702464,
+    "forward_heading_after": 0.016622510950507763,
+    "back_forward_s": 842.504,
+    "back_forward_frame": 7222
+  },
+  {
+    "asset": "014",
+    "extra_moved_view": false,
+    "start_s": 888.132,
+    "end_s": 890.132,
+    "start_frame": 7634,
+    "end_frame": 7651,
+    "camera_xyz": [
+      -12.322319946317513,
+      0.35077497266765206,
+      0.5465870292862
+    ],
+    "camera_to_asset_surface_m": 3.4292250273323486,
+    "camera_to_asset_center_xy_m": 4.6603844801226,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      -12.325093526094197,
+      0.2608148847016048
+    ],
+    "heading": 1.5399626338363281,
+    "approach_s": 877.356,
+    "approach_frame": 7534,
+    "approach_xy": [
+      -12.071420296513448,
+      -0.0002116197298455961
+    ],
+    "lane_y": 0,
+    "forward_heading_target": 0,
+    "forward_heading_before": 0.002970871430143578,
+    "forward_heading_after": 0.016679842515960677,
+    "back_forward_s": 900.852,
+    "back_forward_frame": 7743
+  },
+  {
+    "asset": "015",
+    "extra_moved_view": false,
+    "start_s": 946.464,
+    "end_s": 948.464,
+    "start_frame": 8137,
+    "end_frame": 8154,
+    "camera_xyz": [
+      -4.323630840667541,
+      0.3518135301901356,
+      0.5465870292877333
+    ],
+    "camera_to_asset_surface_m": 3.428186469809865,
+    "camera_to_asset_center_xy_m": 4.659439277333129,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      -4.326442680333473,
+      0.26185703684392203
+    ],
+    "heading": 1.5395446531211534,
+    "approach_s": 935.656,
+    "approach_frame": 8041,
+    "approach_xy": [
+      -4.0728777411313875,
+      1.2650202301471272e-05
+    ],
+    "lane_y": 0,
+    "forward_heading_target": 0,
+    "forward_heading_before": -0.0001658496226251097,
+    "forward_heading_after": 0.016599428960645046,
+    "back_forward_s": 959.188,
+    "back_forward_frame": 8247
+  },
+  {
+    "asset": "016",
+    "extra_moved_view": false,
+    "start_s": 1004.864,
+    "end_s": 1006.864,
+    "start_frame": 8647,
+    "end_frame": 8664,
+    "camera_xyz": [
+      3.67813707338581,
+      0.3518597517754271,
+      0.5465870293005712
+    ],
+    "camera_to_asset_surface_m": 3.4281402482245733,
+    "camera_to_asset_center_xy_m": 4.659270705882396,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      3.6753641997893416,
+      0.2619021226413545
+    ],
+    "heading": 1.5399851405987814,
+    "approach_s": 994.056,
+    "approach_frame": 8556,
+    "approach_xy": [
+      3.9290437881510387,
+      2.120676585142128e-05
+    ],
+    "lane_y": 0,
+    "forward_heading_target": 0,
+    "forward_heading_before": -0.0002911357484241313,
+    "forward_heading_after": 0.016639786994891576,
+    "back_forward_s": 1017.584,
+    "back_forward_frame": 8759
+  },
+  {
+    "asset": "017",
+    "extra_moved_view": false,
+    "start_s": 1063.152,
+    "end_s": 1065.152,
+    "start_frame": 9155,
+    "end_frame": 9173,
+    "camera_xyz": [
+      11.6754195288465,
+      0.35185754486135346,
+      0.5465870292813841
+    ],
+    "camera_to_asset_surface_m": 3.428142455138647,
+    "camera_to_asset_center_xy_m": 4.659461424404816,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      11.67258872289875,
+      0.2618994639225642
+    ],
+    "heading": 1.539348458892141,
+    "approach_s": 1052.356,
+    "approach_frame": 9064,
+    "approach_xy": [
+      11.926102457423882,
+      2.2436722380211255e-05
+    ],
+    "lane_y": 0,
+    "forward_heading_target": 0,
+    "forward_heading_before": -0.00029589551366186485,
+    "forward_heading_after": 0.01673202051685581,
+    "back_forward_s": 1075.852,
+    "back_forward_frame": 9267
+  },
+  {
+    "asset": "018",
+    "extra_moved_view": false,
+    "start_s": 1121.452,
+    "end_s": 1123.452,
+    "start_frame": 9661,
+    "end_frame": 9679,
+    "camera_xyz": [
+      19.676147708607783,
+      0.35186364864384345,
+      0.5465870292951112
+    ],
+    "camera_to_asset_surface_m": 3.428136351356157,
+    "camera_to_asset_center_xy_m": 4.6594046666326925,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      19.67332749580693,
+      0.26190064637683824
+    ],
+    "heading": 1.5394735552195788,
+    "approach_s": 1110.652,
+    "approach_frame": 9571,
+    "approach_xy": [
+      19.926873639155286,
+      2.226993668584809e-05
+    ],
+    "lane_y": 0,
+    "forward_heading_target": 0,
+    "forward_heading_before": -0.000296886974671028,
+    "forward_heading_after": 0.01654429994360399,
+    "back_forward_s": 1134.164,
+    "back_forward_frame": 9772
+  },
+  {
+    "asset": "024",
+    "extra_moved_view": false,
+    "start_s": 1247.084,
+    "end_s": 1249.084,
+    "start_frame": 10743,
+    "end_frame": 10760,
+    "camera_xyz": [
+      20.322713385390717,
+      10.325011853054722,
+      0.5465870292898074
+    ],
+    "camera_to_asset_surface_m": 3.4549881469452783,
+    "camera_to_asset_center_xy_m": 4.68611332590124,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      20.325500916511686,
+      10.235046271357406
+    ],
+    "heading": 1.6017103497923686,
+    "approach_s": 1236.364,
+    "approach_frame": 10643,
+    "approach_xy": [
+      20.071882029387346,
+      9.97758208257827
+    ],
+    "lane_y": 10,
+    "forward_heading_target": 3.141592653589793,
+    "forward_heading_before": 3.1250212037402547,
+    "forward_heading_after": 3.124947960025594,
+    "back_forward_s": 1259.804,
+    "back_forward_frame": 10851
+  },
+  {
+    "asset": "023",
+    "extra_moved_view": false,
+    "start_s": 1305.444,
+    "end_s": 1307.444,
+    "start_frame": 11246,
+    "end_frame": 11264,
+    "camera_xyz": [
+      12.322347038565987,
+      10.350774139878432,
+      0.5465870292922045
+    ],
+    "camera_to_asset_surface_m": 3.4292258601215684,
+    "camera_to_asset_center_xy_m": 4.6603871847407055,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      12.325129473395625,
+      10.260813224985014
+    ],
+    "heading": 1.6016785649780156,
+    "approach_s": 1294.652,
+    "approach_frame": 11153,
+    "approach_xy": [
+      12.071468217001794,
+      9.999788006281257
+    ],
+    "lane_y": 10,
+    "forward_heading_target": 3.141592653589793,
+    "forward_heading_before": 3.138618597642997,
+    "forward_heading_after": 3.124883008454254,
+    "back_forward_s": 1318.148,
+    "back_forward_frame": 11353
+  },
+  {
+    "asset": "022",
+    "extra_moved_view": false,
+    "start_s": 1363.768,
+    "end_s": 1365.768,
+    "start_frame": 11755,
+    "end_frame": 11774,
+    "camera_xyz": [
+      4.323438977694075,
+      10.351816254122847,
+      0.5465870292914454
+    ],
+    "camera_to_asset_surface_m": 3.4281837458771536,
+    "camera_to_asset_center_xy_m": 4.659423237668838,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      4.326239439762269,
+      10.261858394048309
+    ],
+    "heading": 1.6019040153030097,
+    "approach_s": 1352.952,
+    "approach_frame": 11658,
+    "approach_xy": [
+      4.072636497365933,
+      10.000012661861339
+    ],
+    "lane_y": 10,
+    "forward_heading_target": 3.141592653589793,
+    "forward_heading_before": -3.141426166957698,
+    "forward_heading_after": 3.124972185683519,
+    "back_forward_s": 1376.488,
+    "back_forward_frame": 11867
+  },
+  {
+    "asset": "021",
+    "extra_moved_view": false,
+    "start_s": 1422.152,
+    "end_s": 1424.152,
+    "start_frame": 12277,
+    "end_frame": 12295,
+    "camera_xyz": [
+      -3.6781993679806484,
+      10.351860874677905,
+      0.5465870292901541
+    ],
+    "camera_to_asset_surface_m": 3.4281391253220947,
+    "camera_to_asset_center_xy_m": 4.659265282758441,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      -3.67542559608492,
+      10.261902352458895
+    ],
+    "heading": 1.6016323834298096,
+    "approach_s": 1411.356,
+    "approach_frame": 12176,
+    "approach_xy": [
+      -3.929099198623733,
+      10.000021272964515
+    ],
+    "lane_y": 10,
+    "forward_heading_target": 3.141592653589793,
+    "forward_heading_before": -3.1413003394633856,
+    "forward_heading_after": 3.124973618079735,
+    "back_forward_s": 1434.816,
+    "back_forward_frame": 12391
+  },
+  {
+    "asset": "020",
+    "extra_moved_view": false,
+    "start_s": 1480.664,
+    "end_s": 1482.664,
+    "start_frame": 12801,
+    "end_frame": 12819,
+    "camera_xyz": [
+      -11.678113870427552,
+      10.351850906378564,
+      0.5465870292926146
+    ],
+    "camera_to_asset_surface_m": 3.4281490936214363,
+    "camera_to_asset_center_xy_m": 4.659281133066012,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      -11.675342529689797,
+      10.261890142092286
+    ],
+    "heading": 1.6016304297897728,
+    "approach_s": 1469.856,
+    "approach_frame": 12707,
+    "approach_xy": [
+      -11.929015844033739,
+      10.000018681980421
+    ],
+    "lane_y": 10,
+    "forward_heading_target": 3.141592653589793,
+    "forward_heading_before": -3.141337154572451,
+    "forward_heading_after": 3.1249342497250447,
+    "back_forward_s": 1493.384,
+    "back_forward_frame": 12914
+  },
+  {
+    "asset": "019",
+    "extra_moved_view": false,
+    "start_s": 1538.952,
+    "end_s": 1540.952,
+    "start_frame": 13315,
+    "end_frame": 13331,
+    "camera_xyz": [
+      -19.675431771003947,
+      10.351862354413377,
+      0.5465870292905759
+    ],
+    "camera_to_asset_surface_m": null,
+    "camera_to_asset_center_xy_m": 4.659455773756543,
+    "expected_absent_at_original_spot": true,
+    "base_xy": [
+      -19.672607185861438,
+      10.261898752139857
+    ],
+    "heading": 1.6022473521833869,
+    "approach_s": 1528.152,
+    "approach_frame": 13219,
+    "approach_xy": [
+      -19.926119202005385,
+      10.000022266993179
+    ],
+    "lane_y": 10,
+    "forward_heading_target": 3.141592653589793,
+    "forward_heading_before": -3.1412989363225803,
+    "forward_heading_after": 3.1248578568343204,
+    "back_forward_s": 1551.652,
+    "back_forward_frame": 13425
+  },
+  {
+    "asset": "001",
+    "extra_moved_view": true,
+    "start_s": 1696.924,
+    "end_s": 1698.924,
+    "start_frame": 14695,
+    "end_frame": 14713,
+    "camera_xyz": [
+      -24.219094151520633,
+      -10.10193442292797,
+      0.5465870292993221
+    ],
+    "camera_to_asset_surface_m": 3.6780655770720303,
+    "camera_to_asset_center_xy_m": 4.902963251394865,
+    "expected_absent_at_original_spot": false,
+    "base_xy": [
+      -24.21991262136775,
+      -10.011947963674064
+    ],
+    "heading": -1.561579217188737,
+    "approach_s": 1686.084,
+    "approach_frame": 14598,
+    "approach_xy": [
+      -23.960614586149383,
+      -9.754382356877356
+    ],
+    "lane_y": -10,
+    "forward_heading_target": 0,
+    "forward_heading_before": -0.0166308030208848,
+    "forward_heading_after": -0.01670849037178165,
+    "back_forward_s": 1709.752,
+    "back_forward_frame": 14806
+  }
+]
