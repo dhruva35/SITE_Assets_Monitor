@@ -131,10 +131,15 @@ STATE = AppState()
 # ---------------------------------------------------------------------------
 # Determine video path
 # ---------------------------------------------------------------------------
+_default_video = Path(r"C:\Users\GANGARI DHRUVAVEER\Downloads\Phase1.mp4")
 _video_env = os.environ.get("HITL_VIDEO_PATH", "")
+
 if _video_env and Path(_video_env).exists():
     STATE.load_video(_video_env)
     print(f"[WebUI] Auto-loaded video from env: {_video_env}")
+elif _default_video.exists():
+    STATE.load_video(str(_default_video))
+    print(f"[WebUI] Auto-loaded default video: {_default_video}")
 else:
     print("[WebUI] No video loaded yet — POST /api/video/load to set one")
 
@@ -187,13 +192,28 @@ class LoadVideoRequest(BaseModel):
 
 @app.post("/api/video/load")
 async def load_video(req: LoadVideoRequest):
-    if not Path(req.path).exists():
-        raise HTTPException(400, f"File not found: {req.path}")
+    raw_path = req.path.strip().strip('"').strip("'")
+    target_path = Path(raw_path)
+
+    # If relative, check common locations
+    if not target_path.exists():
+        candidates = [
+            PROJECT_ROOT / target_path,
+            Path.home() / "Downloads" / target_path,
+            Path.home() / "Downloads" / target_path.name,
+        ]
+        for c in candidates:
+            if c.exists():
+                target_path = c
+                break
+
+    if not target_path.exists():
+        raise HTTPException(400, f"File not found: {raw_path}")
     try:
-        STATE.load_video(req.path)
+        STATE.load_video(str(target_path))
     except RuntimeError as e:
         raise HTTPException(400, str(e))
-    return {"ok": True, "message": f"Loaded {Path(req.path).name}"}
+    return {"ok": True, "message": f"Loaded {target_path.name}"}
 
 
 # ---------------------------------------------------------------------------
@@ -538,3 +558,4 @@ if __name__ == "__main__":
 
     uvicorn.run("web_ui.server:app", host="0.0.0.0", port=args.port,
                 reload=args.reload, app_dir=str(PROJECT_ROOT))
+

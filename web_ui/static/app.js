@@ -107,11 +107,12 @@ async function api(method, path, body = null) {
 // ============================================================
 (async function init() {
   try {
+    await fetchGallery();
     const info = await api("GET", "/api/video/info");
     if (info.loaded) {
       applyVideoInfo(info);
       await loadFrame(0);
-      await fetchGallery();
+      await fetchProposals(0);
     }
   } catch (e) {
     console.warn("Init:", e);
