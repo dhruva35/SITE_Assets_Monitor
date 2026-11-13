@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SITE Assets Monitor — HITL Enrollment</title>
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<!-- ═══════════════════════════════════════════════════════════════════════
+     TOP HEADER BAR
+═══════════════════════════════════════════════════════════════════════════ -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <span class="topbar-logo">▣</span>
+    <span class="topbar-title">SITE ASSETS MONITOR</span>
+    <span class="topbar-sub">HITL Enrollment Studio</span>
+  </div>
+  <div class="topbar-status">
+    <span id="hdr-video-name" class="hdr-pill hdr-pill-dim">No video</span>
+    <span id="hdr-gallery-count" class="hdr-pill">Gallery: — assets</span>
+    <span id="hdr-session-count" class="hdr-pill hdr-pill-green">Session: 0 enrollments</span>
+  </div>
+  <div class="topbar-actions">
+    <button class="btn-sm btn-outline" id="btn-load-video">📂 Load Video</button>
+    <button class="btn-sm btn-primary" id="btn-export">⬇ Export ZIP</button>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     TOAST NOTIFICATION
+═══════════════════════════════════════════════════════════════════════════ -->
+<div id="toast" class="toast hidden"></div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     LOAD VIDEO MODAL
+═══════════════════════════════════════════════════════════════════════════ -->
+<div id="modal-video" class="modal-overlay hidden">
+  <div class="modal-box">
+    <h2 class="modal-title">Load Video File</h2>
+    <p class="modal-hint">Enter the full path to your video file on disk.</p>
+    <input type="text" id="modal-video-path" class="modal-input"
+           placeholder="e.g. C:\Users\...\Phase1.mp4" />
+    <div class="modal-actions">
+      <button class="btn-sm btn-outline" id="btn-modal-cancel">Cancel</button>
+      <button class="btn-sm btn-primary" id="btn-modal-load">Load</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     MAIN 3-COLUMN LAYOUT
+═══════════════════════════════════════════════════════════════════════════ -->
+<main class="workspace">
+
+  <!-- ── LEFT COLUMN: Video Player ───────────────────────────────────── -->
+  <section class="col col-video">
+    <div class="panel-label">VIDEO PLAYER</div>
+
+    <!-- Canvas where frames are displayed -->
+    <div class="canvas-wrap" id="canvas-wrap">
+      <canvas id="video-canvas"></canvas>
+      <!-- SVG overlay for drawing bboxes -->
+      <svg id="bbox-svg" class="bbox-svg"></svg>
+      <div id="no-video-placeholder" class="no-video-msg">
+        <div>📂</div>
+        <div>Load a video to begin</div>
+      </div>
+    </div>
+
+    <!-- Scrubber & frame info -->
+    <div class="scrubber-row">
+      <span id="frame-current" class="frame-num">0</span>
+      <input type="range" id="scrubber" class="scrubber" min="0" max="1000" value="0" />
+      <span id="frame-total" class="frame-num muted">/ 0</span>
+    </div>
+    <div class="time-row">
+      <span id="time-current" class="time-lbl">0.0s</span>
+      <span id="time-duration" class="time-lbl muted">/ 0.0s</span>
+    </div>
+
+    <!-- Playback controls -->
+    <div class="controls-row">
+      <button class="ctrl-btn" id="btn-prev30" title="Back 30 frames">⏮ 30</button>
+      <button class="ctrl-btn" id="btn-prev5"  title="Back 5 frames">◀ 5</button>
+      <button class="ctrl-btn ctrl-btn-play" id="btn-play" title="Play / Pause">▶</button>
+      <button class="ctrl-btn" id="btn-next5"  title="Forward 5 frames">5 ▶</button>
+      <button class="ctrl-btn" id="btn-next30" title="Forward 30 frames">30 ⏭</button>
+      <select id="speed-select" class="speed-select" title="Playback speed">
+        <option value="0.25">0.25×</option>
+        <option value="0.5">0.5×</option>
+        <option value="1" selected>1×</option>
+        <option value="2">2×</option>
+        <option value="4">4×</option>
+      </select>
+    </div>
+
+    <!-- Mode indicator -->
+    <div class="mode-row">
+      <span id="mode-badge" class="badge badge-paused">PAUSED</span>
+      <span id="cand-count" class="muted small">— candidates</span>
+      <label class="toggle-label">
+        <input type="checkbox" id="toggle-proposals" checked />
+        Show proposals
+      </label>
+    </div>
+  </section>
+
+  <!-- ── CENTER COLUMN: Canvas detail + current bbox info ────────────── -->
+  <section class="col col-center">
+    <div class="panel-label">SELECTION &amp; PREVIEW</div>
+
+    <!-- Crop preview -->
+    <div class="crop-card" id="crop-card">
+      <canvas id="crop-canvas" width="220" height="160"></canvas>
+      <div id="crop-placeholder" class="crop-placeholder">
+        Draw a box on the frame<br>or click a proposal
+      </div>
+    </div>
+
+    <!-- Quality meters -->
+    <div class="quality-block" id="quality-block">
+      <div class="quality-row">
+        <span class="ql">Quality</span>
+        <span id="q-status" class="q-badge q-unknown">—</span>
+      </div>
+      <div class="quality-row">
+        <span class="ql">Blur</span>
+        <div class="q-bar-wrap"><div id="q-blur-bar" class="q-bar"></div></div>
+        <span id="q-blur-val" class="q-val">—</span>
+      </div>
+      <div class="quality-row">
+        <span class="ql">Brightness</span>
+        <div class="q-bar-wrap"><div id="q-bri-bar" class="q-bar"></div></div>
+        <span id="q-bri-val" class="q-val">—</span>
+      </div>
+    </div>
+
+    <!-- Active bbox coords -->
+    <div class="bbox-info" id="bbox-info">
+      <span class="dim-label">Active box</span>
+      <span id="bbox-coords" class="bbox-coords muted">—</span>
+    </div>
+
+    <!-- Proposals list -->
+    <div class="proposal-list-wrap">
+      <div class="panel-label small">AUTO-PROPOSALS</div>
+      <ul id="proposal-list" class="proposal-list">
+        <li class="proposal-empty">No proposals — navigate to a frame with assets</li>
+      </ul>
+    </div>
+
+    <!-- Help tip -->
+    <div class="help-tip">
+      <span>🖱 Drag on frame to draw box</span><br>
+      <span>Click a proposal to select it</span><br>
+      <span>Then assign an ID on the right →</span>
+    </div>
+  </section>
+
+  <!-- ── RIGHT COLUMN: Enroll panel + gallery ────────────────────────── -->
+  <section class="col col-right">
+    <div class="panel-label">ENROLL</div>
+
+    <!-- Quick-assign grid -->
+    <div class="qa-label">QUICK ASSIGN</div>
+    <div id="qa-grid" class="qa-grid">
+      <!-- Populated dynamically from gallery -->
+    </div>
+
+    <!-- New ID input -->
+    <div class="new-id-block">
+      <div class="qa-label">NEW / CUSTOM ID</div>
+      <div class="new-id-row">
+        <input type="text" id="new-id-input" class="id-input"
+               placeholder="e.g. CONT-025" maxlength="20" />
+        <button class="btn-enroll" id="btn-enroll-new">Enroll</button>
+      </div>
+    </div>
+
+    <!-- Enrolled gallery -->
+    <div class="gallery-header">
+      <div class="qa-label">GALLERY</div>
+      <span id="gallery-total" class="muted small">0 assets</span>
+    </div>
+    <div id="gallery-grid" class="gallery-grid">
+      <!-- Thumbnail cards populated dynamically -->
+    </div>
+
+    <!-- Export button (bottom) -->
+    <div class="export-block">
+      <button class="btn-export-full" id="btn-export-bottom">
+        ⬇ Export Training Dataset
+      </button>
+      <div id="export-info" class="export-info muted small"></div>
+    </div>
+  </section>
+
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

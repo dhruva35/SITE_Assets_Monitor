@@ -31,3 +31,9 @@ colorama>=0.4.6
 # Testing (lightweight — can be omitted on production Pi 5)
 pytest>=8.0.0
 pytest-cov>=4.1.0
+
+# Web UI (HITL Enrollment browser interface)
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+python-multipart>=0.0.9
+websockets>=12.0
