@@ -61,7 +61,11 @@
     <div class="canvas-wrap" id="canvas-wrap">
       <canvas id="video-canvas"></canvas>
       <!-- SVG overlay for drawing bboxes -->
-      <svg id="bbox-svg" class="bbox-svg"></svg>
+      <svg id="bbox-svg" class="bbox-svg">
+        <g id="svg-proposals-layer"></g>
+        <g id="svg-manual-layer"></g>
+        <g id="svg-drawing-layer"></g>
+      </svg>
       <div id="no-video-placeholder" class="no-video-msg">
         <div>📂</div>
         <div>Load a video to begin</div>

@@ -681,24 +681,67 @@ html, body {
 
 /* SVG bbox overlay elements */
 .bbox-proposal {
-  fill: none;
-  stroke: #FFD700;
-  stroke-width: 2;
-  stroke-dasharray: 6 3;
+  fill: rgba(0, 0, 0, 0.02);
+  stroke: rgba(180, 180, 180, 0.55);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 3;
   cursor: pointer;
-  transition: stroke 0.1s;
+  transition: all 0.12s ease;
 }
-.bbox-proposal:hover { stroke: #fff; }
-.bbox-proposal.selected { stroke: #FFD700; stroke-dasharray: none; stroke-width: 2.5; }
+.bbox-proposal:hover {
+  stroke: #ffffff;
+  stroke-width: 2;
+  fill: rgba(255, 255, 255, 0.05);
+}
+.bbox-proposal.selected {
+  fill: rgba(255, 215, 0, 0.08);
+  stroke: #FFD700;
+  stroke-dasharray: none;
+  stroke-width: 2.2;
+  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.4));
+}
+
+.bbox-badge-bg {
+  fill: rgba(14, 14, 14, 0.88);
+  stroke: rgba(180, 180, 180, 0.4);
+  stroke-width: 1;
+  rx: 3px;
+  ry: 3px;
+}
+.bbox-badge-bg.selected {
+  stroke: #FFD700;
+  fill: #141200;
+}
+.bbox-badge-bg.manual {
+  stroke: #00cfff;
+  fill: #001824;
+}
+
+.bbox-badge-text {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  fill: #a0a0a0;
+  pointer-events: none;
+  user-select: none;
+}
+.bbox-badge-text.selected {
+  fill: #FFD700;
+}
+.bbox-badge-text.manual {
+  fill: #00cfff;
+}
 
 .bbox-manual {
-  fill: none;
+  fill: rgba(0, 207, 255, 0.08);
   stroke: #00cfff;
   stroke-width: 2;
+  filter: drop-shadow(0 0 4px rgba(0, 207, 255, 0.4));
 }
 
 .bbox-drawing {
-  fill: rgba(255,215,0,0.08);
+  fill: rgba(255, 215, 0, 0.08);
   stroke: #FFD700;
   stroke-width: 1.5;
   stroke-dasharray: 4 3;

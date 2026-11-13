@@ -33,6 +33,9 @@ const S = {
 const D = {
   canvas:          document.getElementById("video-canvas"),
   bboxSvg:         document.getElementById("bbox-svg"),
+  svgProposals:    document.getElementById("svg-proposals-layer"),
+  svgManual:       document.getElementById("svg-manual-layer"),
+  svgDrawing:      document.getElementById("svg-drawing-layer"),
   cropCanvas:      document.getElementById("crop-canvas"),
   cropPlaceholder: document.getElementById("crop-placeholder"),
   noPH:            document.getElementById("no-video-placeholder"),
@@ -186,62 +189,124 @@ async function fetchProposals(frameIdx) {
     const data = await api("GET", `/api/proposals/${frameIdx}`);
     S.proposals = data.proposals || [];
     S.selectedPropIdx = S.proposals.length > 0 ? 0 : -1;
+    if (S.selectedPropIdx >= 0) {
+      const p = S.proposals[0];
+      S.activeBbox = { x1: p.x1, y1: p.y1, x2: p.x2, y2: p.y2 };
+    } else {
+      S.activeBbox = null;
+    }
     renderProposals();
     updateActiveBbox();
     renderProposalList();
+    updateCropPreview();
     D.candCount.textContent = `${S.proposals.length} candidate${S.proposals.length !== 1 ? "s" : ""}`;
   } catch (e) {
     console.warn("Proposals:", e);
     S.proposals = [];
-    renderProposals();
+    clearOverlay();
+    renderProposalList();
   }
 }
 
-function renderProposals() {
-  // Clear existing proposal/manual rects except drawing rect
-  D.bboxSvg.querySelectorAll(".bbox-proposal, .bbox-manual").forEach(el => el.remove());
+function clearOverlay() {
+  if (D.svgProposals) D.svgProposals.innerHTML = "";
+  if (D.svgManual) D.svgManual.innerHTML = "";
+}
 
-  if (!S.showProposals) return;
+function renderProposals() {
+  clearOverlay();
+
+  if (!S.showProposals || S.playing) return;
 
   const cw = D.canvas.offsetWidth;
   const ch = D.canvas.offsetHeight;
   const sw = D.canvas.width  || S.width;
   const sh = D.canvas.height || S.height;
+  if (!cw || !ch || !sw || !sh) return;
+
   const sx = cw / sw;
   const sy = ch / sh;
 
+  // Render proposals
   S.proposals.forEach((p, i) => {
+    const isSel = (i === S.selectedPropIdx);
+    const bx = Math.round(p.x1 * sx);
+    const by = Math.round(p.y1 * sy);
+    const bw = Math.round((p.x2 - p.x1) * sx);
+    const bh = Math.round((p.y2 - p.y1) * sy);
+
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g.style.cursor = "pointer";
+    g.addEventListener("click", (e) => {
+      e.stopPropagation();
+      selectProposal(i);
+    });
+
+    // Bounding box rect
     const rect = makeSvgRect(
-      p.x1 * sx, p.y1 * sy,
-      (p.x2 - p.x1) * sx, (p.y2 - p.y1) * sy,
-      "bbox-proposal" + (i === S.selectedPropIdx ? " selected" : ""),
+      bx, by, bw, bh,
+      "bbox-proposal" + (isSel ? " selected" : "")
     );
-    rect.dataset.idx = i;
-    rect.addEventListener("click", () => selectProposal(i));
+    g.appendChild(rect);
 
-    // Label
+    // Simplified tag badge (clean, short, no noisy resolution)
+    let tagShort = "CONTAINER";
+    if (p.tag.toLowerCase().includes("board")) {
+      tagShort = "ID BOARD";
+    }
+    const labelText = `[#${i + 1}] ${tagShort}`;
+    const badgeW = labelText.length * 7 + 12;
+    const badgeH = 16;
+    const badgeX = bx + 2;
+    const badgeY = by + 2;
+
+    const bg = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    bg.setAttribute("x", badgeX);
+    bg.setAttribute("y", badgeY);
+    bg.setAttribute("width", badgeW);
+    bg.setAttribute("height", badgeH);
+    bg.setAttribute("class", "bbox-badge-bg" + (isSel ? " selected" : ""));
+    g.appendChild(bg);
+
     const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    text.setAttribute("x", p.x1 * sx + 4);
-    text.setAttribute("y", Math.max(14, p.y1 * sy - 4));
-    text.setAttribute("fill", i === S.selectedPropIdx ? "#FFD700" : "#888");
-    text.setAttribute("font-size", "11");
-    text.setAttribute("font-family", "monospace");
-    text.textContent = `[${i+1}] ${p.tag}`;
-    text.style.pointerEvents = "none";
+    text.setAttribute("x", badgeX + 6);
+    text.setAttribute("y", badgeY + 12);
+    text.setAttribute("class", "bbox-badge-text" + (isSel ? " selected" : ""));
+    text.textContent = labelText;
+    g.appendChild(text);
 
-    D.bboxSvg.appendChild(rect);
-    D.bboxSvg.appendChild(text);
+    D.svgProposals.appendChild(g);
   });
 
   // Manual bbox
   if (S.activeBbox && S.selectedPropIdx === -1) {
     const b = S.activeBbox;
-    const rect = makeSvgRect(
-      b.x1 * sx, b.y1 * sy,
-      (b.x2 - b.x1) * sx, (b.y2 - b.y1) * sy,
-      "bbox-manual",
-    );
-    D.bboxSvg.appendChild(rect);
+    const bx = Math.round(b.x1 * sx);
+    const by = Math.round(b.y1 * sy);
+    const bw = Math.round((b.x2 - b.x1) * sx);
+    const bh = Math.round((b.y2 - b.y1) * sy);
+
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
+    const rect = makeSvgRect(bx, by, bw, bh, "bbox-manual");
+    g.appendChild(rect);
+
+    const bg = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    bg.setAttribute("x", bx + 2);
+    bg.setAttribute("y", by + 2);
+    bg.setAttribute("width", 78);
+    bg.setAttribute("height", 16);
+    bg.setAttribute("class", "bbox-badge-bg manual");
+    g.appendChild(bg);
+
+    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    text.setAttribute("x", bx + 6);
+    text.setAttribute("y", by + 12);
+    text.setAttribute("class", "bbox-badge-text manual");
+    text.textContent = "MANUAL BOX";
+    g.appendChild(text);
+
+    D.svgManual.appendChild(g);
   }
 }
 
@@ -509,9 +574,6 @@ function connectWS() {
         ctx.drawImage(img, 0, 0);
         S.frameIdx = msg.frame_idx;
         updateScrubber();
-        if (S.showProposals) {
-          fetchProposals(S.frameIdx);  // async, don't await here
-        }
       };
       img.src = "data:image/jpeg;base64," + msg.jpeg_b64;
     } else if (msg.event === "end") {
@@ -544,6 +606,13 @@ function setPlaying(val) {
   D.btnPlay.classList.toggle("playing", val);
   D.modeBadge.textContent = val ? "PLAYING" : "PAUSED";
   D.modeBadge.className = val ? "badge badge-playing" : "badge badge-paused";
+  if (val) {
+    clearOverlay();
+  } else {
+    if (S.showProposals) {
+      fetchProposals(S.frameIdx);
+    }
+  }
 }
 
 function togglePlay() {
@@ -568,13 +637,11 @@ async function seekTo(idx) {
     wsSend({ action: "pause" });
   }
   await loadFrame(idx);
-  await fetchProposals(idx);
-  S.activeBbox = null;
-  S.selectedPropIdx = S.proposals.length > 0 ? 0 : -1;
-  updateActiveBbox();
-  renderProposals();
-  renderProposalList();
-  updateCropPreview();
+  if (S.showProposals) {
+    await fetchProposals(idx);
+  } else {
+    clearOverlay();
+  }
 }
 
 // ============================================================
@@ -601,10 +668,10 @@ document.addEventListener("mousemove", (e) => {
   const cy = e.clientY - r.top;
 
   // Update / create drawing rect
-  let drawRect = D.bboxSvg.querySelector(".bbox-drawing");
+  let drawRect = D.svgDrawing.querySelector(".bbox-drawing");
   if (!drawRect) {
     drawRect = makeSvgRect(0, 0, 0, 0, "bbox-drawing");
-    D.bboxSvg.appendChild(drawRect);
+    D.svgDrawing.appendChild(drawRect);
   }
   const x1 = Math.min(_dragStart.x, cx);
   const y1 = Math.min(_dragStart.y, cy);
@@ -620,7 +687,7 @@ document.addEventListener("mouseup", (e) => {
   const cx = e.clientX - r.left;
   const cy = e.clientY - r.top;
 
-  D.bboxSvg.querySelector(".bbox-drawing")?.remove();
+  if (D.svgDrawing) D.svgDrawing.innerHTML = "";
 
   const svgW = D.bboxSvg.clientWidth;
   const svgH = D.bboxSvg.clientHeight;
@@ -721,7 +788,11 @@ function bindEvents() {
 
   D.toggleProposals.addEventListener("change", () => {
     S.showProposals = D.toggleProposals.checked;
-    renderProposals();
+    if (S.showProposals && !S.playing) {
+      renderProposals();
+    } else {
+      clearOverlay();
+    }
   });
 
   // Enroll new ID
